@@ -4,7 +4,6 @@ import { PLANETS } from "../../data/planets.js";
 export default class PlanetHome {
     render() {
         const game = document.getElementById("game");
-
         game.innerHTML = `
             <h1>${PLANETS[0].name}</h1>
             <button id="explore">Explorer</button>

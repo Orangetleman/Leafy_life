@@ -6,11 +6,11 @@ export const Router = {
             this.currentScreen.destroy();
         }
 
-        import(`./screens/${screenName}.js`)
+        import(`/js/screens/${screenName}.js`)
             .then(module => {
                 this.currentScreen = new module.default(data);
                 this.currentScreen.render();
             })
-            .catch(err => console.error("Screen error, err"));
+            .catch(err => console.error("Screen error,", err));
         }
     };
