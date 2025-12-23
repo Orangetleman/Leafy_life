@@ -1,3 +1,28 @@
 #game {
   padding-bottom: 60px; /* hauteur de la navbar */
 }
+:root {
+    --shop-title-bg: #34a947;
+    --shop-title-border: #1e661f;
+    --shop-btn-bg: #656565;
+    --shop-btn-hover-bg: #777777;
+    --shop-btn-active-bg: #555555;
+    --shop-btn-border: #2a2a2a;
+
+    --o2-bg: #4da6ff;
+    --o2-border: #006bb3;
+    --co2-bg: #6ecf7a;
+    --co2-border: #2e8b39;
+
+    --modal-bg: #1ea25e;
+    --modal-border: #145d36;
+    --modal-overlay-bg: rgba(0, 0, 0, 0.6);
+    --modal-action-confirm-bg: #28b238;
+    --modal-action-confirm-border: #1e661f;
+    --modal-action-confirm-hover-bg: #3fc04f;
+    --modal-action-confirm-active-bg: #28b238;
+    --modal-action-cancel-bg: #a94442;
+    --modal-action-cancel-border: #6e2c2c;
+    --modal-action-cancel-hover-bg: #c75b5b;
+    --modal-action-cancel-active-bg: #a94442;
+}

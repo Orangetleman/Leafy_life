@@ -1,24 +1,46 @@
 import { ITEMS } from "../../data/items.js";
+import { ShopItemButton } from "../../components/button/ShopItemButton.js";
+import { openBuyModal } from "../../components/modal/modal.js";
 export default class ShopHome {
     render() {
-        console.log("Shop opened");
         const game = document.getElementById("game");
+        
         game.innerHTML = `
-            <div class="shop">
-                <h2>Shop</h2>
-                <ul>
-                    ${ITEMS.map(item => `
-                        <li>
-                            ${item.name},
-                            O2 : ${item.price_O2 ?? "-"},
-                            CO2 : ${item.price_CO2 ?? "-"},
-                            O2_s : ${item.specialprice_O2 ?? "-"},
-                            CO2_s : ${item.specialprice_CO2 ?? "-"},
-                            Spécial : ${item.is_special}
-                        </li>
-                    `).join("")}
-                </ul>
+            <div class="shop-container">
+                
+                <!-- HEADER (recherche + monnaies) -->
+                <div class="shop-header">
+                    <input type="text" placeholder="🔍 Rechercher..." class="shop-search">
+                    <div class="player-currency">
+                        <div class="currency-badge o2">120 O2</div>
+                        <div class="currency-badge co2">85 CO2</div>
+                    </div>
+                </div>
+
+                <!-- TITRE -->
+                <div class="shop-title">
+                    <h2>Shop</h2>
+                </div>
+
+                <!-- LISTE SCROLLABLE -->
+                <div class="shop-list" id="shop-list">
+                </div>
+
             </div>
         `;
+
+        // Récupération de la zone liste
+        const shopList = document.getElementById("shop-list");
+
+        // Ajout des items
+        ITEMS.forEach(item => {
+            const itemButton = ShopItemButton(item, (itm) => {
+                openBuyModal(itm, (confirmedItem) => {
+                    console.log(`Achat confirmé pour l'item : ${confirmedItem.name}`);
+                    // plus tard : gérer l'achat (vérif monnaie, ajout inventaire, etc)
+                });
+            });
+            shopList.appendChild(itemButton);
+        });
     }
 }

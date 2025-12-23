@@ -1,0 +1,72 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay-bg);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.modal {
+    background: var(--modal-bg);
+    padding: 1.5em;
+    border: 0.2em solid var(--modal-border);
+    border-radius: 1em;
+    min-width: 18rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+}
+
+.modal-prices {
+    display: flex;
+    gap: 0.5em;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75em;
+}
+
+.modal-actions button {
+    padding: 0.5em 1em;
+    border-radius: 1em;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-confirm {
+    background-color: var(--modal-action-confirm-bg);
+    border: 0.17em solid var(--modal-action-confirm-border);
+}
+.btn-confirm:hover {
+    background-color: var(--modal-action-confirm-hover-bg);
+    transform: scale(1.02);
+}
+.btn-confirm:active {
+    background-color: var(--modal-action-confirm-active-bg);
+    transform: scale(0.98);
+}
+.btn-cancel {
+    background-color: var(--modal-action-cancel-bg);
+    border: 0.17em solid var(--modal-action-cancel-border);
+}
+.btn-cancel:hover {
+    background-color: var(--modal-action-cancel-hover-bg);
+    transform: scale(1.02);
+}
+.btn-cancel:active {
+    background-color: var(--modal-action-cancel-active-bg);
+    transform: scale(0.98);
+}
