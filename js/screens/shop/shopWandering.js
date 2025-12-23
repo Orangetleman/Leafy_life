@@ -7,8 +7,8 @@ export function getWanderingShopItems(biome) {
                             .slice(0, 2)
                             .map(i => ({
                                 ...i,
-                                price_O2: i.price_O2 ? Math.floor(i.price_O2 / 2) : undefined,
-                                price_CO2: i.price_CO2 ? Math.floor(i.price_CO2 / 2) : undefined
+                                price_O2: i.price_O2 ? i.specialprice_O2 : undefined,
+                                price_CO2: i.price_CO2 ? i.specialprice_CO2 : undefined
                             }));
 
     return [...specials, ...discounted];

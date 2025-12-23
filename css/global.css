@@ -2,6 +2,13 @@
   padding-bottom: 60px; /* hauteur de la navbar */
 }
 :root {
+    --navbar-bg: #2a2a2a;
+    --navbar-border: #1e1e1e;
+    --navbar-link-hover-bg: #3a3a3a;
+    --navbar-link-active-bg: #1e1e1e;
+
+    --shop-bg: #00847cd3;
+    --shop-border: #00847cd3;
     --shop-title-bg: #34a947;
     --shop-title-border: #1e661f;
     --shop-btn-bg: #656565;

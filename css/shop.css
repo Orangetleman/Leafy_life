@@ -5,9 +5,13 @@
 .shop-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 60px); /* hauteur écran - navbar */
+    height: 100vh;
     padding: 1rem;
     gap: 1rem;
+    border: none;
+    background: var(--shop-bg);
+    margin: -0.5rem; /* Pour compenser le padding global */
+    box-sizing: border-box;
 }
 
 /* ──────────────────────────────────────────
@@ -55,12 +59,12 @@
 
 .shop-title {
     flex: 0 0 auto;
+    flex-direction: column;
     text-align: center;
     border: 0.2rem solid var(--shop-title-border);
     padding: 0.5rem 1rem;
     background: var(--shop-title-bg);
-    border-radius: 1rem;
-    max-width: 30rem;
+    border-radius: 0.5rem;
     margin: 0 auto;
 }
 
