@@ -1,7 +1,13 @@
 import { ITEMS } from "../../data/items.js";
 import { ShopItemButton } from "../../components/button/ShopItemButton.js";
 import { openBuyModal } from "../../components/modal/modal.js";
+
 export default class ShopHome {
+    constructor(data = {}) {
+        this.type = data.type || "classic";
+        this.biome = data.biome || null;
+    }
+
     render() {
         const game = document.getElementById("game");
         
@@ -19,7 +25,7 @@ export default class ShopHome {
 
                 <!-- TITRE -->
                 <div class="shop-title">
-                    <h2>Shop</h2>
+                    <h2>${this.type === "wandering" ? "Shop itinérant" : "Shop"}</h2>
                 </div>
 
                 <!-- LISTE SCROLLABLE -->
@@ -31,6 +37,7 @@ export default class ShopHome {
 
         // Récupération de la zone liste
         const shopList = document.getElementById("shop-list");
+        const items = this.type === "wandering" ? getWanderingShopItems(this.biome) : getClassicShopItems();
 
         // Ajout des items
         ITEMS.forEach(item => {
