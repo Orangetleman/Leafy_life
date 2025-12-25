@@ -10,16 +10,30 @@
     z-index: 1000;
 }
 
+.modal-cadre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .modal {
     background: var(--modal-bg);
     padding: 1.5em;
     border: 0.2em solid var(--modal-border);
     border-radius: 1em;
-    min-width: 18rem;
+    min-height: 15vh;
+    max-height: 30vh;
+    min-width: 20vw;
+    max-width: 30vw;
 
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.modal p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0;
 }
 
 .modal-actions {
@@ -54,6 +68,7 @@
 .btn-cancel:hover {
     background-color: var(--modal-action-cancel-hover-bg);
     transform: scale(1.02);
+    cursor: pointer;
 }
 .btn-cancel:active {
     background-color: var(--modal-action-cancel-active-bg);
@@ -93,27 +108,48 @@
 /* ──────────────────────────────────────────
     Modal inventory specific styles 
 */
-#inventory-item-details {
+#modal-inventory-btn-cancel {
+    height: auto;
+    width: auto;
+    padding: 0.5em 1em;
+    margin-left: auto;
+    border-radius: 10em;
+}
+#modal-inventory-item-details {
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5em;
 }
-#inventory-item-icon {
-    width: 3rem;
-    height: 3rem;
-    border: 0.2em solid var(--shop-item-icon-border);
+#modal-inventory-item-icon {
+    width: 10em;
+    height: 10em;
+    border: 0.2em solid var(--inventory-modal-item-icon-border);
+    background-color: var(--inventory-modal-item-icon-bg);
     padding: 0.5em;
-    border-radius: 5em;
+    border-radius: 50%;
     flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-#inventory-item-icon img {
-    width: 100%;
-    height: 100%;
+#modal-inventory-item-icon img {
+    width: 70%;
+    height: 70%;
     object-fit: contain;
 }
-#inventory-item-info {
+#modal-inventory-item-info {
+    font-family: var(--comic-font);
+    display: flex;
+    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     gap: 0.25em;
+}
+#modal-inventory-item-description {
+    font-family: var(--comic-font);
+    font-size: 1rem;
+    margin-top: 0.5em;
 }

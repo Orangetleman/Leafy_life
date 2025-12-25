@@ -2,6 +2,8 @@
   padding-bottom: 60px; /* hauteur de la navbar */
 }
 :root {
+    --comic-font: 'Comic Sans MS', 'Comic Sans', cursive;
+
     --navbar-bg: #2a2a2a;
     --navbar-border: #1e1e1e;
     --navbar-link-hover-bg: #3a3a3a;
@@ -30,6 +32,8 @@
     --inventory-item-btn-border: #af352d;
     --inventory-item-btn-hover-bg: #e07067;
     --inventory-item-btn-active-bg: #bf4038;
+    --inventory-modal-item-icon-border: #af352d;
+    --inventory-modal-item-icon-bg: #ffe5e0;
 
     --o2-bg: #4da6ff;
     --o2-border: #006bb3;

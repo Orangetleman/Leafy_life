@@ -1,5 +1,6 @@
 import { ITEMS, TYPES } from "../../data/items.js";
 import { InventoryItemButton, InventoryTypeButton } from "../../components/button/InventoryItemButton.js";
+import { openItemInventoryModal } from "../../components/modal/modalInventory.js";
 
 export default class InventoryHome {
     constructor(data = {}) {
@@ -27,6 +28,12 @@ export default class InventoryHome {
             this.inventory.appendItem(ITEMS[0]);
             this.inventory.appendItem(ITEMS[1]);
             this.inventory.appendItem(ITEMS[2]);
+            this.inventory.appendItem(ITEMS[4]);
+            this.inventory.appendItem(ITEMS[5]);
+            this.inventory.appendItem(ITEMS[6]);
+            this.inventory.appendItem(ITEMS[7]);
+            this.inventory.appendItem(ITEMS[8]);
+            this.inventory.appendItem(ITEMS[9]);
         // Ajout des boutons de type
         TYPES.forEach(type => {
             const typeButton = InventoryTypeButton(type, () => {
@@ -36,8 +43,8 @@ export default class InventoryHome {
                 this.inventory.getItems().forEach(item => {
                     if (item.use === itemsType) {
                     const itemButton = InventoryItemButton(item, () => {
+                        openItemInventoryModal(item);
                         console.log(`Item cliqué : ${item.name}`);
-                        // plus tard : ouvrir modal item
                     });
                     inventoryList.appendChild(itemButton);
                     }
