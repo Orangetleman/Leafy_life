@@ -1,4 +1,5 @@
 import { Router } from "../../router.js";
+import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
 
 export function renderNavbar() {
     const navbar = document.createElement("div");
@@ -15,6 +16,6 @@ export function renderNavbar() {
 
     document.getElementById("btnLeafs").onclick = () => Router.navigate("leafs/leafsHome");
     document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "classic" });
-    document.getElementById("btnInventory").onclick = () => Router.navigate("inventory/inventoryHome");
+    document.getElementById("btnInventory").onclick = () => Router.navigate("inventory/inventoryHome", { inventory: inventoryManager });
     document.getElementById("btnPlanet").onclick = () => Router.navigate("planet/planetHome");
 }

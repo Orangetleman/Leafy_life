@@ -4,7 +4,7 @@
     left: 0;
 
     width: 100%;
-    height: clamp(3rem, 8vh, 5rem);
+    height: clamp(4rem, 8vh, 5rem);
 
     display: flex;
     justify-content: space-around;

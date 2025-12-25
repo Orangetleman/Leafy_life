@@ -10,14 +10,12 @@ export function openBuyModal(item, onConfirm) {
     modal.innerHTML = `
         <h3>Confirmer l'achat</h3>
 
-        <div class="modal-item">
-            <div class="shop-item-icon">
-                <img src="${item.icon}" alt="${item.name}">
-            </div>
+        <div id="modal-item">
+            <div id="shop-item-icon"><img src="${item.icon}" alt="${item.name}"></div>
             <span>${item.name}</span>
         </div>
 
-        <div class="modal-prices">
+        <div id="modal-prices">
             ${item.price_O2 !== undefined ? `<div class="price-badge price-o2">${item.price_O2} O2</div>` : ""}
             ${item.price_CO2 !== undefined ? `<div class="price-badge price-co2">${item.price_CO2} CO2</div>` : ""}
         </div>

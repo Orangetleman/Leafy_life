@@ -1,5 +1,5 @@
 import { ShopItemButton } from "../../components/button/ShopItemButton.js";
-import { openBuyModal } from "../../components/modal/modal.js";
+import { openBuyModal } from "../../components/modal/modalShop.js";
 import { getWanderingShopItems } from "./shopWandering.js";
 import { getClassicShopItems } from "./shopClassic.js";
 
