@@ -26,14 +26,16 @@
     --inventory-header-border: #145d36;
     --inventory-btn-type: #337fd1;
     --inventory-btn-type-border: #003f7ad3;
-    --inventory-btn-type-hover-bg: #337fd1;
-    --inventory-btn-type-active-bg: #1e66a2;
+    --inventory-btn-type-hover-bg: #4d99eb;
+    --inventory-btn-type-active-bg: #2b73ae;
+    --inventory-btn-type-while-active-bg: #1e5cad;
     --inventory-item-btn-bg: #cf5a51;
     --inventory-item-btn-border: #af352d;
     --inventory-item-btn-hover-bg: #e07067;
     --inventory-item-btn-active-bg: #bf4038;
     --inventory-modal-item-icon-border: #af352d;
     --inventory-modal-item-icon-bg: #ffe5e0;
+    --inventory-modal-item-name-border: #145d36;
 
     --o2-bg: #4da6ff;
     --o2-border: #006bb3;

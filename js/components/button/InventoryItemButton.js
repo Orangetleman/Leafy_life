@@ -1,4 +1,6 @@
-import { ITEMS, TYPES } from "../../data/items.js";
+// Variable partagée pour tracker le bouton de type actuellement actif
+let activeTypeButton = null;
+
 export function InventoryItemButton(item, onClick = null) {
     const button = document.createElement("button");
     button.className = "inventory-item-btn";
@@ -32,8 +34,24 @@ export function InventoryTypeButton(type, onClick = null) {
         button.classList.add("hover");
     });
     
-    if (onClick) {
-        button.addEventListener("click", onClick);
+    if (typeof onClick === "function") {
+        button.addEventListener("click", () => {
+            // Si un autre bouton était actif, le désactiver
+            if (activeTypeButton !== null && activeTypeButton !== button) {
+                activeTypeButton.classList.remove("while-active");
+            }
+            
+            // Basculer l'état du bouton actuel
+            if (button.classList.contains("while-active")) {
+                button.classList.remove("while-active");
+                activeTypeButton = null;
+            } else {
+                button.classList.add("while-active");
+                activeTypeButton = button;
+            }
+            
+            onClick();
+        });
     }
     
     return button;

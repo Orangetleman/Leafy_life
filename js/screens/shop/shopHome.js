@@ -2,12 +2,14 @@ import { ShopItemButton } from "../../components/button/ShopItemButton.js";
 import { openBuyModal } from "../../components/modal/modalShop.js";
 import { getWanderingShopItems } from "./shopWandering.js";
 import { getClassicShopItems } from "./shopClassic.js";
+import { is_search_mode } from "../../utils/helpers.js";
 
 export default class ShopHome {
     constructor(data = {}) {
         this.type = data.type || "classic";
         this.biome = data.biome || null;
         this.money = data.money || { O2: 0, CO2: 0 };
+        this.searchQuery = "";
     }
 
     render() {
@@ -18,7 +20,7 @@ export default class ShopHome {
                 
                 <!-- HEADER (recherche + monnaies) -->
                 <div class="shop-header">
-                    <input type="text" placeholder="🔍 Rechercher..." class="shop-search">
+                    <input type="text" placeholder="🔍 Rechercher..." id="shop-search" class="search-bar">
                     <div class="player-currency">
                         <div class="currency-badge o2">${this.money.O2} O2</div>
                         <div class="currency-badge co2">${this.money.CO2} CO2</div>
@@ -37,19 +39,48 @@ export default class ShopHome {
             </div>
         `;
 
+        // Récupération de la barre de recherche
+        const searchInput = document.getElementById("shop-search");
         // Récupération de la zone liste
         const shopList = document.getElementById("shop-list");
-        const items = this.type === "wandering" ? getWanderingShopItems(this.biome) : getClassicShopItems();
 
-        // Ajout des items
-        items.forEach(item => {
+        searchInput.addEventListener("focus", () => {
+            shopList.innerHTML = "";
+        });
+        searchInput.addEventListener("blur", () => {
+            this.refreshShopList(shopList);
+        });
+
+        searchInput.addEventListener("input", (e) => {
+            this.searchQuery = e.target.value;
+            this.refreshShopList(shopList);
+        });
+        this.refreshShopList(shopList);
+    }
+    refreshShopList(shopList) {
+        shopList.innerHTML = "";
+        // vérification du type de recherche
+        const isTagSearch = this.searchQuery.startsWith("#");
+        const searchTag = isTagSearch ? this.searchQuery.slice(1).toLowerCase() : this.searchQuery.toLowerCase();
+        // Filtrer les items selon le mode de shop puis selon la recherche
+        const items = this.type === "wandering" ? getWanderingShopItems(this.biome) : getClassicShopItems();
+        const itemsToDisplay = items.filter(item => {
+            if (is_search_mode()) {
+                if (isTagSearch) {
+                    return item.tags && item.tags.some(tag => tag.toLowerCase().includes(searchTag));
+                }
+                return item.name.toLowerCase().includes(searchTag);
+            }
+            return item.name.toLowerCase().includes(searchTag);
+        });
+
+        itemsToDisplay.forEach(item => {
             const itemButton = ShopItemButton(item, (itm) => {
                 openBuyModal(itm, (confirmedItem) => {
                     console.log(`Achat confirmé pour l'item : ${confirmedItem.name}`);
                     // plus tard : gérer l'achat (vérif monnaie, ajout inventaire, etc)
                 });
             });
-            console.log(itemButton);
             shopList.appendChild(itemButton);
         });
     }

@@ -25,7 +25,7 @@
     gap: 1rem;
 }
 
-.shop-search {
+#shop-search {
     flex: 1;
     padding: 0.5em 1em;
     border-radius: 0.5em;

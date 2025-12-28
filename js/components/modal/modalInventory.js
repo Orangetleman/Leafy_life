@@ -8,16 +8,18 @@ export function openItemInventoryModal(item, onClose) {
     modal.className = "modal";
 
     modal.innerHTML = `
-        <button class="btn-cancel" id="modal-inventory-btn-cancel">Fermer</button>
-        <div id="modal-inventory-item-details">
-            <div id="modal-inventory-item-icon"><img src="${item.icon}" alt="${item.name}"></div>
-            <div id="modal-inventory-item-info">
-                <h3>${item.name}</h3>
-                <p>Quantité : ${item.amount}</p>
-                <p>Type : ${item.use}</p>
+        <div id="modal-inventory-cadre">
+            <button class="btn-cancel" id="modal-inventory-btn-cancel">Fermer</button>
+            <div id="modal-inventory-item-details">
+                <div id="modal-inventory-item-icon"><img src="${item.icon}" alt="${item.name}"></div>
+                <div id="modal-inventory-item-info">
+                    <h3 id="modal-inventory-item-name">${item.name}</h3>
+                    <p>Quantité : ${item.amount}</p>
+                    <p>Type : ${item.use}</p>
+                </div>
             </div>
+            <p id="modal-inventory-item-description">${item.description}</p>
         </div>
-        <p id="modal-inventory-item-description">${item.description}</p>
     `;
 
     overlay.appendChild(modal);

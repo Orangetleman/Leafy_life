@@ -7,3 +7,9 @@ export function loadSprite(path) {
     img.scr = path;
     return img;
 };
+
+export function is_search_mode() {
+    const searchInput = document.querySelector(".search-bar");
+    console.log(`Search input value: "${searchInput.value}"`);
+    return searchInput && searchInput.value.trim() !== "";
+}

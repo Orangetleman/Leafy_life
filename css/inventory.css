@@ -44,8 +44,10 @@
     transform: scale(1.05);
     background: var(--inventory-btn-type-hover-bg);
 }
-
-.inventory-search {
+.inventory-type-btn.while-active {
+    background: var(--inventory-btn-type-while-active-bg);
+}
+#inventory-search {
     max-height: 2rem;
     width: 93vw;
     flex: 1;
@@ -60,7 +62,7 @@
     margin: 0 auto;
     outline: none;
 }
-.inventory-search:focus {
+#inventory-search:focus {
     outline: none
 }
 
