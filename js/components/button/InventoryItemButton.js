@@ -1,12 +1,42 @@
 // Variable partagée pour tracker le bouton de type actuellement actif
 let activeTypeButton = null;
 
+// Fonction pour créer et afficher un tooltip
+function showTooltip(element, text) {
+    // Enlever les anciens tooltips
+    const oldTooltip = document.querySelector(".inventory-tooltip");
+    if (oldTooltip) oldTooltip.remove();
+
+    const tooltip = document.createElement("div");
+    tooltip.className = "inventory-tooltip";
+    tooltip.textContent = text;
+    
+    document.body.appendChild(tooltip);
+
+    // Positionner le tooltip au niveau de la souris
+    const rect = element.getBoundingClientRect();
+    tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + "px";
+    tooltip.style.top = (rect.top - tooltip.offsetHeight - 5) + "px";
+}
+
+function hideTooltip() {
+    const tooltip = document.querySelector(".inventory-tooltip");
+    if (tooltip) tooltip.remove();
+}
+
 export function InventoryItemButton(item, onClick = null) {
     const button = document.createElement("button");
     button.className = "inventory-item-btn";
     button.type = "button";
     button.innerHTML = `<img src="${item.icon}" alt="${item.name}">`;
     button.addEventListener("click", onClick);
+    
+    // Tooltip pour les items
+    button.addEventListener("mouseenter", () => {
+        showTooltip(button, item.name);
+    });
+    button.addEventListener("mouseleave", hideTooltip);
+    
     return button;
 }
 export function InventoryTypeButton(type, onClick = null) {
@@ -26,12 +56,14 @@ export function InventoryTypeButton(type, onClick = null) {
     });
     
     button.addEventListener("mouseleave", () => {
+        hideTooltip();
         button.classList.remove("active");
         button.classList.remove("hover");
     });
 
     button.addEventListener("mouseenter", () => {
         button.classList.add("hover");
+        showTooltip(button, type.name);
     });
     
     if (typeof onClick === "function") {

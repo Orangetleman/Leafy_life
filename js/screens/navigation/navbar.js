@@ -1,5 +1,6 @@
 import { Router } from "../../router.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
+import { ITEMS } from "../../data/items.js";
 
 export function renderNavbar() {
     const navbar = document.createElement("div");
@@ -14,8 +15,16 @@ export function renderNavbar() {
 
     document.body.appendChild(navbar);
 
+    // Test inventaire :
+        inventoryManager.appendItem(ITEMS[0], 4);
+        inventoryManager.appendItem(ITEMS[1], 2);
+        inventoryManager.appendItem(ITEMS[2], 5);
+        inventoryManager.appendItem(ITEMS[3], 3);
+        inventoryManager.appendMoney("O2", 300);
+        inventoryManager.appendMoney("CO2", 200);
+
     document.getElementById("btnLeafs").onclick = () => Router.navigate("leafs/leafsHome");
-    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "classic" });
+    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "classic", inventoryManager: inventoryManager });
     document.getElementById("btnInventory").onclick = () => Router.navigate("inventory/inventoryHome", { inventory: inventoryManager });
     document.getElementById("btnPlanet").onclick = () => Router.navigate("planet/planetHome");
 }

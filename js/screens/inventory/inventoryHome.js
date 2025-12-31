@@ -11,17 +11,24 @@ export default class InventoryHome {
         this.temp_type = null;
     }
     render() {
-        console.log("Inventory:", ITEMS);
+        console.log("Inventory:", this.inventory.getItems());
         const game = document.getElementById("game");
         game.innerHTML = `
             <div class="inventory-container">
-                <div class="inventory-header" id="inventory-header"></div>
-                <input type="text" placeholder="🔍 Rechercher..." id="inventory-search" class="search-bar">
+                <div class="inventory-header">
+                    <div id="inventory-header-title-box">
+                        <div id="inventory-header-title"><h2>Inventory</h2></div>
+                    </div>
+                    <div class="inventory-type-list" id="inventory-type-list"></div>
+                    <div id="inventory-search-box">
+                        <input type="text" placeholder="🔍 Rechercher..." id="inventory-search" class="search-bar">
+                    </div>
+                </div>
                 <div class="inventory-list" id="inventory-list"></div>
             </div>
         `;
         // récupération de la zone header
-        const inventoryHeader = document.getElementById("inventory-header");
+        const inventoryHeader = document.getElementById("inventory-type-list");
         // récupération de la zone liste
         const inventoryList = document.getElementById("inventory-list");
         const searchInput = document.getElementById("inventory-search");
@@ -43,19 +50,6 @@ export default class InventoryHome {
             this.refreshItemList(inventoryList);
         });
         
-        // Test inventaire:
-            this.inventory.appendItem(ITEMS[0]);
-            this.inventory.appendItem(ITEMS[1]);
-            this.inventory.appendItem(ITEMS[2]);
-            this.inventory.appendItem(ITEMS[0]);
-            this.inventory.appendItem(ITEMS[1]);
-            this.inventory.appendItem(ITEMS[2]);
-            this.inventory.appendItem(ITEMS[4]);
-            this.inventory.appendItem(ITEMS[5]);
-            this.inventory.appendItem(ITEMS[6]);
-            this.inventory.appendItem(ITEMS[7]);
-            this.inventory.appendItem(ITEMS[8]);
-            this.inventory.appendItem(ITEMS[9]);
         // Ajout des boutons de type
         TYPES.forEach(type => {
             const typeButton = InventoryTypeButton(type, () => {
@@ -96,11 +90,9 @@ export default class InventoryHome {
         itemsToDisplay.forEach(item => {
             const itemButton = InventoryItemButton(item, () => {
                 openItemInventoryModal(item);
-                console.log(`Item cliqué : ${item.name}`);
             });
             inventoryList.appendChild(itemButton);
         });
-        
         console.log(`Affichage de ${itemsToDisplay.length} item(s)`);
     }
 }

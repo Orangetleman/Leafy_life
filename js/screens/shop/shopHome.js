@@ -1,15 +1,15 @@
 import { ShopItemButton } from "../../components/button/ShopItemButton.js";
 import { openBuyModal } from "../../components/modal/modalShop.js";
-import { getWanderingShopItems } from "./shopWandering.js";
-import { getClassicShopItems } from "./shopClassic.js";
 import { is_search_mode } from "../../utils/helpers.js";
+import { ShopManager } from "../../gameplay/shop/shopManager.js";
+import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
 
 export default class ShopHome {
     constructor(data = {}) {
         this.type = data.type || "classic";
         this.biome = data.biome || null;
-        this.money = data.money || { O2: 0, CO2: 0 };
         this.searchQuery = "";
+        this.shop = new ShopManager(this.biome, this.type)
     }
 
     render() {
@@ -22,8 +22,8 @@ export default class ShopHome {
                 <div class="shop-header">
                     <input type="text" placeholder="🔍 Rechercher..." id="shop-search" class="search-bar">
                     <div class="player-currency">
-                        <div class="currency-badge o2">${this.money.O2} O2</div>
-                        <div class="currency-badge co2">${this.money.CO2} CO2</div>
+                        <div class="currency-badge o2">${inventoryManager.money.O2} O2</div>
+                        <div class="currency-badge co2">${inventoryManager.money.CO2} CO2</div>
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@ export default class ShopHome {
         const isTagSearch = this.searchQuery.startsWith("#");
         const searchTag = isTagSearch ? this.searchQuery.slice(1).toLowerCase() : this.searchQuery.toLowerCase();
         // Filtrer les items selon le mode de shop puis selon la recherche
-        const items = this.type === "wandering" ? getWanderingShopItems(this.biome) : getClassicShopItems();
+        const items = this.shop.stock
         const itemsToDisplay = items.filter(item => {
             if (is_search_mode()) {
                 if (isTagSearch) {
@@ -77,8 +77,8 @@ export default class ShopHome {
         itemsToDisplay.forEach(item => {
             const itemButton = ShopItemButton(item, (itm) => {
                 openBuyModal(itm, (confirmedItem) => {
-                    console.log(`Achat confirmé pour l'item : ${confirmedItem.name}`);
-                    // plus tard : gérer l'achat (vérif monnaie, ajout inventaire, etc)
+                    this.shop.buyItem(confirmedItem)
+                    console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.O2}`)
                 });
             });
             shopList.appendChild(itemButton);

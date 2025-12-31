@@ -22,8 +22,10 @@
     --shop-btn-border: #2a2a2a;
 
     --inventory-bg: #005bb8d3;
-    --inventory-header-bg: #27b7ff;
-    --inventory-header-border: #145d36;
+    --inventory-title-border: #145d36;
+    --inventory-title-bg: #27b7ff;
+    --inventory-type-list-bg: #27b7ff;
+    --inventory-type-list-border: #145d36;
     --inventory-btn-type: #337fd1;
     --inventory-btn-type-border: #003f7ad3;
     --inventory-btn-type-hover-bg: #4d99eb;

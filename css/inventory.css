@@ -6,20 +6,50 @@
     gap: 1rem;
     border: none;
     background: var(--inventory-bg);
-    margin: -0.5rem; /* Pour compenser le padding global */
+    margin: -0.5rem;
     box-sizing: border-box;
+    scrollbar-gutter: stable;
 }
 /* ──────────────────────────────────────────
     HEADER (Recherche + Types)
 ────────────────────────────────────────── */
 .inventory-header {
     display: flex;
+    flex-direction: column;
+}
+#inventory-header-title {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 0.2rem solid var(--inventory-title-border);
+    padding: 0.5rem 1rem;
+    background: var(--inventory-title-bg);
+    border-radius: 1rem;
+    margin: 0 auto;
+}
+#inventory-header-title-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+}
+.inventory-header h2 {
+    font-family: var(--comic-font);
+    margin: 0;
+    font-size: 1.5rem;
+}
+.inventory-type-list {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
     gap: 1rem;
-    background-color: var(--inventory-header-bg);
-    border-bottom: var(--inventory-header-border) 0.2rem solid;
+    padding: 1rem;
+    background-color: var(--inventory-type-list-bg);
+    border-bottom: var(--inventory-type-list-border) 0.2rem solid;
+    border-top: var(--inventory-type-list-border) 0.2rem solid;
 }
 .inventory-type-btn {
     height: 7rem;
@@ -48,19 +78,21 @@
     background: var(--inventory-btn-type-while-active-bg);
 }
 #inventory-search {
+    min-height: 1.5rem;
     max-height: 2rem;
-    width: 93vw;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.1rem 1rem;
+    width: 100%;
     border-radius: 0.5em;
     border: 1px solid var(--shearch-bar-border);
     background: var(--shearch-bar-bg);
     color: var(--shearch-bar-text);
-    margin: 0 auto;
+    box-sizing: border-box;
+    margin: 0;
     outline: none;
+}
+#inventory-search-box {
+    padding : 1rem;
+    display: flex;
+    flex: 1;
 }
 #inventory-search:focus {
     outline: none
@@ -76,6 +108,7 @@
     gap: 1rem;
     padding: 1rem;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     margin: 0 auto;
     align-content: flex-start;
 }
@@ -111,4 +144,21 @@
 .inventory-item-btn:active {
     background-color: var(--inventory-item-btn-active-bg);
     transform: scale(0.95);
+}
+
+/* ──────────────────────────────────────────
+    TOOLTIP
+────────────────────────────────────────── */
+.inventory-tooltip {
+    position: fixed;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    border: 1px solid #444;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
