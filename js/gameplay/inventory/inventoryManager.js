@@ -29,31 +29,42 @@ export class InventoryManager {
             }
         }
     }
-    removeMoney(currency, amount = 1) {
-        console.warn({[currency]: amount})
-        const itemIndex = this.money.findIndex(i => i.id === itemId);
-        if (this.isenoughMoney({[currency]: amount})) {
-            currency === "O2" ? this.money.O2-=amount : currency === "CO2" ? this.money.CO2-=amount : this.money.CO2 = this.money.CO2
-            console.log(this.money[currency])
+    removeMoney(currency, amount) {
+        if (!this.money.hasOwnProperty(currency)) {
+            console.warn(`Currency ${currency} not recognized.`);
+            return false;
+        }
+        
+        if (this.money[currency] >= amount) {
+            this.money[currency] -= amount;
+            console.log(`${currency}: ${this.money[currency]} (removed ${amount})`);
+            return true;
         } else {
-            console.warn(`Not enough ${currency}.`);
+            console.warn(`Not enough ${currency}. Required: ${amount}, Available: ${this.money[currency]}`);
+            return false;
         }
     }
     isitemInInventory(itemId) {
         return this.items.some(i => i.id === itemId);
     }
-    isenoughMoney(amount) {
-        const existingMoneyO2 = this.money.hasOwnProperty("O2");
-        const existingMoneyCO2 = this.money.hasOwnProperty("CO2");
-        const existingPriceO2 = amount.price_O2 ? true : false;
-        const existingPriceCO2 = amount.price_CO2 ? true : false;
-        if ( existingMoneyO2 && existingMoneyCO2 && existingPriceO2 && existingPriceCO2 ) {
-            return this.money.O2 >= amount.price_O2 && this.money.CO2 >= amount.price_CO2;
-        } else if ( existingMoneyO2 && existingPriceO2 ) {
-            return this.money.O2 >= amount.price_O2;
-        } else if ( existingMoneyCO2 && existingPriceCO2) {
-            return this.money.CO2 >= amount.price_CO2;
+    isenoughMoney(item) {
+        const needsO2 = item.price_O2 !== undefined && item.price_O2 > 0;
+        const needsCO2 = item.price_CO2 !== undefined && item.price_CO2 > 0;
+        
+        // Si l'item nécessite les deux devises
+        if (needsO2 && needsCO2) {
+            return this.money.O2 >= item.price_O2 && this.money.CO2 >= item.price_CO2;
         }
+        // Si l'item nécessite uniquement O2
+        else if (needsO2) {
+            return this.money.O2 >= item.price_O2;
+        }
+        // Si l'item nécessite uniquement CO2
+        else if (needsCO2) {
+            return this.money.CO2 >= item.price_CO2;
+        }
+        // Si aucun prix n'est défini, l'item est gratuit
+        return true;
     }
     getItems() {
         return this.items;

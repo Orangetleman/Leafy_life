@@ -3,6 +3,7 @@ import { openBuyModal } from "../../components/modal/modalShop.js";
 import { is_search_mode } from "../../utils/helpers.js";
 import { ShopManager } from "../../gameplay/shop/shopManager.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
+import { Router } from "../../router.js"
 
 export default class ShopHome {
     constructor(data = {}) {
@@ -78,7 +79,8 @@ export default class ShopHome {
             const itemButton = ShopItemButton(item, (itm) => {
                 openBuyModal(itm, (confirmedItem) => {
                     this.shop.buyItem(confirmedItem)
-                    console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.O2}`)
+                    console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.CO2}`)
+                    Router.navigate("shop/shopHome", { type: this.type, inventoryManager: inventoryManager })
                 });
             });
             shopList.appendChild(itemButton);
