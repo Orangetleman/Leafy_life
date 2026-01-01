@@ -4,7 +4,7 @@ import { is_search_mode } from "../../utils/helpers.js";
 import { ShopManager } from "../../gameplay/shop/shopManager.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
 import { Router } from "../../router.js"
-
+// feur
 export default class ShopHome {
     constructor(data = {}) {
         this.type = data.type || "classic";
