@@ -4,7 +4,8 @@ export class ShopManager {
     constructor(biome,type) {
         this.type = type || "classic"
         this.biome = biome || "plain"
-        this.stock = this.type === "classic" ? getClassicShopItems() : getWanderingShopItems(this.biome)
+        this.amountStock = this.type === "classic" ? 999999 : 25
+        this.stock = this.type === "classic" ? getClassicShopItems(this.amountStock) : getWanderingShopItems(this.biome)
     }
     removeItemFromStock(itemId, amount = 1) {
         const itemIndex = this.stock.findIndex(i => i.id === itemId);
@@ -59,7 +60,7 @@ export class ShopManager {
         this.removeItemFromStock(item.id, 1);
         
         console.log(`Achat réussi : ${item.name}`);
-        
+
         return true;
     }
     isIteminStock(itemId) {
@@ -87,3 +88,5 @@ export function getWanderingShopItems(biome) {
 function roll(chance) {
     return Math.random() < chance;
 }
+
+export const classicShopManager = ShopManager()

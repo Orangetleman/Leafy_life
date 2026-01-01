@@ -1,16 +1,16 @@
 import { ShopItemButton } from "../../components/button/ShopItemButton.js";
 import { openBuyModal } from "../../components/modal/modalShop.js";
 import { is_search_mode } from "../../utils/helpers.js";
-import { ShopManager } from "../../gameplay/shop/shopManager.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
+import { classicShopManager, ShopManager } from "../../gameplay/shop/shopManager.js";
 import { Router } from "../../router.js"
-// feur
+
 export default class ShopHome {
     constructor(data = {}) {
         this.type = data.type || "classic";
         this.biome = data.biome || null;
         this.searchQuery = "";
-        this.shop = new ShopManager(this.biome, this.type)
+        this.shop = this.type === "classic" ? classicShopManager : new ShopManager(this.type, this.biome)
     }
 
     render() {
