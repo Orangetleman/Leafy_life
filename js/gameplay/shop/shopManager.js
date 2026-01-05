@@ -1,11 +1,14 @@
 import { ITEMS } from "../../data/items.js";
+import { PLANETS } from "../../data/planets.js"
 import { inventoryManager } from "../inventory/inventoryManager.js";
 export class ShopManager {
     constructor(biome,type) {
         this.type = type || "classic"
         this.biome = biome || "plain"
-        this.amountStock = this.type === "classic" ? 999999 : 25
-        this.stock = this.type === "classic" ? getClassicShopItems(this.amountStock) : getWanderingShopItems(this.biome)
+        this.stock = this.type === "classic" ? getClassicShopItems() : getWanderingShopItems(this.biome)
+    }
+    reloadWanderingShopItems() {
+        this.stock = this.type === "wandering" ? getWanderingShopItems(this.biome) : this.stock
     }
     removeItemFromStock(itemId, amount = 1) {
         const itemIndex = this.stock.findIndex(i => i.id === itemId);
@@ -67,10 +70,10 @@ export class ShopManager {
         return this.stock.some((i) => (i.id === itemId || i.amount > 0))
     }
 }
-export function getClassicShopItems() {
+function getClassicShopItems() {
     return ITEMS.filter(item => !item.is_special).map((itm) => ({...itm, amount: 99999}));
 }
-export function getWanderingShopItems(biome) {
+function getWanderingShopItems(biome) {
     const specials = ITEMS.filter(i => i.is_special && roll(i.rarity)).map(i => ({...i, amount: 50/*quantité dispo dans le shop itinérant d'items spéciaux*/}));
     const discounted = ITEMS.filter(i => !i.is_special)
                             .sort(() => Math.random() - 0.5)
@@ -81,7 +84,6 @@ export function getWanderingShopItems(biome) {
                                 price_CO2: i.price_CO2 ? i.specialprice_CO2 : undefined,
                                 amount : 50 // Quantité dispo dans le shop itinérant d'items normaux
                             }));
-
     return [...specials, ...discounted];
 }
 
@@ -89,4 +91,16 @@ function roll(chance) {
     return Math.random() < chance;
 }
 
-export const classicShopManager = ShopManager()
+
+const wanderingShopManagerPlain = new ShopManager(PLANETS[0].biomes[0], "wandering");
+const wanderingShopManagerForest = new ShopManager(PLANETS[0].biomes[1], "wandering");
+const wanderingShopManagerLake = new ShopManager(PLANETS[0].biomes[2], "wandering");
+const wanderingShopManagerMountain = new ShopManager(PLANETS[0].biomes[3], "wandering");
+
+export const classicShopManager = new ShopManager();
+export const WANDERINGSHOPS = [
+    {id:0, shop: wanderingShopManagerPlain, biome: "plain"},
+    {id:1, shop: wanderingShopManagerForest, biome: "forest"},
+    {id:2, shop: wanderingShopManagerLake, biome: "lake"},
+    {id:3, shop: wanderingShopManagerMountain, biome: "Mountain"},
+]

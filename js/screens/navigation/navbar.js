@@ -30,7 +30,7 @@ export function renderNavbar() {
         inventoryManager.appendMoney("CO2", 1000);
 
     document.getElementById("btnLeafs").onclick = () => Router.navigate("leafs/leafsHome");
-    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "wandering", inventoryManager: inventoryManager });
+    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "wandering", inventoryManager: inventoryManager, mustReload: true });
     document.getElementById("btnInventory").onclick = () => Router.navigate("inventory/inventoryHome", { inventory: inventoryManager });
     document.getElementById("btnPlanet").onclick = () => Router.navigate("planet/planetHome");
 }

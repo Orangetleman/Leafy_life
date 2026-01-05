@@ -3,7 +3,7 @@ export const ITEMS = [
         /* Normaux : */
     { id: 3, name: "Meat", use: "food", price_O2: 64, specialprice_O2: 32, is_special: false, icon: "assets/imgs/icons/meat.png",
         tags : ["meat", "growth", "food"],
-        description: "Riche en protéines et en énergie, cette viande est essentielle au métabolisme des leafs animaux. Elle soutient leur croissance et leur endurance." },
+        description: "Riche en protéines et en énergie, cette viande est essentielle au métabolisme des leafs carnivores. Elle soutient leur croissance et leur endurance." },
     { id: 4, name: "Grass", use: "food", price_O2: 32, specialprice_O2: 16, is_special: false, icon: "assets/imgs/icons/grass.png",
         tags : ["grass", "growth", "food"],
         description: "Cette herbe fraîche fournit fibres et nutriments de base aux leafs herbivores. Un apport simple mais vital à leur équilibre digestif." },

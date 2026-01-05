@@ -2,15 +2,23 @@ import { ShopItemButton } from "../../components/button/ShopItemButton.js";
 import { openBuyModal } from "../../components/modal/modalShop.js";
 import { is_search_mode } from "../../utils/helpers.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
-import { classicShopManager, ShopManager } from "../../gameplay/shop/shopManager.js";
+import { classicShopManager, WANDERINGSHOPS } from "../../gameplay/shop/shopManager.js";
 import { Router } from "../../router.js"
 
 export default class ShopHome {
     constructor(data = {}) {
         this.type = data.type || "classic";
-        this.biome = data.biome || null;
+        this.biome = data.biome || "plain";
+        this.mustReload = data.mustReload || false;
         this.searchQuery = "";
-        this.shop = this.type === "classic" ? classicShopManager : new ShopManager(this.type, this.biome)
+        if (this.type === "classic") {
+            this.shop = classicShopManager
+        } else if (this.type === "wandering") {
+            this.shop = WANDERINGSHOPS.find((i) => i.biome === this.biome)?.shop;
+        }
+        if (this.mustReload) {
+            this.shop.reloadWanderingShopItems()
+        }
     }
 
     render() {
@@ -77,7 +85,7 @@ export default class ShopHome {
 
         itemsToDisplay.forEach(item => {
             const itemButton = ShopItemButton(item, (itm) => {
-                openBuyModal(itm, (confirmedItem) => {
+                openBuyModal(itm, this.shop, (confirmedItem) => {
                     this.shop.buyItem(confirmedItem)
                     console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.CO2}`)
                     Router.navigate("shop/shopHome", { type: this.type, inventoryManager: inventoryManager })

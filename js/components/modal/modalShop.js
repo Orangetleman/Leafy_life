@@ -1,4 +1,4 @@
-export function openBuyModal(item, onConfirm) {
+export function openBuyModal(item, shop, onConfirm) {
     // Overlay
     const overlay = document.createElement("div");
     overlay.className = "modal-overlay";
@@ -12,7 +12,10 @@ export function openBuyModal(item, onConfirm) {
 
         <div id="modal-item">
             <div id="shop-item-icon"><img src="${item.icon}" alt="${item.name}"></div>
-            <span>${item.name}</span>
+            <div id="shop-item-info">
+                <span>${item.name}</span>
+                <span>Remaining : ${shop.stock.find((i) => i.name === item.name).amount}</span>
+            </div>
         </div>
 
         <div id="modal-prices">
