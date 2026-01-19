@@ -16,11 +16,11 @@
 }
 
 #navbar button {
-    font-size: 1.5rem; /* Increase font size */
-    padding: 1rem 2rem; /* Increase padding for larger buttons */
+    font-size: 1.5rem;
+    padding: 0.70rem 1.5rem; 
     margin: 0.7em;
     border: none;
-    border-radius: 0.7em; /* Rounded corners */
+    border-radius: 0.7em;
     background-color: #444;
     color: white;
     cursor: pointer;
