@@ -1,5 +1,5 @@
 import { ShopItemButton } from "../../components/button/ShopItemButton.js";
-import { openBuyModal } from "../../components/modal/modalShop.js";
+import { openBuyModal, openErrorModal } from "../../components/modal/modalShop.js";
 import { is_search_mode } from "../../utils/helpers.js";
 import { inventoryManager } from "../../gameplay/inventory/inventoryManager.js";
 import { classicShopManager, WANDERINGSHOPS } from "../../gameplay/shop/shopManager.js";
@@ -84,11 +84,22 @@ export default class ShopHome {
         });
 
         itemsToDisplay.forEach(item => {
-            const itemButton = ShopItemButton(item, (itm) => {
-                openBuyModal(itm, this.shop, (confirmedItem) => {
-                    this.shop.buyItem(confirmedItem)
-                    console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.CO2}`)
-                    Router.navigate("shop/shopHome", { type: this.type, inventoryManager: inventoryManager })
+            const itemButton = ShopItemButton(item, this.shop, (itm) => {
+                openBuyModal(itm, this.shop, inventoryManager, (confirmedItem, amount) => {
+                    const result = this.shop.buyItem(confirmedItem, amount);
+                    if (result.success) {
+                        console.warn(`O2 : ${inventoryManager.money.O2}, CO2 : ${inventoryManager.money.CO2}`)
+                        Router.navigate("shop/shopHome", { type: this.type, inventoryManager: inventoryManager })
+                    } else {
+                        // Afficher la modale d'erreur appropriée
+                        const errorMessages = {
+                            "insufficient_funds": `Fonds insuffisants pour acheter ${confirmedItem.name}. Vous n'avez pas assez d'O2 ou de CO2.`,
+                            "out_of_stock": `${confirmedItem.name} n'est pas en stock.`,
+                            "payment_failed": `Une erreur est survenue lors du paiement. Veuillez réessayer.`
+                        };
+                        const message = errorMessages[result.error] || "Une erreur inconnue est survenue.";
+                        openErrorModal(message);
+                    }
                 });
             });
             shopList.appendChild(itemButton);

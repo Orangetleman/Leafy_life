@@ -29,6 +29,20 @@
     flex-direction: column;
     gap: 1rem;
 }
+.modal-error {
+    background: var(--modal-error-bg);
+    padding: 1.5em;
+    border: 0.2em solid var(--modal-error-border);
+    border-radius: 1em;
+    min-height: 10rem;
+    max-height: 20rem;
+    min-width: 15vw;
+    max-width: 25vw;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
 .modal p {
     word-wrap: break-word;
@@ -87,6 +101,61 @@
 #modal-prices {
     display: flex;
     gap: 0.5em;
+}
+
+#shop-modal-action {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+#shop-amount-label {
+    font-family: var(--comic-font);
+    font-size: 1.2rem;
+}
+#shop-amount-selection {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5em;
+}
+#shop-amount-selection button {
+    width: auto;
+    padding: 1em 1em;
+    border-radius: 10em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+#shop-amount-display {
+    width: auto;
+    padding: 0.3em 0.75em;
+    border-radius: 5em;
+    background-color: var(--modal-shop-amount-bg);
+    border: 0.17em solid var(--modal-shop-amount-border);
+    font-family: var(--comic-font);
+    font-size: 1.2rem;
+}
+#shop-remove-amount-btn {
+    background-color: var(--modal-shop-amount-remove-btn-bg);
+    border: 0.17em solid var(--modal-shop-amount-remove-btn-border);
+}
+#shop-remove-amount-btn:hover {
+    background-color: var(--modal-shop-amount-remove-btn-hover-bg);
+    transform: scale(1.02);
+}
+#shop-remove-amount-btn:active {
+    background-color: var(--modal-shop-amount-remove-btn-active-bg);
+    transform: scale(0.98);
+}
+#shop-add-amount-btn {
+    background-color: var(--modal-shop-amount-add-btn-bg);
+    border: 0.17em solid var(--modal-shop-amount-add-btn-border);
+}
+#shop-add-amount-btn:hover {
+    background-color: var(--modal-shop-amount-add-btn-hover-bg);
+    transform: scale(1.02);
+}
+#shop-add-amount-btn:active {
+    background-color: var(--modal-shop-amount-add-btn-active-bg);
+    transform: scale(0.98);
 }
 
 #shop-item-info {

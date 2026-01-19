@@ -159,6 +159,11 @@
     border: 0.1em solid var(--co2-border);
 }
 
+.stock-badge {
+    background-color: var(--stock-bg);
+    border: 0.1em solid var(--stock-border);
+}
+
 .price-badge.original {
     background-color: #f0f0f0;
     color: #888;

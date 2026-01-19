@@ -1,13 +1,20 @@
 // Sous-fonction INTERNE
 function createPriceBadge(value, type) {
-    const badge = document.createElement("div");
-    badge.className = `price-badge price-${type.toLowerCase()}`;
-    badge.textContent = `${value} ${type}`;
-    return badge;
+    if (type === "stock") {
+        const badge = document.createElement("div");
+        badge.className = "price-badge stock-badge";
+        badge.textContent = `Stock: ${value}`;
+        return badge;
+    } else {
+        const badge = document.createElement("div");
+        badge.className = `price-badge price-${type.toLowerCase()}`;
+        badge.textContent = `${value} ${type}`;
+        return badge;
+    }
 }
 
 // Fonction EXPORTÉE
-export function ShopItemButton(item, onClick = null) {
+export function ShopItemButton(item, shop, onClick = null) {
     const button = document.createElement("button");
     button.className = "shop-item-btn";
     button.type = "button";
@@ -22,7 +29,7 @@ export function ShopItemButton(item, onClick = null) {
 
     const name = document.createElement("div");
     name.className = "shop-item-name";
-    name.textContent = item.name;
+    name.textContent = `${item.name}`;
 
     left.appendChild(icon);
     left.appendChild(name);
@@ -39,6 +46,9 @@ export function ShopItemButton(item, onClick = null) {
         prices.appendChild(createPriceBadge(item.price_CO2, "CO2"));
     }
 
+    if (shop.stock.find((i) => i.name === item.name)?.amount !== undefined) {
+        prices.appendChild(createPriceBadge(shop.stock.find((i) => i.name === item.name).amount, "stock"));
+    }
     button.appendChild(left);
     button.appendChild(prices);
 

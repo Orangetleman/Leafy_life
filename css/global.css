@@ -20,6 +20,16 @@
     --shop-btn-hover-bg: #777777;
     --shop-btn-active-bg: #555555;
     --shop-btn-border: #2a2a2a;
+    --modal-shop-amount-bg: #ffffff;
+    --modal-shop-amount-border: #cccccc;
+    --modal-shop-amount-remove-btn-bg: #e07067;
+    --modal-shop-amount-remove-btn-border: #bf4038;
+    --modal-shop-amount-remove-btn-hover-bg: #ff8b85;
+    --modal-shop-amount-remove-btn-active-bg: #e07067;
+    --modal-shop-amount-add-btn-bg: #28b238;
+    --modal-shop-amount-add-btn-border: #1e661f;
+    --modal-shop-amount-add-btn-hover-bg: #3fc04f;
+    --modal-shop-amount-add-btn-active-bg: #28b238;
 
     --inventory-bg: #005bb8d3;
     --inventory-title-border: #145d36;
@@ -43,6 +53,8 @@
     --o2-border: #006bb3;
     --co2-bg: #6ecf7a;
     --co2-border: #2e8b39;
+    --stock-bg: #ffd700;
+    --stock-border: #bfa500;
 
     --modal-bg: #1ea25e;
     --modal-border: #145d36;
@@ -55,210 +67,11 @@
     --modal-action-cancel-border: #6e2c2c;
     --modal-action-cancel-hover-bg: #c75b5b;
     --modal-action-cancel-active-bg: #a94442;
-}
-/* ──────────────────────────────────────────────────────────
-  1. CURSEUR PAR DÉFAUT (flèche standard)
-  Hotspot : Pointe de la flèche (coin supérieur gauche)
-   ────────────────────────────────────────────────────────── */
-* {
-    cursor: url('../assets/cursors/default.cur'),
-            url('../assets/cursors/default.png') 0 0,
-            auto;
+    --modal-error-bg: #ff4c4c;
+    --modal-error-border: #b22222;
 }
 
-/* ──────────────────────────────────────────────────────────
-  2. POINTER (main qui pointe / index levé)
-  Hotspot : Bout de l'index
-  Pour curseur 32x32px : généralement autour de (10, 5)
-   ────────────────────────────────────────────────────────── */
-button,
-a,
-.shop-item-btn,
-.inventory-item-btn,
-.inventory-type-btn,
-.btn-confirm,
-.btn-cancel {
-    cursor: url('../assets/cursors/pointer.cur'),
-            url('../assets/cursors/pointer.png') 10 5,
-            pointer;
+/* Héritage normal pour inputs */
+input, textarea, select {
+    cursor: inherit;
 }
-
-/* ──────────────────────────────────────────────────────────
-  3. TEXT (barre verticale I)
-  Hotspot : Centre de la barre
-  Pour curseur 32x32px : (16, 16) ou (14, 16)
-   ────────────────────────────────────────────────────────── */
-input[type="text"],
-textarea,
-#shop-search,
-#inventory-search {
-    cursor: url('../assets/cursors/text.cur'),
-            url('../assets/cursors/text.png') 16 16,
-            text;
-}
-
-/* ──────────────────────────────────────────────────────────
-  4. GRAB (main ouverte pour saisir)
-  Hotspot : Centre de la paume
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-.draggable,
-.moveable {
-    cursor: url('../assets/cursors/grab.cur'),
-            url('../assets/cursors/grab.png') 16 16,
-            grab;
-}
-
-/* ──────────────────────────────────────────────────────────
-  5. GRABBING (main fermée en train de tenir)
-  Hotspot : Centre du poing
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-.draggable:active,
-.moveable:active {
-    cursor: url('../assets/cursors/grabbing.cur'),
-            url('../assets/cursors/grabbing.png') 16 16,
-            grabbing;
-}
-
-/* ──────────────────────────────────────────────────────────
-  6. NOT-ALLOWED (cercle barré / interdit)
-  Hotspot : Centre du symbole
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-button:disabled,
-.disabled,
-.unavailable {
-    cursor: url('../assets/cursors/not-allowed.cur'),
-            url('../assets/cursors/not-allowed.png') 16 16,
-            not-allowed;
-}
-
-/* ──────────────────────────────────────────────────────────
-  7. WAIT (sablier / chargement)
-  Hotspot : Centre
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-.loading,
-body.loading {
-    cursor: url('../assets/cursors/wait.cur'),
-            url('../assets/cursors/wait.png') 16 16,
-            wait;
-}
-
-/* ──────────────────────────────────────────────────────────
-  8. HELP (point d'interrogation)
-  Hotspot : Pointe de la flèche (si curseur flèche + ?)
-  Pour curseur 32x32px : (0, 0) ou (8, 8)
-   ────────────────────────────────────────────────────────── */
-.help,
-[title],
-.tooltip-trigger {
-    cursor: url('../assets/cursors/help.cur'),
-            url('../assets/cursors/help.png') 0 0,
-            help;
-}
-
-/* ──────────────────────────────────────────────────────────
-  9. MOVE (croix 4 directions)
-  Hotspot : Centre de la croix
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-.modal,
-.draggable-window {
-    cursor: url('../assets/cursors/move.cur'),
-            url('../assets/cursors/move.png') 16 16,
-            move;
-}
-
-/* ──────────────────────────────────────────────────────────
-  10. CROSSHAIR (visée / précision)
-  Hotspot : Centre exact de la croix
-  Pour curseur 32x32px : (16, 16)
-   ────────────────────────────────────────────────────────── */
-.target,
-.precise-area {
-    cursor: url('../assets/cursors/crosshair.cur'),
-            url('../assets/cursors/crosshair.png') 16 16,
-            crosshair;
-}
-
-/* ──────────────────────────────────────────────────────────
-  11. RESIZE (redimensionnement)
-  
-  - NWSE (↖↘) : Hotspot au centre (16, 16)
-  - NESW (↗↙) : Hotspot au centre (16, 16)
-  - EW (↔) : Hotspot au centre (16, 16)
-  - NS (↕) : Hotspot au centre (16, 16)
-   ────────────────────────────────────────────────────────── */
-
-/* Diagonale Nord-Ouest / Sud-Est */
-.resize-nwse {
-    cursor: url('../assets/cursors/resize-nwse.cur'),
-            url('../assets/cursors/resize-nwse.png') 16 16,
-            nwse-resize;
-}
-
-/* Diagonale Nord-Est / Sud-Ouest */
-.resize-nesw {
-    cursor: url('../assets/cursors/resize-nesw.cur'),
-            url('../assets/cursors/resize-nesw.png') 16 16,
-            nesw-resize;
-}
-
-/* Horizontal Est-Ouest */
-.resize-ew {
-    cursor: url('../assets/cursors/resize-ew.cur'),
-            url('../assets/cursors/resize-ew.png') 16 16,
-            ew-resize;
-}
-
-/* Vertical Nord-Sud */
-.resize-ns {
-    cursor: url('../assets/cursors/resize-ns.cur'),
-            url('../assets/cursors/resize-ns.png') 16 16,
-            ns-resize;
-}
-
-/* ──────────────────────────────────────────────────────────
-  12. ZOOM (loupe +/-)
-  Hotspot : Centre de la loupe ou point focal
-  Pour curseur 32x32px : (16, 16) ou (10, 10)
-   ────────────────────────────────────────────────────────── */
-.zoom-in {
-    cursor: url('../assets/cursors/zoom-in.cur'),
-            url('../assets/cursors/zoom-in.png') 16 16,
-            zoom-in;
-}
-
-.zoom-out {
-    cursor: url('../assets/cursors/zoom-out.cur'),
-            url('../assets/cursors/zoom-out.png') 16 16,
-            zoom-out;
-}
-
-/* ──────────────────────────────────────────────────────────
-  13. PROGRESS (flèche + sablier)
-  Hotspot : Pointe de la flèche
-  Pour curseur 32x32px : (0, 0)
-   ────────────────────────────────────────────────────────── */
-.processing {
-    cursor: url('../assets/cursors/progress.cur'),
-            url('../assets/cursors/progress.png') 0 0,
-            progress;
-}
-
-/* ═══════════════════════════════════════════════════════════
-  GUIDE RAPIDE DES HOTSPOTS SELON LA FORME :
-
-  Flèche (→) : Pointe = (0, 0)
-  Main index (☝) : Bout du doigt = (10, 5)
-  Symbole centré (⊗, +, ↔) : Centre = (16, 16)
-  Barre verticale (|) : Centre = (16, 16)
-  Croix précise (+) : Centre exact = (16, 16)
-
-  ASTUCE : Si votre curseur n'a pas la bonne taille :
-  - Ouvrez le .png dans un éditeur
-  - Comptez les pixels depuis le coin supérieur gauche (0,0)
-  - jusqu'au point où vous voulez que le clic soit détecté
-   ═══════════════════════════════════════════════════════════ */

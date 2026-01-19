@@ -29,45 +29,45 @@ export class ShopManager {
             }
         }
     }
-    buyItem(item) {
+    buyItem(item, amount = 1) {
         // Vérifier si le joueur a assez d'argent
         if (!inventoryManager.isenoughMoney(item)) {
             console.warn(`Fonds insuffisants pour acheter : ${item.name}`);
-            return false;
+            return { success: false, error: "insufficient_funds" };
         }
         // Vérifier si l'item est en stock
-        if (!this.isIteminStock(item.id)) {
+        if (!this.isIteminStock(item.id, amount)) {
             console.warn(`${item.name} n'est pas en stock`);
-            return false;
+            return { success: false, error: "out_of_stock" };
         }
         // Déduire l'argent (O2)
         if (item.price_O2 !== undefined && item.price_O2 >= 0) {
-            if (!inventoryManager.removeMoney("O2", item.price_O2)) {
+            if (!inventoryManager.removeMoney("O2", item.price_O2*amount)) {
                 console.error(`Erreur lors du paiement O2 pour ${item.name}`);
-                return false;
+                return { success: false, error: "payment_failed" };
             }
         }
         // Déduire l'argent (CO2)
         if (item.price_CO2 !== undefined && item.price_CO2 > 0) {
-            if (!inventoryManager.removeMoney("CO2", item.price_CO2)) {
+            if (!inventoryManager.removeMoney("CO2", item.price_CO2*amount)) {
                 // Rembourser O2 si le paiement CO2 échoue (si on a assez d'O2 mais pas assez de CO2 -> ça rembourse le O2 et ça annul l'achat)
                 if (item.price_O2 !== undefined && item.price_O2 >= 0) {
-                    inventoryManager.appendMoney("O2", item.price_O2);
+                    inventoryManager.appendMoney("O2", item.price_O2*amount);
                 }
                 console.error(`Erreur lors du paiement CO2 pour ${item.name}`);
-                return false;
+                return { success: false, error: "insufficient_funds" };
             }
         }
         // Ajouter l'item à l'inventaire et retirer du stock
-        inventoryManager.appendItem(item, 1);
-        this.removeItemFromStock(item.id, 1);
-        
+        inventoryManager.appendItem(item, amount);
+        this.removeItemFromStock(item.id, amount);
+
         console.log(`Achat réussi : ${item.name}`);
 
-        return true;
+        return { success: true };
     }
-    isIteminStock(itemId) {
-        return this.stock.some((i) => (i.id === itemId || i.amount > 0))
+    isIteminStock(itemId, amount = 1) {
+        return this.stock.some((i) => (i.id === itemId && i.amount >= amount))
     }
 }
 function getClassicShopItems() {

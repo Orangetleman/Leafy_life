@@ -26,11 +26,11 @@ export function renderNavbar() {
         inventoryManager.appendItem(ITEMS[7], 3);
         inventoryManager.appendItem(ITEMS[8], 4);
         inventoryManager.appendItem(ITEMS[9], 2);
-        inventoryManager.appendMoney("O2", 1000);
-        inventoryManager.appendMoney("CO2", 1000);
+        inventoryManager.appendMoney("O2", 10000);
+        inventoryManager.appendMoney("CO2", 10000);
 
     document.getElementById("btnLeafs").onclick = () => Router.navigate("leafs/leafsHome");
-    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "wandering", inventoryManager: inventoryManager, mustReload: true });
+    document.getElementById("btnShop").onclick = () => Router.navigate("shop/shopHome", { type: "classic", inventoryManager: inventoryManager, mustReload: true });
     document.getElementById("btnInventory").onclick = () => Router.navigate("inventory/inventoryHome", { inventory: inventoryManager });
     document.getElementById("btnPlanet").onclick = () => Router.navigate("planet/planetHome");
 }
