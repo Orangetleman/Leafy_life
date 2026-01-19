@@ -25,19 +25,25 @@ function hideTooltip() {
 }
 
 export function InventoryItemButton(item, onClick = null) {
-    const button = document.createElement("button");
-    button.className = "inventory-item-btn";
-    button.type = "button";
-    button.innerHTML = `<img src="${item.icon}" alt="${item.name}">`;
-    button.addEventListener("click", onClick);
-    
+    const itemContainer = document.createElement("div");
+    itemContainer.className = "inventory-item-btn-container";
+        const button = document.createElement("button");
+        button.className = "inventory-item-btn";
+        button.type = "button";
+        button.innerHTML = `<img src="${item.icon}" alt="${item.name}">`;
+        button.addEventListener("click", onClick);
+    itemContainer.appendChild(button);
+    const amountBadge = document.createElement("div");
+        amountBadge.className = "inventory-item-amount-badge";
+        amountBadge.textContent = item.amount;
+    itemContainer.appendChild(amountBadge);
     // Tooltip pour les items
     button.addEventListener("mouseenter", () => {
         showTooltip(button, item.name);
     });
     button.addEventListener("mouseleave", hideTooltip);
     
-    return button;
+    return itemContainer;
 }
 export function InventoryTypeButton(type, onClick = null) {
     const button = document.createElement("button");

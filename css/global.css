@@ -45,6 +45,9 @@
     --inventory-item-btn-border: #af352d;
     --inventory-item-btn-hover-bg: #e07067;
     --inventory-item-btn-active-bg: #bf4038;
+    --inventory-item-amount-badge-bg: rgba(0, 0, 0, 0.7);
+    --inventory-item-amount-badge-text: #ffffff;
+    --inventory-item-amount-badge-border: #af352d;
     --inventory-modal-item-icon-border: #af352d;
     --inventory-modal-item-icon-bg: #ffe5e0;
     --inventory-modal-item-name-border: #145d36;

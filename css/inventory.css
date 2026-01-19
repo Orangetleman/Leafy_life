@@ -112,6 +112,13 @@
     margin: 0 auto;
     align-content: flex-start;
 }
+.inventory-item-btn-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+
+}
 .inventory-item-btn {
     border: 0.25em solid;
     text-align: left;
@@ -145,7 +152,18 @@
     background-color: var(--inventory-item-btn-active-bg);
     transform: scale(0.95);
 }
-
+.inventory-item-amount-badge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background-color: var(--inventory-item-amount-badge-bg);
+    border: 0.1em solid var(--inventory-item-amount-badge-border);
+    color: var(--inventory-item-amount-badge-text);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
 /* ──────────────────────────────────────────
     TOOLTIP
 ────────────────────────────────────────── */
