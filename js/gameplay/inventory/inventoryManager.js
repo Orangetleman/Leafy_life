@@ -10,7 +10,6 @@ export class InventoryManager {
         } else {
             this.items.push({ ...item, amount: amount });
         }
-        console.log(`Item ajouté : ${item.name} (Total: ${this.items.find(i => i.id === item.id).amount})`);
     }
     appendMoney(currency, amount) {
         if (this.money.hasOwnProperty(currency)) {

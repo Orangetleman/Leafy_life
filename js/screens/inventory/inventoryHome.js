@@ -1,4 +1,4 @@
-import { ITEMS, TYPES } from "../../data/items.js";
+import { TYPES } from "../../data/items.js";
 import { InventoryItemButton, InventoryTypeButton } from "../../components/button/InventoryItemButton.js";
 import { openItemInventoryModal } from "../../components/modal/modalInventory.js";
 import { is_search_mode } from "../../utils/helpers.js";

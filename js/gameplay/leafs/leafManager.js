@@ -1,10 +1,17 @@
-import { LEAFS } from "../../data/leafs.js";
+import { LeafStat } from "./leafStats.js";
+export class LeafManager {
+    constructor() {
+        this.owned = [];
+    }
 
-export const LeafManager = {
-    owned: [],
-
-    unlock(id) {
-        const leaf = LEAFS.find(l => l.id === id);
-        if (leaf) this.owned.push(leaf);
+    addLeaf(leaf) {
+        const existingLeaf = this.owned.find(l => l.id === leaf.id);
+        if (existingLeaf) {
+            console.log(`Leaf déjà possédé : ${leaf.name}`);
+            return;
+        }
+        this.owned.push(new LeafStat(leaf));
+        console.log(`Leaf ajouté : ${leaf.name} dans la collection : `, this.owned);
     }
 }
+export const leafManager = new LeafManager();

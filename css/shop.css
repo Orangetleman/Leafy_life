@@ -107,11 +107,11 @@
 }
 .shop-item-btn:hover {
     background-color: var(--shop-btn-hover-bg);
-    transform: scale(1.02);
+    transform: scale(1.015);
 }
 .shop-item-btn:active {
     background-color: var(--shop-btn-active-bg);
-    transform: scale(0.98);
+    transform: scale(0.985);
 }
 
 .shop-item-left {

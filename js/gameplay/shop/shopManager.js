@@ -1,10 +1,10 @@
 import { ITEMS } from "../../data/items.js";
-import { PLANETS } from "../../data/planets.js"
+import { PLANETS, BIOMES } from "../../data/planets.js"
 import { inventoryManager } from "../inventory/inventoryManager.js";
 export class ShopManager {
     constructor(biome,type) {
         this.type = type || "classic"
-        this.biome = biome || "plain"
+        this.biome = biome || BIOMES[0]
         this.stock = this.type === "classic" ? getClassicShopItems() : getWanderingShopItems(this.biome)
     }
     reloadWanderingShopItems() {

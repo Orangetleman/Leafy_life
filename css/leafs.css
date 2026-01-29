@@ -1,0 +1,313 @@
+/* ──────────────────────────────────────────
+    LEAFS CONTAINER
+────────────────────────────────────────── */
+.leafs-container {
+    display: flex;
+    flex-direction: column;
+    height: 97vh;
+    padding: 0rem;
+    gap: 1rem;
+    border: none;
+    background: var(--leafs-bg, #f5f5f5);
+    margin: -0.5rem;
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+}
+
+/* ──────────────────────────────────────────
+    HEADER
+────────────────────────────────────────── */
+.leafs-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#leafs-header-title {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 0.2rem solid var(--leafs-title-border, #ccc);
+    padding: 0.5rem 1rem;
+    background: var(--leafs-title-bg, #fff);
+    border-radius: 1rem;
+    margin: 0 auto;
+}
+
+#leafs-header-title-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+.leafs-header h2 {
+    font-family: var(--comic-font);
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#leafs-search-box {
+    padding: 1rem;
+    display: flex;
+    flex: 1;
+}
+
+#leafs-search {
+    min-height: 1.5rem;
+    max-height: 2rem;
+    width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid var(--shearch-bar-border);
+    background: var(--shearch-bar-bg);
+    color: var(--shearch-bar-text);
+    box-sizing: border-box;
+    margin: 0;
+    outline: none;
+}
+
+#leafs-search:focus {
+    outline: none;
+}
+
+/* ──────────────────────────────────────────
+    LEAFS LIST
+────────────────────────────────────────── */
+.leafs-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+}
+
+/* ──────────────────────────────────────────
+    LEAF BUTTON
+────────────────────────────────────────── */
+.leaf-button {
+    display: flex;
+    flex-direction: column;
+    background: var(--leaf-button-bg, #fff);
+    border: 0.2rem solid var(--leaf-button-border, #ddd);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.leaf-button:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    background: var(--leaf-button-hover-bg, #f9f9f9);
+}
+
+.leaf-button:active {
+    transform: translateY(0);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.leaf-button-left {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.leaf-button-img {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: var(--leaf-button-img-bg, #eee);
+}
+
+.leaf-button-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.leaf-button-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.leaf-button-name {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--leaf-button-name-color, #000);
+}
+
+.leaf-button-rarity {
+    font-size: 0.875rem;
+    color: var(--leaf-button-rarity-color, #666);
+}
+
+.leaf-button-type-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.leaf-button-right {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.leaf-button-badge {
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    border: none;
+}
+
+.lvl-badge {
+    background: var(--lvl-badge-bg, #e8f4f8);
+    color: var(--lvl-badge-color, #0066cc);
+}
+
+.boost-badge {
+    background: var(--boost-badge-bg, #fff3e0);
+    color: var(--boost-badge-color, #ff9800);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+}
+
+.boost-badge img {
+    width: 1.2rem;
+    height: 1.2rem;
+    object-fit: contain;
+}
+
+/* ──────────────────────────────────────────
+    MODAL LEAFS
+────────────────────────────────────────── */
+#leaf-modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--modal-bg, #fff);
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 0.2rem solid var(--modal-border, #eee);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-family: var(--comic-font);
+    font-size: 1.5rem;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--modal-close-color, #999);
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.modal-close-btn:hover {
+    background-color: var(--modal-close-hover-bg, #f0f0f0);
+    color: var(--modal-close-hover-color, #000);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.leaf-modal-info {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.leaf-modal-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 0.8rem;
+    border: 0.2rem solid var(--modal-border, #eee);
+}
+
+.leaf-modal-stats {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.leaf-modal-stats p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 0.2rem solid var(--modal-border, #eee);
+}
+
+.modal-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.modal-btn-close {
+    background: var(--modal-btn-close-bg, #999);
+    color: var(--modal-btn-close-color, #fff);
+}
+
+.modal-btn-close:hover {
+    background: var(--modal-btn-close-hover-bg, #777);
+}
+
+.modal-btn-close:active {
+    transform: scale(0.98);
+}
