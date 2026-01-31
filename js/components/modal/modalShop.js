@@ -46,6 +46,7 @@ export function openBuyModal(item, shop, inventoryManager, onConfirm) {
     // Modal
     const modal = document.createElement("div");
     modal.className = "modal";
+    modal.id = "shop-buy-modal";
 
     // Contenu du Modal
         // Titre

@@ -88,7 +88,6 @@
 }
 .shop-item-btn {
     border: 0.2em solid;
-    background: var(--shop-btn-bg);
     text-align: left;
 
     display: flex;

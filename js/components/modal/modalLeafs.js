@@ -1,46 +1,35 @@
 export function openLeafModal(leaf) {
+    // Overlay
+    const overlay = document.createElement("div");
+    overlay.className = "modal-overlay";
+
+    // Modal
     const modal = document.createElement("div");
     modal.className = "modal";
     modal.id = "leaf-modal";
     
     modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>${leaf.name}</h2>
-                <button class="modal-close-btn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="leaf-modal-info">
-                    <img src="${leaf.img}" alt="${leaf.name}" class="leaf-modal-img">
-                    <div class="leaf-modal-stats">
-                        <p><strong>Type:</strong> ${leaf.type}</p>
-                        <p><strong>Rareté:</strong> ${leaf.rarity}</p>
-                        <p><strong>Espèce:</strong> ${leaf.species}</p>
-                        <p><strong>Biome:</strong> ${leaf.biome}</p>
-                        <p><strong>Niveau:</strong> ${leaf.lvl}</p>
-                        <p><strong>HP:</strong> ${leaf.hp}</p>
-                        <p><strong>Attaque:</strong> ${leaf.atk}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn modal-btn-close">Fermer</button>
+        <button class="modal-close-btn">Fermer</button>
+        <div class="leaf-modal-info">
+            <img src="${leaf.img}" alt="${leaf.name}" class="leaf-modal-img">
+            <div class="leaf-modal-stats">
+                <p><strong>Type:</strong> ${leaf.type}</p>
+                <p><strong>Rareté:</strong> ${leaf.rarity}</p>
+                <p><strong>Espèce:</strong> ${leaf.species}</p>
+                <p><strong>Biome:</strong> ${leaf.biome}</p>
+                <p><strong>Niveau:</strong> ${leaf.lvl}</p>
+                <p><strong>HP:</strong> ${leaf.hp}</p>
+                <p><strong>Attaque:</strong> ${leaf.atk}</p>
             </div>
         </div>
     `;
-    
-    document.body.appendChild(modal);
-    
-    // Fermer avec le bouton X
-    const closeBtn = modal.querySelector(".modal-close-btn");
-    closeBtn.addEventListener("click", () => {
-        modal.remove();
-    });
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
     
     // Fermer avec le bouton Fermer
-    const closeFooterBtn = modal.querySelector(".modal-btn-close");
-    closeFooterBtn.addEventListener("click", () => {
-        modal.remove();
+    const closeBtn = modal.querySelector(".modal-close-btn");
+    closeBtn.addEventListener("click", () => {
+        overlay.remove();
     });
     
     // Fermer en cliquant en dehors du modal

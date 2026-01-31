@@ -29,7 +29,10 @@ export function leafButton(leaf, leafs, onClick = null) {
         left.className = "leaf-button-left";
             const img = document.createElement("div");
             img.className = "leaf-button-img";
-            img.textContent = `<img src="${leaf.img}" alt="${leaf.name}">`;
+                const imgContent = document.createElement("img");
+                imgContent.src = leaf.img;
+                imgContent.alt = leaf.name;
+                img.appendChild(imgContent);
             left.appendChild(img);
             const info = document.createElement("div");
             info.className = "leaf-button-info";
