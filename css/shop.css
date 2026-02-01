@@ -29,9 +29,13 @@
     flex: 1;
     padding: 0.5em 1em;
     border-radius: 0.5em;
-    border: 1px solid #444;
-    background: #2a2a2a;
-    color: white;
+    border: 1px solid var(--shearch-bar-border);
+    background: var(--shearch-bar-bg);
+    color: var(--shearch-bar-text);
+}
+
+#shop-search::placeholder {
+    color: var(--shearch-bar-placeholder-text);
 }
 
 .player-currency {

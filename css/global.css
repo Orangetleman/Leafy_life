@@ -4,20 +4,23 @@
 :root {
     --comic-font: 'Comic Sans MS', 'Comic Sans', cursive;
 
-    --navbar-bg: #2a2a2a;
+    --navbar-bg: #131313;
     --navbar-border: #1e1e1e;
+    --navbar-link-bg: #f8f3ec;
     --navbar-link-hover-bg: #3a3a3a;
     --navbar-link-active-bg: #1e1e1e;
-    --shearch-bar-bg: #3a3a3a;
-    --shearch-bar-border: #1e1e1e;
-    --shearch-bar-text: #ffffff;
+    --navbar-link-text: #131313;
+    --shearch-bar-bg: #f8f3ec;
+    --shearch-bar-border: #7e7e7e;
+    --shearch-bar-text: #000000;
+    --shearch-bar-placeholder-text: #555555;
 
-    --shop-bg: #f3eef8;
+    --shop-bg: #e7b7e7;
     --shop-item-icon-bg: #e6d4f0;
     --shop-item-icon-border: #b19cd9d3;
-    --shop-title-bg: #b19cd9;
-    --shop-title-border: #8b6b9f;
-    --shop-btn-bg: #c8a2c8;
+    --shop-title-bg: #b86ab8;
+    --shop-title-border: #7e3e7e;
+    --shop-btn-bg: #db96db;
     --shop-btn-hover-bg: #dab3d3;
     --shop-btn-active-bg: #a887b8;
     --shop-btn-border: #7a5a8a;
@@ -72,6 +75,7 @@
     --modal-close-color: #999;
     --modal-close-hover-bg: #cccccc;
     --modal-close-hover-color: #666;
+    --modal-close-active-bg: #aaaaaa;
     --boost-badge-bg: #fff0b3;
     --boost-badge-color: #ff9800;
     --boost-badge-color-hover-bg: #ffd966;

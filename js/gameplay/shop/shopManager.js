@@ -71,11 +71,11 @@ export class ShopManager {
     }
 }
 function getClassicShopItems() {
-    return ITEMS.filter(item => !item.is_special).map((itm) => ({...itm, amount: 99999}));
+    return Object.values(ITEMS).filter(item => !item.is_special).map((itm) => ({...itm, amount: 99999}));
 }
 function getWanderingShopItems(biome) {
-    const specials = ITEMS.filter(i => i.is_special && roll(i.rarity)).map(i => ({...i, amount: 50/*quantité dispo dans le shop itinérant d'items spéciaux*/}));
-    const discounted = ITEMS.filter(i => !i.is_special)
+    const specials = Object.values(ITEMS).filter(i => i.is_special && roll(i.rarity)).map(i => ({...i, amount: 50/*quantité dispo dans le shop itinérant d'items spéciaux*/}));
+    const discounted = Object.values(ITEMS).filter(i => !i.is_special)
                             .sort(() => Math.random() - 0.5)
                             .slice(0, 2)
                             .map(i => ({

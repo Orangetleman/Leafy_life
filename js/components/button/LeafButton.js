@@ -1,6 +1,7 @@
 import { LEAFS_TYPE } from "../../data/leafs.js";
 
-export function createBadge(value, type, onClick = null) {
+export function createBadge(value, type = "boost", onClick = null) {
+    console.log("Creating badge with value:", value);
     if (type === "lvl") {
         const badge = document.createElement("div");
         badge.className = "leaf-button-badge lvl-badge";
@@ -13,10 +14,12 @@ export function createBadge(value, type, onClick = null) {
             text.textContent = `+`;
             badge.appendChild(text);
             const icon = document.createElement("img");
-            icon.src = `${value.icon}`;
+            icon.src = value.icon;
             icon.alt = `Boost : ${value.name}`;
             badge.appendChild(icon);
-        badge.onclick = () => onClick(value);
+        if (onClick) {
+            badge.onclick = () => onClick(value);
+        }
         return badge;
     }
 }
@@ -55,9 +58,11 @@ export function leafButton(leaf, leafs, onClick = null) {
         // Right side with lvl
         const right = document.createElement("div");
         right.className = "leaf-button-right";
-        right.appendChild(createBadge(leaf.lvl, "lvl")); 
+        right.appendChild(createBadge(leaf.competence_lvl, "lvl")); 
         button.appendChild(right);
 
-    button.onclick = () => onClick(leaf, leafs);
+    if (onClick) {
+        button.onclick = () => onClick(leaf, leafs);
+    }
     return button;
 }

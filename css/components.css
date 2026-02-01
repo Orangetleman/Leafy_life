@@ -11,18 +11,19 @@
     align-items: center;
     font-size: 1rem;
 
-    background-color: #224400;
-    border-top: 0.15rem solid #5ab308;
+    background-color: var(--navbar-bg);
+    border-top: 0.15rem solid var(--navbar-border);
 }
 
 #navbar button {
+    font-family: var(--comic-font);
     font-size: 1.5rem;
     padding: 0.70rem 1.5rem; 
     margin: 0.7em;
     border: none;
     border-radius: 0.7em;
-    background-color: #444;
-    color: white;
+    background-color: var(--navbar-link-bg);
+    color: var(--navbar-link-text);
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
 }

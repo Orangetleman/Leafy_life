@@ -23,16 +23,19 @@ export function renderNavbar() {
         leafManager.addLeaf(LEAFS[4]);
         leafManager.addLeaf(LEAFS[6]);
         leafManager.addLeaf(LEAFS[8]);
-        inventoryManager.appendItem(ITEMS[0], 4);
-        inventoryManager.appendItem(ITEMS[1], 2);
-        inventoryManager.appendItem(ITEMS[2], 5);
-        inventoryManager.appendItem(ITEMS[3], 3);
-        inventoryManager.appendItem(ITEMS[4], 4);
-        inventoryManager.appendItem(ITEMS[5], 2);
-        inventoryManager.appendItem(ITEMS[6], 5);
-        inventoryManager.appendItem(ITEMS[7], 3);
-        inventoryManager.appendItem(ITEMS[8], 4);
-        inventoryManager.appendItem(ITEMS[9], 2);
+        inventoryManager.appendItem(ITEMS[1], 4);
+        inventoryManager.appendItem(ITEMS[2], 2);
+        inventoryManager.appendItem(ITEMS[3], 5);
+        inventoryManager.appendItem(ITEMS[4], 3);
+        inventoryManager.appendItem(ITEMS[5], 4);
+        inventoryManager.appendItem(ITEMS[6], 2);
+        inventoryManager.appendItem(ITEMS[7], 5);
+        inventoryManager.appendItem(ITEMS[8], 3);
+        inventoryManager.appendItem(ITEMS[9], 4);
+        inventoryManager.appendItem(ITEMS[10], 2);
+        inventoryManager.appendItem(ITEMS[11], 2);
+        inventoryManager.appendItem(ITEMS[12], 2);
+        
         inventoryManager.appendMoney("O2", 1000);
         inventoryManager.appendMoney("CO2", 1000);
 

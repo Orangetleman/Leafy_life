@@ -21,9 +21,9 @@
     border: 0.2em solid var(--modal-border);
     border-radius: 1em;
     min-height: 20rem;
-    max-height: 30rem;
-    min-width: 20vw;
-    max-width: 30vw;
+    max-height: 40rem;
+    min-width: 30vw;
+    max-width: 50vw;
 
     display: flex;
     flex-direction: column;
@@ -268,33 +268,20 @@
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    background: rgb(112, 255, 99);
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: start;
     z-index: 1000;
 }
 
-.modal-header {
+#leaf-modal-close-btn {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    border-bottom: 0.2rem solid var(--modal-border, #eee);
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-family: var(--comic-font);
-    font-size: 1.5rem;
-}
-
-.modal-close-btn {
-    display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: start;
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
     background-color: var(--modal-close-bg);
+
     color: var(--modal-close-color);
     padding: 0.3rem 0.6rem;
     border: none;
@@ -302,63 +289,119 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.modal-close-btn:hover {
+#leaf-modal-close-btn:hover {
+    transform: scale(1.02);
     background-color: var(--modal-close-hover-bg);
     color: var(--modal-close-hover-color);
 }
 
-.leaf-modal-info {
+#leaf-modal-close-btn:active {
+    transform: scale(0.98);
+    background-color: var(--modal-close-active-bg, #aaaaaa);
+}
+
+#leaf-modal-info {
     display: flex;
+    flex-direction: row;
     gap: 1.5rem;
 }
 
-.leaf-modal-img {
-    width: 150px;
-    height: 150px;
+#leaf-modal-img {
+    width: 5em;
+    height: 5em;
+    margin: 1rem;
+    padding: 0.5rem;
+    background-color: var(--leaf-button-img-bg);
     object-fit: cover;
     border-radius: 0.8rem;
     border: 0.2rem solid var(--modal-border, #eee);
 }
+#leaf-modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
-.leaf-modal-stats {
+#leaf-modal-infos {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
 }
 
-.leaf-modal-stats p {
+#leaf-modal-infos p {
+    font-family: var(--comic-font);
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
 }
 
-.modal-footer {
+.leaf-modal-stats {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     gap: 1rem;
-    padding: 1.5rem;
-    border-top: 0.2rem solid var(--modal-border, #eee);
 }
 
-.modal-btn {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 0.5rem;
+.stat-display-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-name {
+    font-family: var(--comic-font);
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    font-size: 0.95rem;
+    color: #333;
 }
 
-.modal-btn-close {
-    background: var(--modal-btn-close-bg, #999);
-    color: var(--modal-btn-close-color, #fff);
+.stat-value-level {
+    font-family: var(--comic-font);
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
 }
 
-.modal-btn-close:hover {
-    background: var(--modal-btn-close-hover-bg, #777);
+.progress-bar-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    width: 100%;
 }
 
-.modal-btn-close:active {
-    transform: scale(0.98);
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: #ddd;
+    border-radius: 0.4em;
+    border: 0.1em solid #aaa;
+    overflow: hidden;
+    height: 1.2rem;
+    width: 100%;
+}
+
+.progress-bar-text {
+    font-family: var(--comic-font);
+    font-size: 0.85rem;
+    color: #333;
+    text-align: right;
+}
+.progress-bar-container:hover {
+    border-color: #888;
+}
+.progress-bar {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+.progress-bar-boost {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+    opacity: 0.7;
 }

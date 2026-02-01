@@ -30,4 +30,11 @@ export function openItemInventoryModal(item, onClose) {
         overlay.remove();
         if (onClose) onClose();
     };
+
+    // Fermer en cliquant en dehors du modal
+    overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) {
+            overlay.remove();
+        };
+    });
 }

@@ -8,7 +8,10 @@ export class LeafStat {
         this.hp = leaf.hp;
         this.species = leaf.species;
         this.biome = leaf.biome;
-        this.lvl = leaf.lvl;
+        this.competence_lvl = leaf.competence_lvl;
         this.img = leaf.img;
+        this.nutrients = 100;
+        this.hydration = 100;
+        this.regime = leaf.regime || null;
     }
 }
