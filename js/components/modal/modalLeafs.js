@@ -78,7 +78,7 @@ function statDisplay(leaf, statName, frStatName, value) {
             valueElement.textContent = value;
             statContainer.appendChild(valueElement);
         } else {
-            statContainer.appendChild(createProgressBar(leaf, statName, value, 100));
+            statContainer.appendChild(createProgressBar(leaf, statName, value, statName === "hp" ? 10 : statName === "nutrients" ? 100 : statName === "hydration" ? 100 : statName === "attack" ? 10 : 100));
         }
         
         statElement.appendChild(statContainer);
@@ -119,7 +119,7 @@ function itemTypeSelector(leaf, statName) {
     }
     console.log("No item found for stat:", statName);
 }
-function createProgressBar(leaf, statName, value, maxValue, boostvalue = 10, color = "green", boostColor = "lightgreen") {
+function createProgressBar(leaf, statName, value, maxValue, boostvalue = 0, color = "green", boostColor = "lightgreen") {
     const finalValue = Math.min(value + boostvalue, maxValue);
     const barContainerContainer = document.createElement("div");
     barContainerContainer.className = "progress-bar-container-wrapper";
