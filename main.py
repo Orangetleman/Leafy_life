@@ -8,9 +8,24 @@ Gère la navigation entre les vues (écrans) et la barre de navigation.
 import flet as ft
 
 from js.data.leafs import LEAFS
-from js.gameplay.leafs.leaf_manager import leaf_manager
+from js.gameplay.leafs.leafManager.js import leaf_manager #ca marche pas
 
+'''export class LeafManager {
+    constructor() {
+        this.owned = [];
+    }
 
+    addLeaf(leaf) {
+        const existingLeaf = this.owned.find(l => l.id === leaf.id);
+        if (existingLeaf) {
+            console.log(`Leaf déjà possédé : ${leaf.name}`);
+            return;
+        }
+        this.owned.push(new LeafStat(leaf));
+        console.log(`Leaf ajouté : ${leaf.name} dans la collection : `, this.owned);
+    }
+}
+export const leafManager = new LeafManager();''' #a traduire ou faire un autre fichier
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
     for key in (0, 2, 4, 6, 8):
