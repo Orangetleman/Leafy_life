@@ -3,26 +3,22 @@ import flet as ft
 
 def create_progress_bar(value, max_value, label, color="green"):
     """Crée une barre de progression stylisée."""
-    percentage = (value / max_value) * 100 if max_value > 0 else 0
+    ratio = value / max_value if max_value > 0 else 0
     
     return ft.Column([
         ft.Row([
             ft.Text(label, weight=ft.FontWeight.W_500, size=14),
             ft.Text(f"{value}/{max_value}", size=12, color="gray"),
         ]),
-        ft.Container(
-            content=ft.Container(
-                width=f'{percentage}%',
-                height=20,
-                bgcolor=color,
-                border_radius=4,
-            ),
-            width=200,
-            height=20,
-            bgcolor="rgba(200, 200, 200, 0.3)",
-            border_radius=4,
+        ft.ProgressBar(
+            value=ratio,
+            color=color,
+            bgcolor="#4C4C4C",
+            width=300,
+            bar_height=20,
+            border_radius=8,
         )
-    ], spacing=0)
+    ], spacing=5)
 
 def prepare_leaf_data(leaf):
     """Prépare les données d'un leaf - assure que tous les attributs existent."""
@@ -43,59 +39,65 @@ def prepare_leaf_data(leaf):
     return leaf
 
 def open_leaf_modal(page: ft.Page, leaf_dict):
-    print("Ouverture du modal pour le leaf:", leaf_dict.name)
-    """Ouvre le modal affichant les détails complets d'un leaf (comme en JavaScript)."""
     leaf = prepare_leaf_data(leaf_dict)
-    
+
     def close_modal(e):
-        bs.open = False
+        dialog.open = False
         page.update()
-    
-    # Récupérer les infos du biome et du type
+
     biome_name = BIOMES[leaf.biome - 1]['name']
     leaf_type_name = LEAFS_TYPE[leaf.type]['name']
-    
-    # Construire le contenu du modal
-    modal_content = ft.Column(
-        [
-            ft.Text(leaf.name, size=18, weight=ft.FontWeight.BOLD),
-            ft.Container(
-                content=ft.Image(
-                    src=leaf.img,
-                    width=150,
-                    height=150,
-                    fit="contain",
+
+    dialog = ft.AlertDialog(
+        modal=True,
+        title=ft.Text(leaf.name, weight=ft.FontWeight.BOLD),
+        content=ft.Column(
+            [
+                ft.Row(
+                    controls=[
+                        ft.Image(src=leaf.img, width=150, height=150, fit="contain"),
+                        ft.Divider(),
+                        ft.Column([
+                            ft.Row([
+                                ft.Text("Biome:", size=14, color="white", weight=ft.FontWeight.BOLD),
+                                ft.Text(biome_name, size=14, color="white"),
+                            ]),
+                            ft.Row([
+                                ft.Text("Type:", size=14, color="white", weight=ft.FontWeight.BOLD),
+                                ft.Text(leaf_type_name, size=14, color="white"),
+                            ]),
+                            ft.Row([
+                                ft.Text("Rareté:", size=14, color="white", weight=ft.FontWeight.BOLD),
+                                ft.Text(leaf.rarity, size=14, color="white"),
+                            ]),
+                            ft.Row([
+                                ft.Text("Espèce:", size=14, color="white", weight=ft.FontWeight.BOLD),
+                                ft.Text(leaf.species, size=14, color="white"),
+                            ]),
+                        ])
+                    ],
                 ),
-                alignment=ft.Alignment.CENTER,
-                margin=ft.margin.only(bottom=10),
-            ),
-            ft.Text(f"Biome: {biome_name}", size=14),
-            ft.Text(f"Type: {leaf_type_name}", size=14),
-            ft.Text(f"Rareté: {leaf.rarity}", size=14),
-            ft.Text(f"Espèce: {leaf.species}", size=14),
-            ft.Divider(),
-            ft.Text("Statistiques", weight=ft.FontWeight.BOLD, size=14),
-            ft.Text(f"Niveau: {leaf.competence_lvl}", weight=ft.FontWeight.W_500),
-            create_progress_bar(leaf.hp, 10, "Points de Vie", color="red"),
-            create_progress_bar(leaf.nutrients, 100, "Nourriture", color="orange"),
-            create_progress_bar(leaf.hydration, 100, "Hydratation", color="blue"),
-            create_progress_bar(leaf.atk, 10, "Attaque", color="purple"),
-            ft.ElevatedButton("Fermer", on_click=close_modal),
+                ft.Divider(),
+                ft.Text("Statistiques", weight=ft.FontWeight.BOLD),
+                create_progress_bar(leaf.hp, 10, "Points de Vie", color="red"),
+                create_progress_bar(leaf.nutrients, 100, "Nourriture", color="orange"),
+                create_progress_bar(leaf.hydration, 100, "Hydratation", color="blue"),
+                create_progress_bar(leaf.atk, 10, "Attaque", color="purple"),
+            ],
+            scroll="auto",
+            tight=True,        # ← important pour que la Column ne prenne pas toute la hauteur
+            width=300,
+        ),
+        actions=[
+            ft.TextButton("Fermer", on_click=close_modal),
         ],
-        scroll="auto",
-        spacing=10
+        actions_alignment=ft.MainAxisAlignment.END,
     )
-    
-    bs = ft.BottomSheet(
-        ft.Container(
-            modal_content,
-            padding=20,
-        )
-    )
-    page.overlay.append(bs)
-    bs.open = True
+
+    # ✅ La bonne façon : ajouter à overlay PUIS open=True PUIS update
+    page.overlay.append(dialog)
+    dialog.open = True
     page.update()
-    print("Modal créé pour le leaf:", leaf.name)
 
 def _build_leafs_home(page: ft.Page) -> list:
     """Écran des leafs - affiche la collection avec recherche."""
