@@ -7,101 +7,17 @@ Gère la navigation entre les vues (écrans) et la barre de navigation.
 
 import flet as ft
 
+from js.css.styles import COLOR_NAVBAR_BG
 from js.data.leafs import LEAFS
 from js.gameplay.leafs.leaf_manager import leaf_manager
+from js.screens.leafs.leafs_home import build_leafs_home
+from js.screens.navigation.navbar import build_navbar
 
 
-# ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
+    """Données de test (équivalent du seed dans navbar.js)."""
     for key in (0, 2, 4, 6, 8):
         leaf_manager.add_leaf(LEAFS[key])
-
-
-def _build_navbar(page: ft.Page) -> ft.Row:
-    """Barre de navigation (équivalent de js/screens/navigation/navbar.js)."""
-    return ft.Row(
-        [
-            ft.ElevatedButton(
-                "Leafs",
-                on_click=lambda e: page.push_route("/leafs"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Shop",
-                on_click=lambda e: page.push_route("/shop"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Inventory",
-                on_click=lambda e: page.push_route("/inventory"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Planet",
-                on_click=lambda e: page.push_route("/planet"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-        ],
-        alignment=ft.MainAxisAlignment.CENTER,
-        spacing=12,
-    )
-
-
-def _build_leafs_home(page: ft.Page) -> list:
-    """
-    Contenu de l'écran Leafs (équivalent de js/screens/leafs/leafsHome.js).
-    Retourne la liste des contrôles du corps de la vue.
-    """
-    title = ft.Text("Vos leafs", size=22, weight=ft.FontWeight.BOLD)
-    list_container = ft.Column(
-        scroll=ft.ScrollMode.AUTO,
-        expand=True,
-        spacing=8,
-    )
-
-    def on_search_change(e):
-        query = (e.control.value or "").strip().lower()
-        list_container.controls.clear()
-        for leaf in leaf_manager.owned:
-            if not query or query in leaf.name.lower():
-                list_container.controls.append(
-                    ft.ListTile(
-                        title=ft.Text(leaf.name),
-                        leading=ft.Image(src=leaf.img, width=48, height=48, fit=ft.ImageFit.CONTAIN),
-                    )
-                )
-        page.update()
-
-    search = ft.TextField(
-        hint_text="🔍 Rechercher...",
-        on_change=on_search_change,
-        expand=True,
-    )
-
-    for leaf in leaf_manager.owned:
-        list_container.controls.append(
-            ft.ListTile(
-                title=ft.Text(leaf.name),
-                leading=ft.Image(src=leaf.img, width=48, height=48, fit=ft.ImageFit.CONTAIN),
-            )
-        )
-
-    return [
-        ft.Container(
-            content=ft.Column(
-                [
-                    ft.Row([title], alignment=ft.MainAxisAlignment.CENTER),
-                    ft.Row([search], alignment=ft.MainAxisAlignment.CENTER),
-                    ft.Divider(),
-                    ft.Container(content=list_container, expand=True),
-                ],
-                expand=True,
-            ),
-            padding=16,
-            bgcolor="#f0f8ff",
-            border_radius=8,
-        )
-    ]
 
 
 def _build_placeholder(title: str) -> list:
@@ -118,20 +34,28 @@ def _build_placeholder(title: str) -> list:
 def main(page: ft.Page) -> None:
     page.title = "Leafy Life"
     page.padding = 0
-    page.theme_mode = ft.ThemeMode.DARK
+    page.theme_mode = ft.ThemeMode.LIGHT
 
-    def route_change(e: ft.RouteChangeEvent) -> None:
-        route = e.route or "/leafs"
+    def route_change(e) -> None:
+        # Au premier appel, e peut être None ou un événement sans .route : utiliser page.route
+        route = getattr(e, "route", None) if e is not None else None
+        if route is None or route == "":
+            route = "/leafs"
+        page.controls.clear()
         page.views.clear()
-        navbar = _build_navbar(page)
+        navbar = build_navbar(page)
+        navbar_container = ft.Container(
+            content=navbar,
+            padding=8,
+            bgcolor=COLOR_NAVBAR_BG,
+        )
 
-        # Vue racine : Leafs par défaut
         if route in ("/", "/leafs"):
-            body = _build_leafs_home(page)
+            body = build_leafs_home(page)
             page.views.append(
                 ft.View(
                     "/leafs",
-                    [ft.Container(content=navbar, padding=8, bgcolor="#131313"), *body],
+                    [navbar_container, *body],
                     padding=0,
                     scroll=ft.ScrollMode.AUTO,
                 )
@@ -140,7 +64,7 @@ def main(page: ft.Page) -> None:
             page.views.append(
                 ft.View(
                     "/shop",
-                    [ft.Container(content=navbar, padding=8, bgcolor="#131313"), *_build_placeholder("Shop")],
+                    [navbar_container, *_build_placeholder("Shop")],
                     padding=0,
                 )
             )
@@ -148,7 +72,7 @@ def main(page: ft.Page) -> None:
             page.views.append(
                 ft.View(
                     "/inventory",
-                    [ft.Container(content=navbar, padding=8, bgcolor="#131313"), *_build_placeholder("Inventory")],
+                    [navbar_container, *_build_placeholder("Inventory")],
                     padding=0,
                 )
             )
@@ -156,15 +80,16 @@ def main(page: ft.Page) -> None:
             page.views.append(
                 ft.View(
                     "/planet",
-                    [ft.Container(content=navbar, padding=8, bgcolor="#131313"), *_build_placeholder("Planet")],
+                    [navbar_container, *_build_placeholder("Planet")],
                     padding=0,
                 )
             )
         else:
+            body = build_leafs_home(page)
             page.views.append(
                 ft.View(
                     "/leafs",
-                    [ft.Container(content=navbar, padding=8, bgcolor="#131313"), *_build_leafs_home(page)],
+                    [navbar_container, *body],
                     padding=0,
                     scroll=ft.ScrollMode.AUTO,
                 )
@@ -180,8 +105,20 @@ def main(page: ft.Page) -> None:
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     _seed_test_data()
-    page.push_route(page.route or "/leafs")
+
+    # Affichage initial : ajouter le contenu directement à la page (les Views ne s'affichent pas toujours au premier paint)
+    navbar = build_navbar(page)
+    navbar_container = ft.Container(
+        content=navbar,
+        padding=8,
+        bgcolor=COLOR_NAVBAR_BG,
+    )
+    body = build_leafs_home(page)
+    for control in [navbar_container, *body]:
+        page.add(control)
+    page.route = "/leafs"
+    page.update()
 
 
 if __name__ == "__main__":
-    ft.run(target=main, assets_dir="assets")
+    ft.run(main, assets_dir="assets")
