@@ -133,13 +133,14 @@ class LeafManager:
 
     def add_leaf(self,leaf):
         is_owned = False
+        new_leaf = LeafStat(leaf)
         for leafs in self.owned:
-            if leafs["id"] == leaf["id"]:
-                print(leaf["name"] + " est déjà un de vos leafs.")
+            if leafs.id == new_leaf.id:
+                print(new_leaf.name + " est déjà un de vos leafs.")
                 is_owned = True
         if not is_owned:
-            self.owned.append(leaf)
-            print(leaf["name"] + " fais maintenant parti de vos leafs !")
+            self.owned.append(new_leaf)
+            print(new_leaf.name + " fais maintenant parti de vos leafs !")
 
 class LeafStat:
     def __init__(self, leaf):
