@@ -13,7 +13,7 @@ def _planet(page: ft.Page) -> list:
     return [ft.Container(ft.Stack(
         [
             ft.Image(
-                src="assets/imgs/icons/23112025-IMG_0402.jpg",
+                src="assets/imgs/icons/biome_plain.png",
                 width=1000,
                 height=1000,
                 fit="cover",
