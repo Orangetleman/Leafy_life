@@ -9,6 +9,7 @@ import flet as ft
 
 from leafs import LEAFS
 from datacenter import *
+from planet import _planet
 
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
@@ -200,7 +201,7 @@ def main(page: ft.Page) -> None:
         elif name == "inventory":
             body = _build_placeholder("Inventory")
         elif name == "planet":
-            body = _build_placeholder("Planet")
+            body = _planet(page)
         else:
             body = _build_leafs_home(page)
 
@@ -212,5 +213,5 @@ def main(page: ft.Page) -> None:
     show_screen("leafs")
 
 if __name__ == "__main__":
-    #ft.run(target=main, assets_dir="assets")
-    ft.run(main)
+    ft.run(main, assets_dir="icons")
+    
