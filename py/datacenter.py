@@ -139,5 +139,21 @@ class LeafManager:
             self.owned.append(leaf)
             print(leaf["name"] + " fais maintenant parti de vos leafs !")
 
+class LeafStat:
+    def __init__(self, leaf):
+        self.id = leaf["id"]
+        self.name = leaf["name"]
+        self.type = leaf["type"]
+        self.rarity = leaf["rarity"]
+        self.atk = leaf["atk"]
+        self.hp = leaf["hp"]
+        self.species = leaf["species"]
+        self.biome = leaf["biome"]
+        self.competence_lvl = leaf["competence_lvl"]
+        self.img = leaf["img"]
+        self.nutrients = 100
+        self.hydration = 100
+        self.regime = leaf["regime"] if "regime" in leaf else None
+
 leafmanager = LeafManager()
 
