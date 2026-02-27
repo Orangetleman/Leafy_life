@@ -1,14 +1,15 @@
+import random
 from os import name
-# ------------------------------------------------------------------------
-# ----------------------------- DATA PALETTE -----------------------------
-# ------------------------------------------------------------------------
+# ————————————————————————————————————————————————————————————————————————————————————————
+# ————————————————————————————————————— DATA PALETTE —————————————————————————————————————
+# ————————————————————————————————————————————————————————————————————————————————————————
 
-# Enemies palette
+# ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
     { "id": 1, "name": "Chardon", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2},
 ]
 
-# Events palette
+# ------------------------------------ Events palette ------------------------------------
 EVENTS = {
     "plain": [
         { "type": "enemy", "data": { "enemyId": 1 } },
@@ -17,7 +18,7 @@ EVENTS = {
     ]
 }
 
-# Items palette
+# ------------------------------------ Items palette ------------------------------------
 ITEMS = {
     # Consomables Leafs Mobs (O2):
         # Normaux :
@@ -80,7 +81,7 @@ TYPES = [
     { 'id': 4, 'name': "resurrector", 'icon': "assets/imgs/icons/type_resurrector.png" }
 ]
 
-# Leafs palette
+# ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
     # id, name, type, rarity, atk, hp, species, regime (if animal), biome, competence_lvl, img
 
@@ -109,7 +110,7 @@ LEAFS_TYPE = [
     { 'id': 3, 'name': "tank", 'icon': "assets/imgs/icons/leaf_type_tank.png" }
 ]
 
-# Biomes palette
+# ------------------------------------ Biomes palette ------------------------------------
 BIOMES = [
     {'id': 1, 'name': "plain", 'icon': "assets/imgs/icons/biome_plain.png"},
     {'id': 2, 'name': "forest", 'icon': "assets/imgs/icons/biome_forest.png"},
@@ -120,11 +121,12 @@ PLANETS = [
     { 'id': 1, 'name': "Earth", 'biomes': [BIOMES[0], BIOMES[1], BIOMES[2], BIOMES[3]] }
 ]
 
-# ----------------------------------------------------------------------------------------
-# ------------------------------------- DATA MANAGER -------------------------------------
-# ----------------------------------------------------------------------------------------
+# ————————————————————————————————————————————————————————————————————————————————————————
+# ————————————————————————————————————— DATA MANAGER —————————————————————————————————————
+# ————————————————————————————————————————————————————————————————————————————————————————
 
-# LeafManager gère les leafs possédés par le joueur, leur ajout et leurs statistiques.
+# ------------------------------------- LeafManager --------------------------------------
+# Gère les leafs possédés par le joueur, leur ajout et leurs statistiques.
 class LeafManager:
     def __init__(self, owned = []):
         self.owned = owned
@@ -157,7 +159,8 @@ class LeafStat:
 
 leafmanager = LeafManager()
 
-# InventoryManager gère les items et l'argent possédés par le joueur, leur ajout et leurs quantités.
+# ------------------------------------- InventoryManager -------------------------------------
+# Gère les items et l'argent possédés par le joueur, leur ajout et leurs quantités.
 class InventoryManager:
     def __init__(self):
         self.items = []
@@ -236,3 +239,122 @@ class InventoryManager:
         return self.money
 
 inventory_manager = InventoryManager()
+
+# ------------------------------------- ShopManager -------------------------------------
+# Gère les items disponibles à l'achat dans le shop, leur ajout et leur suppression.
+class ShopManager:
+    def __init__(self, biome=None, type_str=None):
+        self.type = type_str or "classic"
+        self.biome = biome or BIOMES[0]
+        self.stock = get_classic_shop_items() if self.type == "classic" else get_wandering_shop_items(self.biome)
+    
+    def reload_wandering_shop_items(self):
+        if self.type == "wandering":
+            self.stock = get_wandering_shop_items(self.biome)
+    
+    def remove_item_from_stock(self, item_id, amount=1):
+        item_index = -1
+        for i, item in enumerate(self.stock):
+            if item["id"] == item_id:
+                item_index = i
+                break
+        
+        if item_index != -1:
+            if self.is_item_in_stock(item_id):
+                item_amount = self.stock[item_index]["amount"]
+                item_amount_to_remove = item_amount - amount
+                if item_amount_to_remove > -1:
+                    self.stock[item_index]["amount"] = item_amount_to_remove
+                    return True
+                else:
+                    print(f"{self.stock[item_index]['name']} is out of stock")
+                    return False
+            else:
+                print(f"{self.stock[item_index]['name']} is not in stock")
+                return False
+        return None
+    
+    def buy_item(self, item, amount=1):
+        # Vérifier si le joueur a assez d'argent
+        if not inventory_manager.is_enough_money(item):
+            print(f"Fonds insuffisants pour acheter : {item['name']}")
+            return {"success": False, "error": "insufficient_funds"}
+        
+        # Vérifier si l'item est en stock
+        if not self.is_item_in_stock(item["id"], amount):
+            print(f"{item['name']} n'est pas en stock")
+            return {"success": False, "error": "out_of_stock"}
+        
+        # Déduire l'argent (O2)
+        if "price_O2" in item and item["price_O2"] >= 0:
+            if not inventory_manager.remove_money("O2", item["price_O2"] * amount):
+                print(f"Erreur lors du paiement O2 pour {item['name']}")
+                return {"success": False, "error": "payment_failed"}
+        
+        # Déduire l'argent (CO2)
+        if "price_CO2" in item and item["price_CO2"] > 0:
+            if not inventory_manager.remove_money("CO2", item["price_CO2"] * amount):
+                # Rembourser O2 si le paiement CO2 échoue
+                if "price_O2" in item and item["price_O2"] >= 0:
+                    inventory_manager.append_money("O2", item["price_O2"] * amount)
+                print(f"Erreur lors du paiement CO2 pour {item['name']}")
+                return {"success": False, "error": "insufficient_funds"}
+        
+        # Ajouter l'item à l'inventaire et retirer du stock
+        inventory_manager.append_item(item, amount)
+        self.remove_item_from_stock(item["id"], amount)
+        
+        print(f"Achat réussi : {item['name']}")
+        
+        return {"success": True}
+    
+    def is_item_in_stock(self, item_id, amount=1):
+        return any(i["id"] == item_id and i["amount"] >= amount for i in self.stock)
+
+def get_classic_shop_items():
+    return [
+        {**item, "amount": float('inf')} # Les items du shop classique sont illimités
+        for item in ITEMS.values()
+        if not item["is_special"]
+    ]
+
+def get_wandering_shop_items(biome):
+    specials = [
+        {**item, "amount": 50}
+        for item in ITEMS.values()
+        if item["is_special"] and roll(item["rarity"])
+    ]
+    
+    non_special_items = [item for item in ITEMS.values() if not item["is_special"]]
+    random.shuffle(non_special_items)
+    discounted_items = non_special_items[:2]
+    
+    discounted = [
+        {
+            **item,
+            "price_O2": item["specialprice_O2"] if "price_O2" in item else None,
+            "price_CO2": item["specialprice_CO2"] if "price_CO2" in item else None,
+            "amount": 50
+        }
+        for item in discounted_items
+    ]
+    
+    return specials + discounted
+
+def roll(chance):
+    return random.random() < chance
+
+# Instances
+wandering_shop_manager_plain = ShopManager(PLANETS[0]["biomes"][0], "wandering")
+wandering_shop_manager_forest = ShopManager(PLANETS[0]["biomes"][1], "wandering")
+wandering_shop_manager_lake = ShopManager(PLANETS[0]["biomes"][2], "wandering")
+wandering_shop_manager_mountain = ShopManager(PLANETS[0]["biomes"][3], "wandering")
+
+classic_shop_manager = ShopManager()
+
+WANDERINGSHOPS = [
+    {"id": 0, "shop": wandering_shop_manager_plain, "biome": "plain"},
+    {"id": 1, "shop": wandering_shop_manager_forest, "biome": "forest"},
+    {"id": 2, "shop": wandering_shop_manager_lake, "biome": "lake"},
+    {"id": 3, "shop": wandering_shop_manager_mountain, "biome": "mountain"},
+]
