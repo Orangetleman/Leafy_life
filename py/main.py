@@ -183,6 +183,8 @@ def _build_placeholder(title: str) -> list:
     page.on_view_pop = view_pop
     _seed_test_data()
     page.go(page.route or "/leafs")'''
+
+
 def main(page: ft.Page) -> None:
     page.title = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
