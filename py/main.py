@@ -7,60 +7,26 @@ Gère la navigation entre les vues (écrans) et la barre de navigation.
 
 import flet as ft
 
-from js.data.leafs import LEAFS
-from js.gameplay.leafs.leafManager.js import leaf_manager #ca marche pas
+from leafs import LEAFS
+from datacenter import *
 
-'''export class LeafManager {
-    constructor() {
-        this.owned = [];
-    }
-
-    addLeaf(leaf) {
-        const existingLeaf = this.owned.find(l => l.id === leaf.id);
-        if (existingLeaf) {
-            console.log(`Leaf déjà possédé : ${leaf.name}`);
-            return;
-        }
-        this.owned.push(new LeafStat(leaf));
-        console.log(`Leaf ajouté : ${leaf.name} dans la collection : `, this.owned);
-    }
-}
-export const leafManager = new LeafManager();''' #a traduire ou faire un autre fichier
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
     for key in (0, 2, 4, 6, 8):
-        leaf_manager.add_leaf(LEAFS[key])
+        leafmanager.add_leaf(LEAFS[key])
 
 
-def _build_navbar(page: ft.Page) -> ft.Row:
-    """Barre de navigation (équivalent de js/screens/navigation/navbar.js)."""
+def _build_navbar(navigate) -> ft.Row:
     return ft.Row(
         [
-            ft.ElevatedButton(
-                "Leafs",
-                on_click=lambda e: page.push_route("/leafs"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Shop",
-                on_click=lambda e: page.push_route("/shop"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Inventory",
-                on_click=lambda e: page.push_route("/inventory"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
-            ft.ElevatedButton(
-                "Planet",
-                on_click=lambda e: page.push_route("/planet"),
-                style=ft.ButtonStyle(bgcolor="#f8f3ec", color="#131313"),
-            ),
+            ft.Button("Leafs",      on_click=lambda e: navigate("leafs")),
+            ft.Button("Shop",       on_click=lambda e: navigate("shop")),
+            ft.Button("Inventory",  on_click=lambda e: navigate("inventory")),
+            ft.Button("Planet",     on_click=lambda e: navigate("planet")),
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=12,
     )
-
 
 def _build_leafs_home(page: ft.Page) -> list:
     """
@@ -77,7 +43,7 @@ def _build_leafs_home(page: ft.Page) -> list:
     def on_search_change(e):
         query = (e.control.value or "").strip().lower()
         list_container.controls.clear()
-        for leaf in leaf_manager.owned:
+        for leaf in leafmanager.owned:
             if not query or query in leaf.name.lower():
                 list_container.controls.append(
                     ft.ListTile(
@@ -93,7 +59,7 @@ def _build_leafs_home(page: ft.Page) -> list:
         expand=True,
     )
 
-    for leaf in leaf_manager.owned:
+    for leaf in leafmanager.owned:
         list_container.controls.append(
             ft.ListTile(
                 title=ft.Text(leaf.name),
@@ -125,12 +91,12 @@ def _build_placeholder(title: str) -> list:
         ft.Container(
             content=ft.Text(f"{title} – Écran en cours de migration.", size=16),
             padding=20,
-            alignment=ft.alignment.center,
+            alignment=ft.Alignment(0, 0),
         )
     ]
 
 
-def main(page: ft.Page) -> None:
+'''def main(page: ft.Page) -> None:
     page.title = "Leafy Life"
     page.padding = 0
     page.theme_mode = ft.ThemeMode.DARK
@@ -186,17 +152,63 @@ def main(page: ft.Page) -> None:
             )
         page.update()
 
+    input = ft.TextField(value="0", text_align=ft.TextAlign.RIGHT, width=100)        #test de flet, exemple simple pour boutons + boite de texte
+
+    def minus_click(e):
+        input.value = str(int(input.value) - 1)
+
+    def plus_click(e):
+        input.value = str(int(input.value) + 1)
+
+    page.add(
+        ft.Row(
+            alignment=ft.MainAxisAlignment.CENTER,
+            controls=[
+                ft.IconButton(ft.Icons.REMOVE, on_click=minus_click),
+                input,
+                ft.IconButton(ft.Icons.ADD, on_click=plus_click),
+            ],
+        )
+    )                                                                                  #a voir pour une flexibox
+
+       
+
     def view_pop(e: ft.ViewPopEvent) -> None:
         page.views.pop()
         if page.views:
             top = page.views[-1]
-            page.push_route(top.route)
+            page.go(top.route)
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     _seed_test_data()
-    page.push_route(page.route or "/leafs")
+    page.go(page.route or "/leafs")'''
+def main(page: ft.Page) -> None:
+    page.title = "Leafy Life"
+    page.theme_mode = ft.ThemeMode.DARK
+    page.bgcolor = "#1a1a1a"
 
+    def show_screen(name: str):
+        page.clean()
+        
+        if name == "leafs":
+            body = _build_leafs_home(page)
+        elif name == "shop":
+            body = _build_placeholder("Shop")
+        elif name == "inventory":
+            body = _build_placeholder("Inventory")
+        elif name == "planet":
+            body = _build_placeholder("Planet")
+        else:
+            body = _build_leafs_home(page)
+
+        page.add(
+            ft.Container(content=_build_navbar(show_screen), padding=8, bgcolor="#131313"),
+            *body,
+        )
+
+    show_screen("leafs")
 
 if __name__ == "__main__":
-    ft.run(target=main, assets_dir="assets")
+    #ft.run(target=main, assets_dir="assets")
+    ft.run(main)
