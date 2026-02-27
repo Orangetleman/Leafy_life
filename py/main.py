@@ -124,5 +124,5 @@ def main(page: ft.Page) -> None:
     show_screen("leafs")
 
 if __name__ == "__main__":
-    ft.run(main, assets_dir="icons")
+    ft.run(main)
     
