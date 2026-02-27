@@ -124,7 +124,7 @@ PLANETS = [
 # ------------------------------------- DATA MANAGER -------------------------------------
 # ----------------------------------------------------------------------------------------
 
-
+# LeafManager gère les leafs possédés par le joueur, leur ajout et leurs statistiques.
 class LeafManager:
     def __init__(self, owned = []):
         self.owned = owned
@@ -157,3 +157,82 @@ class LeafStat:
 
 leafmanager = LeafManager()
 
+# InventoryManager gère les items et l'argent possédés par le joueur, leur ajout et leurs quantités.
+class InventoryManager:
+    def __init__(self):
+        self.items = []
+        self.money = {"O2": 0, "CO2": 0}
+    
+    def append_item(self, item, amount=1):
+        existing_item = None
+        for i in self.items:
+            if i["id"] == item["id"]:
+                existing_item = i
+                break
+        
+        if existing_item:
+            existing_item["amount"] += amount
+        else:
+            new_item = item.copy()
+            new_item["amount"] = amount
+            self.items.append(new_item)
+    
+    def append_money(self, currency, amount):
+        if currency in self.money:
+            self.money[currency] += amount
+        else:
+            print(f"Currency {currency} not recognized.")
+    
+    def remove_item(self, item_id, amount=1):
+        item_index = -1
+        for i, item in enumerate(self.items):
+            if item["id"] == item_id:
+                item_index = i
+                break
+        
+        if item_index != -1:
+            self.items[item_index]["amount"] -= amount
+            if self.items[item_index]["amount"] <= 0:
+                deleted_item = self.items.pop(item_index)
+                return deleted_item
+        return None
+    
+    def remove_money(self, currency, amount):
+        if currency not in self.money:
+            print(f"Currency {currency} not recognized.")
+            return False
+        
+        if self.money[currency] >= amount:
+            self.money[currency] -= amount
+            print(f"{currency}: {self.money[currency]} (removed {amount})")
+            return True
+        else:
+            print(f"Not enough {currency}. Required: {amount}, Available: {self.money[currency]}")
+            return False
+    
+    def is_item_in_inventory(self, item_id):
+        return any(i["id"] == item_id for i in self.items)
+    
+    def is_enough_money(self, item):
+        needs_O2 = "price_O2" in item and item["price_O2"] > 0
+        needs_CO2 = "price_CO2" in item and item["price_CO2"] > 0
+        
+        # Si l'item nécessite les deux devises
+        if needs_O2 and needs_CO2:
+            return self.money["O2"] >= item["price_O2"] and self.money["CO2"] >= item["price_CO2"]
+        # Si l'item nécessite uniquement O2
+        elif needs_O2:
+            return self.money["O2"] >= item["price_O2"]
+        # Si l'item nécessite uniquement CO2
+        elif needs_CO2:
+            return self.money["CO2"] >= item["price_CO2"]
+        # Si aucun prix n'est défini, l'item est gratuit
+        return True
+    
+    def get_items(self):
+        return self.items
+    
+    def get_money(self):
+        return self.money
+
+inventory_manager = InventoryManager()
