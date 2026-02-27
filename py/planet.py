@@ -6,7 +6,7 @@ def _planet(page: ft.Page) -> list:
 
     content=ft.Text("explore", size=16)
 
-    def plus_click(e):
+    def expl_plaine(e):
         page.clean()
         page.add(ft.Text("caca", size=16))
         
@@ -21,7 +21,7 @@ def _planet(page: ft.Page) -> list:
             ft.Container(
                 content=ft.Row(
                     [
-                        ft.IconButton(content, on_click=plus_click),
+                        ft.IconButton(content, on_click=expl_plaine),
                     ],
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
