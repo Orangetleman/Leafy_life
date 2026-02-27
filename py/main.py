@@ -118,7 +118,10 @@ def main(page: ft.Page) -> None:
 
         page.add(
             ft.Container(content=_build_navbar(show_screen), padding=8, bgcolor="#131313"),
-            *body,
+            ft.Container(
+                content=ft.Column(body, expand=True),
+                expand=True,
+            )
         )
 
     show_screen("leafs")

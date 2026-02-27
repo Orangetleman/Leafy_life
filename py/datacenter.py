@@ -5,7 +5,7 @@ from os import name
 
 # Enemies palette
 ENEMIES = [
-    { "id": 1, "name": "Chardon", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2},
+    { "id": 1, "name": "Chardon", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual" : "23112025-IMG_0402.jpg"},
 ]
 
 # Events palette

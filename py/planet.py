@@ -1,4 +1,5 @@
 import flet as ft
+from datacenter import ENEMIES
 
 def _planet(page: ft.Page) -> list:
     page.title = "Planet"
@@ -8,16 +9,22 @@ def _planet(page: ft.Page) -> list:
 
     def expl_plaine(e):
         page.clean()
-        page.add(ft.Text("caca", size=16))
+        page.add(
+            ft.Stack([
+                ft.Container(
+                    content= ft.Image(
+                    src="assets/imgs/icons/arriere_plaine.png"),
+                    expand=True,
+                    ),
+                ft.Container(content= ft.Image(src=ENEMIES[0]["visual"]),expand=True)
+                ]))
+            
         
-    return [ft.Container(ft.Stack(
-        [
-            ft.Image(
+    return ft.Stack([
+            ft.Container(ft.Image(
                 src="assets/imgs/icons/biome_plain.png",
-                width=1000,
-                height=1000,
-                fit="cover",
-            ),
+                
+            ),expand=True),
             ft.Container(
                 content=ft.Row(
                     [
@@ -27,8 +34,8 @@ def _planet(page: ft.Page) -> list:
                 ),
                 width=300,
                 height=300,
-            ),
-        ]
-    ))]
+            )
+    ])
+    
 
 
