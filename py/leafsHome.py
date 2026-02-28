@@ -83,6 +83,7 @@ def open_leaf_modal(page: ft.Page, leaf_dict):
                 create_progress_bar(leaf.nutrients, 100, "Nourriture", color="orange"),
                 create_progress_bar(leaf.hydration, 100, "Hydratation", color="blue"),
                 create_progress_bar(leaf.atk, 10, "Attaque", color="purple"),
+                create_progress_bar(leaf.xp, 100, "xp", color="yellow"),
             ],
             scroll="auto",
             tight=True,        # ← important pour que la Column ne prenne pas toute la hauteur
