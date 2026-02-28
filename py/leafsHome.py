@@ -102,8 +102,21 @@ def open_leaf_modal(page: ft.Page, leaf_dict):
 def _build_leafs_home(page: ft.Page) -> list:
     """Écran des leafs - affiche la collection avec recherche."""
     
-    def on_leaf_click(leaf):
+    import asyncio
+
+    async def on_leaf_click(e, leaf_row, leaf):
+        leaf_row.bgcolor = "#7a9c52"
+        leaf_row.update()
+        
+        await asyncio.sleep(0.2)
+        
+        leaf_row.bgcolor = "#92b368"
+        leaf_row.update()
         open_leaf_modal(page, leaf)
+
+    def on_leaf_hover(e, leaf_row):
+        leaf_row.bgcolor = "#a8c97a" if e.data else "#92b368"
+        leaf_row.update()
     
     def populate_list(query=""):
         """Remplit la liste en fonction de la recherche."""
@@ -113,7 +126,6 @@ def _build_leafs_home(page: ft.Page) -> list:
             # Filtrer par recherche
             if query:
                 search_lower = query.lower()
-                # Recherche par nom, biome, type ou espèce
                 biome_name = BIOMES[leaf.biome - 1]['name'].lower()
                 leaf_type_name = LEAFS_TYPE[leaf.type]['name'].lower()
                 
@@ -122,21 +134,14 @@ def _build_leafs_home(page: ft.Page) -> list:
                         search_lower in leaf_type_name or
                         search_lower in leaf.species.lower()):
                     continue
-            
-            # Créer un conteneur avec les infos du leaf
+
+            # Et dans le Container :
             leaf_row = ft.Container(
                 content=ft.Row([
-                    # Image miniature
                     ft.Container(
-                        content=ft.Image(
-                            src=leaf.img,
-                            width=50,
-                            height=50,
-                            fit="contain",
-                        ),
+                        content=ft.Image(src=leaf.img, width=50, height=50, fit="contain"),
                         width=60,
                     ),
-                    # Infos du leaf
                     ft.Column([
                         ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=14),
                         ft.Row([
@@ -148,8 +153,17 @@ def _build_leafs_home(page: ft.Page) -> list:
                 padding=10,
                 border_radius=8,
                 bgcolor="#92b368",
-                on_click=lambda e, l=leaf: on_leaf_click(l),
+                animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),  # ← anime bgcolor aussi
             )
+
+            leaf_row.on_hover = lambda e, r=leaf_row: on_leaf_hover(e, r)
+
+            # ← retire le lambda on_click, garde uniquement ça :
+            async def handle_click(e, r=leaf_row, l=leaf):
+                await on_leaf_click(e, r, l)
+
+            leaf_row.on_click = handle_click
+            
             items.append(leaf_row)
         
         list_container.controls = items
