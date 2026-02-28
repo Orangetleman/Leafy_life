@@ -9,6 +9,18 @@ def _planet(page: ft.Page) -> list:
 
     def expl_plaine(e):
         page.clean()
+        sprite = ft.Container(content= ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),left=0,bottom=400)
+
+        def on_keyboard(e: ft.KeyboardEvent):
+            if e.key == "Arrow Right":
+                sprite.left += 100
+                page.update()
+            if e.key == "Arrow Left":
+                sprite.left -= 100
+                page.update()
+
+        page.on_keyboard_event = on_keyboard  # 👈 écoute le clavier
+
         page.add(
             ft.Stack([
                 ft.Container(
@@ -16,7 +28,8 @@ def _planet(page: ft.Page) -> list:
                     src="assets/imgs/icons/arriere_plaine.png"),
                     expand=True,
                     ),
-                ft.Container(content= ft.Image(src=ENEMIES[0]["visual"]),expand=True)
+                ft.Container(content= ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),right=0,bottom=400),
+                sprite
                 ]))
             
         
@@ -38,4 +51,4 @@ def _planet(page: ft.Page) -> list:
     ])
     
 
-
+print(ENEMIES[0]["visual"])
