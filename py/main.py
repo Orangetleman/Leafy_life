@@ -7,13 +7,13 @@ Gère la navigation entre les vues (écrans) et la barre de navigation.
 
 import flet as ft
 
-from leafs import LEAFS
+from leafsHome import _build_leafs_home
 from datacenter import *
-from planet import _planet
+from planetHome import _planet
 
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
-    for key in (0, 2, 4, 6, 8):
+    for key in (0, 1, 2, 3, 4, 5, 6, 7, 8):
         leafmanager.add_leaf(LEAFS[key])
 
 
@@ -29,61 +29,7 @@ def _build_navbar(navigate) -> ft.Row:
         spacing=12,
     )
 
-def _build_leafs_home(page: ft.Page) -> list:
-    """
-    Contenu de l'écran Leafs (équivalent de js/screens/leafs/leafsHome.js).
-    Retourne la liste des contrôles du corps de la vue.
-    """
-    title = ft.Text("Vos leafs", size=22, weight=ft.FontWeight.BOLD)
-    list_container = ft.Column(
-        scroll=ft.ScrollMode.AUTO,
-        expand=True,
-        spacing=8,
-    )
 
-    def on_search_change(e):
-        query = (e.control.value or "").strip().lower()
-        list_container.controls.clear()
-        for leaf in leafmanager.owned:
-            if not query or query in leaf.name.lower():
-                list_container.controls.append(
-                    ft.ListTile(
-                        title=ft.Text(leaf.name),
-                        leading=ft.Image(src=leaf.img, width=48, height=48, fit=ft.ImageFit.CONTAIN),
-                    )
-                )
-        page.update()
-
-    search = ft.TextField(
-        hint_text="🔍 Rechercher...",
-        on_change=on_search_change,
-        expand=True,
-    )
-
-    for leaf in leafmanager.owned:
-        list_container.controls.append(
-            ft.ListTile(
-                title=ft.Text(leaf.name),
-                leading=ft.Image(src=leaf.img, width=48, height=48, fit=ft.ImageFit.CONTAIN),
-            )
-        )
-
-    return [
-        ft.Container(
-            content=ft.Column(
-                [
-                    ft.Row([title], alignment=ft.MainAxisAlignment.CENTER),
-                    ft.Row([search], alignment=ft.MainAxisAlignment.CENTER),
-                    ft.Divider(),
-                    ft.Container(content=list_container, expand=True),
-                ],
-                expand=True,
-            ),
-            padding=16,
-            bgcolor="#f0f8ff",
-            border_radius=8,
-        )
-    ]
 
 
 def _build_placeholder(title: str) -> list:
@@ -127,5 +73,5 @@ def main(page: ft.Page) -> None:
     show_screen("leafs")
 
 if __name__ == "__main__":
+    _seed_test_data()
     ft.run(main)
-    
