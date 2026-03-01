@@ -154,8 +154,8 @@ class LeafStat:
         self.biome = leaf["biome"]
         self.competence_lvl = leaf["competence_lvl"]
         self.img = leaf["img"]
-        self.nutrients = 100
-        self.hydration = 100
+        self.nutrients = 20
+        self.hydration = 20
         self.regime = leaf["regime"] if "regime" in leaf else None
         self.xp = leaf["xp"]
 

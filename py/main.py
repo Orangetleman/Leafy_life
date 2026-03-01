@@ -7,14 +7,17 @@ Gère la navigation entre les vues (écrans) et la barre de navigation.
 
 import flet as ft
 
-from leafsHome import _build_leafs_home
 from datacenter import *
+from leafsHome import _build_leafs_home
 from planetHome import _planet
+from inventoryHome import _build_inventory_home
+from shopHome import _build_shop_home
 
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
     for key in (0, 1, 2, 3, 4, 5, 6, 7, 8):
         leafmanager.add_leaf(LEAFS[key])
+        inventory_manager.append_item(ITEMS[key+1])
 
 
 def _build_navbar(navigate) -> ft.Row:
@@ -57,9 +60,9 @@ def main(page: ft.Page) -> None:
         if name == "leafs":
             body = _build_leafs_home(page)
         elif name == "shop":
-            body = _build_placeholder("Shop")
+            body = _build_shop_home(page)
         elif name == "inventory":
-            body = _build_placeholder("Inventory")
+            body = _build_inventory_home(page)
         elif name == "planet":
             body = _planet(page)
         else:
@@ -68,7 +71,7 @@ def main(page: ft.Page) -> None:
         page.add(
             ft.Container(content=_build_navbar(show_screen), padding=8, bgcolor="#131313"),
             ft.Container(
-                content=ft.Column(body, expand=True),
+                content=ft.Column(controls=body, expand=True),  # ← controls= explicite
                 expand=True,
             )
         )

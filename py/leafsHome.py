@@ -80,8 +80,8 @@ def open_leaf_modal(page: ft.Page, leaf_dict):
                 ft.Divider(),
                 ft.Text("Statistiques", weight=ft.FontWeight.BOLD),
                 create_progress_bar(leaf.hp, 10, "Points de Vie", color="red"),
-                create_progress_bar(leaf.nutrients, 100, "Nourriture", color="orange"),
-                create_progress_bar(leaf.hydration, 100, "Hydratation", color="blue"),
+                create_progress_bar(leaf.nutrients, 100, "Nourriture", color="#ef540c" if leaf.nutrients <= 20 else "#ef980c"),
+                create_progress_bar(leaf.hydration, 100, "Hydratation", color="#ff0000" if leaf.hydration <= 20 else "#1e90ff"),
                 create_progress_bar(leaf.atk, 10, "Attaque", color="purple"),
                 create_progress_bar(leaf.xp, 100, "xp", color="yellow"),
             ],
@@ -154,12 +154,11 @@ def _build_leafs_home(page: ft.Page) -> list:
                 padding=10,
                 border_radius=8,
                 bgcolor="#92b368",
-                animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),  # ← anime bgcolor aussi
+                animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
             )
 
             leaf_row.on_hover = lambda e, r=leaf_row: on_leaf_hover(e, r)
 
-            # ← retire le lambda on_click, garde uniquement ça :
             async def handle_click(e, r=leaf_row, l=leaf):
                 await on_leaf_click(e, r, l)
 
