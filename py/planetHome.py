@@ -1,89 +1,111 @@
 import flet as ft
-from datacenter import ENEMIES
+from pynput import keyboard as pynput_keyboard
+from datacenter import *
+import asyncio
 
 def _planet(page: ft.Page) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    content=ft.Text("explore", size=16)
+    content = ft.Text("explore", size=16)
 
     def expl_plaine(e):
         page.clean()
-        sprite = ft.Container(content= ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),left=0,bottom=400)
-        
-        # Dictionnaire pour tracker les touches pressées
-        keys_pressed = {"ArrowRight": False, "ArrowLeft": False}
-        last_keys = {}
-        
-        def on_keyboard_event(e: ft.KeyboardEvent):
-            print(f"Key pressed: {e.key}")
-            # Détecte si c'est un "up" : la touche était pressée avant et ne l'est plus
-            if e.key in last_keys:
-                keys_pressed[e.key] = False
-                del last_keys[e.key]
-                print(f"{e.key} released")
-            else:
-                # C'est un "down"
-                if e.key == "D" or e.key == "ArrowRight":
-                    keys_pressed["ArrowRight"] = True
-                    last_keys["ArrowRight"] = True
-                    print("Right pressed")
-                elif e.key == "Q" or e.key == "ArrowLeft":
-                    keys_pressed["ArrowLeft"] = True
-                    last_keys["ArrowLeft"] = True
-                    print("Left pressed")
-        
-        def update_position():
-            if keys_pressed["ArrowRight"]:
-                sprite.left += 10
-            if keys_pressed["ArrowLeft"]:
-                sprite.left -= 10
-            page.update()
-        
-        # Mise à jour continuelle de la position
-        import time
-        import threading
-        
-        def game_loop():
-            while True:
-                update_position()
-                time.sleep(0.05)  # 50ms = ~20 FPS
-        
-        thread = threading.Thread(target=game_loop, daemon=True)
-        thread.start()
+        sprite = ft.Container(
+            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
+            left=0,
+            bottom=400,
+            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
+        )
+
+        keys_pressed = {"right": False, "left": False}
+        running = [True]
+        focused = [True]
+
+        def on_press(key):
+            if not focused[0]:
+                return
+            try:
+                if key.char in ("d", "D"):
+                    keys_pressed["right"] = True
+                elif key.char in ("q", "Q"):
+                    keys_pressed["left"] = True
+            except AttributeError:
+                if key == pynput_keyboard.Key.right:
+                    keys_pressed["right"] = True
+                elif key == pynput_keyboard.Key.left:
+                    keys_pressed["left"] = True
+
+        def on_release(key):
+            try:
+                if key.char in ("d", "D"):
+                    keys_pressed["right"] = False
+                elif key.char in ("q", "Q"):
+                    keys_pressed["left"] = False
+            except AttributeError:
+                if key == pynput_keyboard.Key.right:
+                    keys_pressed["right"] = False
+                elif key == pynput_keyboard.Key.left:
+                    keys_pressed["left"] = False
+
+        listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
+        listener.start()
+
+        def stop_game(e=None):
+            print("stop_game appelé")
+            running[0] = False
+            listener.stop()
+            print("listener stoppé, running:", running[0])
+        def on_window_event(e):
+            if e.type == ft.WindowEventType.FOCUS:
+                focused[0] = True
+            elif e.type == ft.WindowEventType.BLUR:
+                focused[0] = False
+                keys_pressed["right"] = False
+                keys_pressed["left"] = False
+
+        page.stop_current_screen = stop_game
+        page.window.on_event = on_window_event
+
+        async def game_loop():
+            while running[0]:
+                if keys_pressed["right"]:
+                    sprite.left = (sprite.left or 0) + 10
+                if keys_pressed["left"]:
+                    sprite.left = (sprite.left or 0) - 10
+                page.update()
+                await asyncio.sleep(0.05)
 
         game_container = ft.Container(
             content=ft.Stack([
                 ft.Container(
-                    content= ft.Image(src="assets/imgs/icons/arriere_plaine.png"),
+                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.png"),
                     expand=True,
                 ),
-                ft.Container(content= ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),right=0,bottom=400),
+                ft.Container(
+                    content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
+                    right=0,
+                    bottom=400
+                ),
                 sprite
             ]),
             expand=True
         )
-        
-        page.on_keyboard_event = on_keyboard_event
-        page.add(game_container)
-            
-        
-    return ft.Stack([
-            ft.Container(ft.Image(
-                src="assets/imgs/icons/biome_plain.png",
-                
-            ),expand=True),
-            ft.Container(
-                content=ft.Row(
-                    [
-                        ft.IconButton(content, on_click=expl_plaine),
-                    ],
-                    alignment=ft.MainAxisAlignment.CENTER,
-                ),
-                width=300,
-                height=300,
-            )
-    ])
-    
 
-print(ENEMIES[0]["visual"])
+        page.add(game_container)
+        page.run_task(game_loop)  # ← après page.add pour que le sprite soit sur la page
+
+    return [ft.Stack([
+        ft.Container(
+            ft.Image(src="assets/imgs/icons/biome_plain.png"),
+            expand=True
+        ),
+        ft.Container(
+            content=ft.Row(
+                [ft.IconButton(content, on_click=expl_plaine)],
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            width=300,
+            height=300,
+        )
+    ])]

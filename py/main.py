@@ -49,6 +49,9 @@ def main(page: ft.Page) -> None:
     page.bgcolor = "#1a1a1a"
 
     def show_screen(name: str):
+        if hasattr(page, 'stop_current_screen'):
+            page.stop_current_screen()
+            del page.stop_current_screen
         page.clean()
         
         if name == "leafs":
