@@ -9,15 +9,6 @@ def _planet(page: ft.Page) -> list:
 
     content = ft.Text("explore", size=16)
 
-    def expl_plaine(e):
-        page.clean()
-        sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
-            left=0,
-            bottom=200,
-            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
-        )
-
     keys_pressed = {"right": False, "left": False}
     running = [True]
     focused = [True]
@@ -62,7 +53,7 @@ def _planet(page: ft.Page) -> list:
         sprite = ft.Container(
             content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
             left=0,
-            bottom=400,
+            bottom=200,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
