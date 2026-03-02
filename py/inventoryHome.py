@@ -168,10 +168,22 @@ def _build_inventory_home(page: ft.Page) -> list:
         )
         
         def on_type_click(e):
-            if state["active_type"] == type_obj or (state["active_type"] != type_obj and state["active_type"] is not None):
-                state["active_type"] = None
-                button.border = ft.border.all(2, "#555555")
-                button.bgcolor = "#2a2a2a"
+            if state["active_type"] is not None:
+                if state["active_type"] == type_obj:
+                    state["active_type"] = None
+                    button.border = ft.border.all(2, "#555555")
+                    button.bgcolor = "#2a2a2a"
+                else:
+                    # modifier le précédent bouton actif pour le désactiver
+                    for btn in type_buttons_container.controls:
+                        if btn.content.controls[1].value == state["active_type"]["name"]:
+                            state["active_type"] = type_obj
+                            button.border = ft.border.all(2, "#4a9eff")
+                            button.bgcolor = "#1a3a5c"
+                            btn.border = ft.border.all(2, "#555555")
+                            btn.bgcolor = "#2a2a2a"
+                            btn.update()
+                            break
             else:
                 state["active_type"] = type_obj
                 button.border = ft.border.all(2, "#4a9eff")
@@ -184,6 +196,9 @@ def _build_inventory_home(page: ft.Page) -> list:
     
     for type_obj in TYPES:
         type_buttons_container.controls.append(create_type_button(type_obj))
+    # LA, TU DOIS FAIRE UN STOCKAGE DE L'OBJET BOUTON DANS LE STATE POUR CHAQUE TYPE, 
+    # AFIN DE POUVOIR CHANGER SON STYLE QUAND ON CLIQUE SUR UN AUTRE TYPE OU QUAND ON REFOCUS LE CHAMPS DE RECHERCHE. 
+    # SINON, TU NE POURRAS PAS REMETTRE LE STYLE PAR DÉFAUT AU BOUTON QUAND IL N'EST PLUS ACTIF.
     
     search_input = ft.TextField(
         hint_text="Rechercher... (ex: #food, bandage)",

@@ -45,7 +45,6 @@ def _build_placeholder(title: str) -> list:
         )
     ]
 
-
 def main(page: ft.Page) -> None:
     page.title = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
