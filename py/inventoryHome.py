@@ -168,7 +168,7 @@ def _build_inventory_home(page: ft.Page) -> list:
         )
         
         def on_type_click(e):
-            if state["active_type"] == type_obj:
+            if state["active_type"] == type_obj or (state["active_type"] != type_obj and state["active_type"] is not None):
                 state["active_type"] = None
                 button.border = ft.border.all(2, "#555555")
                 button.bgcolor = "#2a2a2a"

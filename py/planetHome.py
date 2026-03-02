@@ -14,7 +14,7 @@ def _planet(page: ft.Page) -> list:
         sprite = ft.Container(
             content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
             left=0,
-            bottom=400,
+            bottom=200,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
 
@@ -70,11 +70,11 @@ def _planet(page: ft.Page) -> list:
         async def game_loop():
             while running[0]:
                 if keys_pressed["right"]:
-                    sprite.left = (sprite.left or 0) + 10
+                    sprite.left = (sprite.left or 0) + 15
                 if keys_pressed["left"]:
-                    sprite.left = (sprite.left or 0) - 10
+                    sprite.left = (sprite.left or 0) - 15
                 page.update()
-                await asyncio.sleep(0.05)
+                await asyncio.sleep(0.025)  # 40 FPS
 
         game_container = ft.Container(
             content=ft.Stack([
