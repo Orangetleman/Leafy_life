@@ -18,11 +18,11 @@ def _planet(page: ft.Page) -> list:
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
 
-        keys_pressed = {"right": False, "left": False}
-        running = [True]
-        focused = [True]
+    keys_pressed = {"right": False, "left": False}
+    running = [True]
+    focused = [True]
 
-        def on_press(key):
+    def on_press(key):
             if not focused[0]:
                 return
             try:
@@ -36,18 +36,35 @@ def _planet(page: ft.Page) -> list:
                 elif key == pynput_keyboard.Key.left:
                     keys_pressed["left"] = True
 
-        def on_release(key):
-            try:
-                if key.char in ("d", "D"):
-                    keys_pressed["right"] = False
-                elif key.char in ("q", "Q"):
-                    keys_pressed["left"] = False
-            except AttributeError:
-                if key == pynput_keyboard.Key.right:
-                    keys_pressed["right"] = False
-                elif key == pynput_keyboard.Key.left:
-                    keys_pressed["left"] = False
+    def on_release(key):
+        try:
+            if key.char in ("d", "D"):
+                keys_pressed["right"] = False
+            elif key.char in ("q", "Q"):
+                keys_pressed["left"] = False
+        except AttributeError:
+            if key == pynput_keyboard.Key.right:
+                keys_pressed["right"] = False
+            elif key == pynput_keyboard.Key.left:
+                keys_pressed["left"] = False
 
+    
+    def on_window_event(e):
+        if e.type == ft.WindowEventType.FOCUS:
+            focused[0] = True
+        elif e.type == ft.WindowEventType.BLUR:
+            focused[0] = False
+            keys_pressed["right"] = False
+            keys_pressed["left"] = False
+
+    def expl_plaine(e):
+        page.clean()
+        sprite = ft.Container(
+            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
+            left=0,
+            bottom=400,
+            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
+        )
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         listener.start()
 
@@ -56,13 +73,6 @@ def _planet(page: ft.Page) -> list:
             running[0] = False
             listener.stop()
             print("listener stoppé, running:", running[0])
-        def on_window_event(e):
-            if e.type == ft.WindowEventType.FOCUS:
-                focused[0] = True
-            elif e.type == ft.WindowEventType.BLUR:
-                focused[0] = False
-                keys_pressed["right"] = False
-                keys_pressed["left"] = False
 
         page.stop_current_screen = stop_game
         page.window.on_event = on_window_event
