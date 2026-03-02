@@ -61,42 +61,51 @@ def _build_inventory_home(page: ft.Page) -> list:
     def create_inventory_item_button(item):
         def on_tap(e, i=item):
             open_item_modal(i)
-
-        return ft.GestureDetector(
-            on_tap=on_tap,
-            content=ft.Container(
-                content=ft.Stack([
-                    ft.Image(
+        
+        # Créer le container une fois
+        item_container = ft.Container(
+            content=ft.Stack([
+                ft.Container(
+                    content=ft.Image(
                         src=item["icon"] if "icon" in item else "",
                         width=80,
                         height=80,
                         fit="contain",
                         error_content=ft.Icon(ft.Icons.HELP_OUTLINE, size=40),
                     ),
-                    ft.Container(
-                        content=ft.Text(str(item["amount"]), weight=ft.FontWeight.BOLD, size=12, color="white"),
-                        alignment=ft.Alignment(1, 1),
-                        bgcolor=ft.Colors.with_opacity(0.7, "black"),
-                        border_radius=ft.border_radius.only(top_left=5, bottom_right=8),
-                        padding=ft.padding.symmetric(horizontal=4, vertical=2),
-                    )
-                ], width=80, height=80),
-                width=90,
-                height=90,
-                border_radius=10,
-                border=ft.border.all(2, "#444444"),
-                tooltip=item["name"],
-                padding=5,
-                bgcolor="#2a2a2a",
-            )
+                    padding=5,
+                ),
+                ft.Container(
+                    content=ft.Text(str(item["amount"]), weight=ft.FontWeight.BOLD, size=12, color="white"),
+                    bgcolor=ft.Colors.with_opacity(0.7, "black"),
+                    border=ft.border.all(2, "#444444"),
+                    border_radius=ft.border_radius.only(top_left=5, bottom_right=8),
+                    padding=ft.padding.symmetric(horizontal=4, vertical=2),
+                    right=0,
+                    bottom=0,
+                    width=25,
+                    height=25,
+                )
+            ], width=80, height=80),
+            width=90,
+            height=90,
+            border_radius=10,
+            border=ft.border.all(2, "#444444"),
+            tooltip=item["name"],
+            bgcolor="#2a2a2a",
+            animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
+            on_click=on_tap,
         )
+
+        def on_hover(e):
+            item_container.bgcolor = "#3c3c3c" if e.data else "#2a2a2a"
+            item_container.update()
+
+        item_container.on_hover = on_hover
+        return item_container
     
     def open_item_modal(item):
-        def close_modal(e):
-            dialog.open = False
-            page.overlay.remove(dialog)
-            page.update()
-        
+        # Créer la dialog d'abord
         dialog = ft.AlertDialog(
             modal=True,
             title=ft.Text(item["name"], weight=ft.FontWeight.BOLD),
@@ -125,9 +134,14 @@ def _build_inventory_home(page: ft.Page) -> list:
                 ft.Divider(),
                 ft.Text(item.get("description", "Pas de description"), size=13, color="gray"),
             ], tight=True, width=300, spacing=10),
-            actions=[ft.TextButton("Fermer", on_click=close_modal)],
             actions_alignment=ft.MainAxisAlignment.END,
         )
+        
+        def close_modal(e):
+            dialog.open = False
+            page.update()
+        
+        dialog.actions = [ft.TextButton("Fermer", on_click=close_modal)]
         
         page.overlay.append(dialog)
         dialog.open = True
@@ -196,9 +210,6 @@ def _build_inventory_home(page: ft.Page) -> list:
     
     for type_obj in TYPES:
         type_buttons_container.controls.append(create_type_button(type_obj))
-    # LA, TU DOIS FAIRE UN STOCKAGE DE L'OBJET BOUTON DANS LE STATE POUR CHAQUE TYPE, 
-    # AFIN DE POUVOIR CHANGER SON STYLE QUAND ON CLIQUE SUR UN AUTRE TYPE OU QUAND ON REFOCUS LE CHAMPS DE RECHERCHE. 
-    # SINON, TU NE POURRAS PAS REMETTRE LE STYLE PAR DÉFAUT AU BOUTON QUAND IL N'EST PLUS ACTIF.
     
     search_input = ft.TextField(
         hint_text="Rechercher... (ex: #food, bandage)",
@@ -212,7 +223,11 @@ def _build_inventory_home(page: ft.Page) -> list:
     refresh_item_list()
     
     return [ft.Column([
-        ft.Text("Inventaire", size=24, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER),
+        ft.Container(
+            content=ft.Text("Inventaire", size=24, weight=ft.FontWeight.BOLD, text_align=ft.TextAlign.CENTER),
+            alignment=ft.Alignment.CENTER,
+            padding=ft.padding.symmetric(vertical=10),
+        ),
         ft.Container(
             content=type_buttons_container,
             padding=ft.padding.symmetric(vertical=10),
