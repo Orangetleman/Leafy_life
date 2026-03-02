@@ -48,6 +48,10 @@ def _planet(page: ft.Page) -> list:
             keys_pressed["right"] = False
             keys_pressed["left"] = False
 
+
+    """===========================================================plaine===================================================================================="""
+
+
     def expl_plaine(e):
         page.clean()
         sprite = ft.Container(
@@ -94,7 +98,11 @@ def _planet(page: ft.Page) -> list:
         )
 
         page.add(game_container)
-        page.run_task(game_loop)  # ← après page.add pour que le sprite soit sur la page
+        page.run_task(game_loop)  
+
+
+    """===========================================================foret===================================================================================="""
+
 
     return [ft.Stack([
         ft.Container(
