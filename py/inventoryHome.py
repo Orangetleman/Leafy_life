@@ -48,9 +48,13 @@ def _build_inventory_home(page: ft.Page) -> list:
         item_list_container.controls.clear()
         items = filter_items()
         
-        if not items:
+        if is_search_mode() and not items:
             item_list_container.controls.append(
-                ft.Text("Inventaire vide", size=16, color="red")
+                ft.Text("Aucun résultat trouvé", size=16, color="#f77c5dab")
+            )
+        elif not items:
+            item_list_container.controls.append(
+                ft.Text("Inventaire vide", size=16, color="#f77c5dab")
             )
         else:
             for item in items:
@@ -73,19 +77,17 @@ def _build_inventory_home(page: ft.Page) -> list:
                         fit="contain",
                         error_content=ft.Icon(ft.Icons.HELP_OUTLINE, size=40),
                     ),
-                    padding=5,
+                    padding=10,
                 ),
                 ft.Container(
                     content=ft.Text(str(item["amount"]), weight=ft.FontWeight.BOLD, size=12, color="white"),
                     bgcolor=ft.Colors.with_opacity(0.7, "black"),
                     border=ft.border.all(2, "#444444"),
-                    border_radius=ft.border_radius.only(top_left=5, bottom_right=8),
+                    border_radius=10,
                     padding=ft.padding.symmetric(horizontal=4, vertical=2),
-                    right=0,
-                    bottom=0,
-                    width=25,
-                    height=25,
-                )
+                    right=-2,
+                    bottom=-2,
+                ),
             ], width=80, height=80),
             width=90,
             height=90,
@@ -234,6 +236,7 @@ def _build_inventory_home(page: ft.Page) -> list:
         ),
         ft.Container(
             content=search_input,
+            alignment=ft.Alignment.CENTER,
             padding=ft.padding.symmetric(horizontal=20),
         ),
         ft.Container(

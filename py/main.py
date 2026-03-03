@@ -17,7 +17,8 @@ from shopHome import _build_shop_home
 def _seed_test_data():
     for key in (0, 1, 2, 3, 4, 5, 6, 7, 8):
         leafmanager.add_leaf(LEAFS[key])
-        inventory_manager.append_item(ITEMS[key+1])
+        for i in range(1, 24):
+            inventory_manager.append_item(ITEMS[key+1])
 
 
 def _build_navbar(navigate) -> ft.Row:
@@ -31,9 +32,6 @@ def _build_navbar(navigate) -> ft.Row:
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=12,
     )
-
-
-
 
 def _build_placeholder(title: str) -> list:
     """Vue de remplacement pour les écrans non encore migrés."""
