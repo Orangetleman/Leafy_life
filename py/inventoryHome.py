@@ -109,7 +109,8 @@ def _build_inventory_home(page: ft.Page) -> list:
     def open_item_modal(item):
         # Créer la dialog d'abord
         dialog = ft.AlertDialog(
-            modal=True,
+            modal=False,
+            on_dismiss=lambda e: close_modal(e),
             title=ft.Text(item["name"], weight=ft.FontWeight.BOLD),
             content=ft.Column([
                 ft.Row([
