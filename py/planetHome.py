@@ -9,9 +9,10 @@ def _planet(page: ft.Page) -> list:
 
     content = ft.Text("explore", size=16)
 
-    keys_pressed = {"right": False, "left": False}
+    keys_pressed = {"right": False, "left": False, "space":False}
     running = [True]
     focused = [True]
+     
 
     def on_press(key):
             if not focused[0]:
@@ -48,14 +49,24 @@ def _planet(page: ft.Page) -> list:
             keys_pressed["right"] = False
             keys_pressed["left"] = False
 
-    def dialogue():
-        return ft.Container(
-            ft.Container(
-                content=ft.Text("feur"),
-                bgcolor=ft.Colors.with_opacity(0.6, "blue"),
+    def dialogue(e, scene):
+        i_scene = [0]
+        def next_dialogue(key):
+            if key == pynput_keyboard.Key.space:
+                if i_scene[0] < len(scene) - 1:  
+                    i_scene[0] += 1
+                    chara_msg.content.value = scene[i_scene[0]] 
+                    chara_msg.update()  
+        msg=scene[i_scene[0]]
+        chara_msg = ft.Container(
+                content=ft.Text(msg,size= 30),
+                bgcolor=ft.Colors.with_opacity(0.6, "green"),
                 alignment=ft.Alignment.CENTER_RIGHT,
                 height=200,
-            ),
+            )
+        listener = pynput_keyboard.Listener(on_press=next_dialogue)
+        listener.start()
+        return ft.Container(chara_msg,
             alignment=ft.Alignment.BOTTOM_CENTER
         )
 
@@ -111,8 +122,7 @@ def _planet(page: ft.Page) -> list:
                     bottom=400
                 ),
                 sprite,
-                dialogue()],
-                expand=True),
+                dialogue(e,s1)]),
             expand=True
         )
 
