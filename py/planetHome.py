@@ -95,7 +95,7 @@ def _planet(page: ft.Page) -> list:
         game_container = ft.Container(
             content=ft.Stack([
                 ft.Container(
-                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.jpeg"),
+                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.png"),
                 ),
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
