@@ -48,6 +48,17 @@ def _planet(page: ft.Page) -> list:
             keys_pressed["right"] = False
             keys_pressed["left"] = False
 
+    def dialogue():
+        return ft.Container(
+            content=ft.Stack([
+                ft.Container(
+                    content=ft.Text("feur"),
+                    bgcolor=ft.Colors.with_opacity(0.6, "blue"),
+                    expand=True,
+                    padding= ft.padding.symmetric(horizontal=100),
+                )]
+        ))
+
 
     """===========================================================plaine===================================================================================="""
 
@@ -57,7 +68,7 @@ def _planet(page: ft.Page) -> list:
         sprite = ft.Container(
             content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
             left=0,
-            bottom=200,
+            bottom=50,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
@@ -92,8 +103,8 @@ def _planet(page: ft.Page) -> list:
                     right=0,
                     bottom=400
                 ),
-                sprite
-            ]),
+                sprite,
+                dialogue()]),
             expand=True
         )
 
