@@ -2,6 +2,19 @@ import flet as ft
 from pynput import keyboard as pynput_keyboard
 from datacenter import *
 import asyncio
+import pyglet
+import threading
+
+# Charge la musique
+music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
+music_player = pyglet.media.Player()
+music_player.queue(music)
+music_player.loop = True
+music_player.play()
+
+# Lance pyglet en arrière-plan
+threading.Thread(target=pyglet.app.run, daemon=True).start()
+
 
 def _planet(page: ft.Page) -> list:
     page.title = "Planet"
