@@ -51,21 +51,26 @@ def _planet(page: ft.Page) -> list:
 
     def dialogue(e, scene):
         i_scene = [0]
+
         def next_dialogue(key):
             if key == pynput_keyboard.Key.space:
                 if i_scene[0] < len(scene) - 1:  
                     i_scene[0] += 1
                     chara_msg.content.value = scene[i_scene[0]] 
-                    chara_msg.update()  
+                    chara_msg.update()
+
         msg=scene[i_scene[0]]
+        
         chara_msg = ft.Container(
                 content=ft.Text(msg,size= 30),
                 bgcolor=ft.Colors.with_opacity(0.6, "green"),
-                alignment=ft.Alignment.CENTER_RIGHT,
+                alignment=ft.Alignment.CENTER_LEFT,
                 height=200,
             )
+        
         listener = pynput_keyboard.Listener(on_press=next_dialogue)
         listener.start()
+
         return ft.Container(chara_msg,
             alignment=ft.Alignment.BOTTOM_CENTER
         )
