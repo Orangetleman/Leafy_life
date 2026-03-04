@@ -50,14 +50,14 @@ def _planet(page: ft.Page) -> list:
 
     def dialogue():
         return ft.Container(
-            content=ft.Stack([
-                ft.Container(
-                    content=ft.Text("feur"),
-                    bgcolor=ft.Colors.with_opacity(0.6, "blue"),
-                    expand=True,
-                    padding= ft.padding.symmetric(horizontal=100),
-                )]
-        ))
+            ft.Container(
+                content=ft.Text("feur"),
+                bgcolor=ft.Colors.with_opacity(0.6, "blue"),
+                alignment=ft.Alignment.CENTER_RIGHT,
+                height=200,
+            ),
+            alignment=ft.Alignment.BOTTOM_CENTER
+        )
 
 
     """===========================================================plaine===================================================================================="""
@@ -96,7 +96,6 @@ def _planet(page: ft.Page) -> list:
             content=ft.Stack([
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/arriere_plaine.jpeg"),
-                    expand=True,
                 ),
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
