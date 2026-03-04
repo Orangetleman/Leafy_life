@@ -56,22 +56,40 @@ def _planet(page: ft.Page) -> list:
             if key == pynput_keyboard.Key.space:
                 if i_scene[0] < len(scene) - 1:  
                     i_scene[0] += 1
-                    chara_msg.content.value = scene[i_scene[0]] 
+                    if i_scene[0]%2==0:
+                        npc_msg.content.value = scene[i_scene[0]] 
+                        chara_msg.visible = False
+                        npc_msg.visible = True
+                    else:
+                        chara_msg.content.value = scene[i_scene[0]] 
+                        chara_msg.visible = True
+                        npc_msg.visible = False
                     chara_msg.update()
+                    npc_msg.update()
+
 
         msg=scene[i_scene[0]]
         
         chara_msg = ft.Container(
                 content=ft.Text(msg,size= 30),
                 bgcolor=ft.Colors.with_opacity(0.6, "green"),
+                alignment=ft.Alignment.CENTER_RIGHT,
+                height=200,
+                visible=False
+            )
+        
+        npc_msg = ft.Container(
+                content=ft.Text(msg,size= 30),
+                bgcolor=ft.Colors.with_opacity(0.6, "green"),
                 alignment=ft.Alignment.CENTER_LEFT,
                 height=200,
+                visible=True
             )
         
         listener = pynput_keyboard.Listener(on_press=next_dialogue)
         listener.start()
 
-        return ft.Container(chara_msg,
+        return ft.Container(content= ft.Stack([chara_msg, npc_msg]),
             alignment=ft.Alignment.BOTTOM_CENTER
         )
 

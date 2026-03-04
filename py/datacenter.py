@@ -365,4 +365,4 @@ WANDERINGSHOPS = [
 # ------------------------------------- Dialogues -------------------------------------
 # Gère les dialogues pour chaque scene
 
-s1 = ["hey","bonjour","tfq","rien et toi","caca","feur"]
+s1 = ["hey","bonjour","tfq","rien et toi","quoi","feur"]
