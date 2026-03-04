@@ -360,3 +360,9 @@ WANDERINGSHOPS = [
     {"id": 2, "shop": wandering_shop_manager_lake, "biome": "lake"},
     {"id": 3, "shop": wandering_shop_manager_mountain, "biome": "mountain"},
 ]
+
+
+# ------------------------------------- Dialogues -------------------------------------
+# Gère les dialogues pour chaque scene
+
+s1 = ["hey","bonjour","tfq","rien et toi","caca","feur"]
