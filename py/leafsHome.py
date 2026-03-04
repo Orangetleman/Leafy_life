@@ -171,7 +171,7 @@ def _build_leafs_home(page: ft.Page) -> list:
     
     # Barre de recherche
     search = ft.TextField(
-        hint_text="🔍 Rechercher par nom, type ou biome...",
+        label="🔍 Rechercher par nom, type ou biome...",
         on_change=lambda e: populate_list(e.control.value.lower()),
         width=300,
     )

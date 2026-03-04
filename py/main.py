@@ -15,6 +15,8 @@ from shopHome import _build_shop_home
 
 # ---- Données de test (équivalent du seed dans navbar.js) ----
 def _seed_test_data():
+    inventory_manager.append_money("CO2",1000)
+    inventory_manager.append_money("O2",1000)
     for key in (0, 1, 2, 3, 4, 5, 6, 7, 8):
         leafmanager.add_leaf(LEAFS[key])
         for i in range(24):

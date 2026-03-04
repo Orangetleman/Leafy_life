@@ -215,7 +215,7 @@ def _build_inventory_home(page: ft.Page) -> list:
         type_buttons_container.controls.append(create_type_button(type_obj))
     
     search_input = ft.TextField(
-        hint_text="Rechercher... (ex: #food, bandage)",
+        label="Rechercher... (ex: #food, bandage)",
         on_focus=on_search_focus,
         on_blur=on_search_blur,
         on_change=on_search_input,
