@@ -82,6 +82,10 @@ def _planet(page: ft.Page) -> list:
             bottom=50,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
+        biome=ft.Container(
+            content=ft.Image(src="assets/imgs/icons/biome_plain.png"),
+            expand=True,
+        ) # À REGLER LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         listener.start()
 
@@ -100,13 +104,16 @@ def _planet(page: ft.Page) -> list:
                     sprite.left = (sprite.left or 0) + 15
                 if keys_pressed["left"]:
                     sprite.left = (sprite.left or 0) - 15
+                #print(f"biome.height: {biome.bottom}, page.height: {page.height}")
+                sprite.bottom = (biome.bottom / 4) + (page.height-biome.bottom) # Garder le sprite à une hauteur fixe peu importe la taille de la fenêtre # laaaaaaaaaaaaaaaa ausssiiiiiiiii
                 page.update()
                 await asyncio.sleep(0.025)  # 40 FPS
 
         game_container = ft.Container(
             content=ft.Stack([
+                biome,
                 ft.Container(
-                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.png"),
+                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.jpeg"),
                 ),
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
