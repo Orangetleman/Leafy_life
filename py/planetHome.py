@@ -66,6 +66,10 @@ def _planet(page: ft.Page) -> list:
                         npc_msg.visible = False
                     chara_msg.update()
                     npc_msg.update()
+                else:
+                    dialogue_box.visible = False  # 👈 cache tout quand c'est fini
+                    dialogue_box.update()
+                    listener.stop()  # 👈 arrête le listener pynput
 
 
         msg=scene[i_scene[0]]
@@ -86,12 +90,14 @@ def _planet(page: ft.Page) -> list:
                 visible=True
             )
         
+        dialogue_box = ft.Container(content= ft.Stack([chara_msg, npc_msg]),
+            alignment=ft.Alignment.BOTTOM_CENTER
+        )
+        
         listener = pynput_keyboard.Listener(on_press=next_dialogue)
         listener.start()
 
-        return ft.Container(content= ft.Stack([chara_msg, npc_msg]),
-            alignment=ft.Alignment.BOTTOM_CENTER
-        )
+        return dialogue_box
 
 
     """===========================================================plaine===================================================================================="""
