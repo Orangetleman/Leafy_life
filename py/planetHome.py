@@ -6,7 +6,7 @@ import pyglet
 import threading
 
 # Charge la musique
-music = pyglet.media.load("assets/musics/frogmusic.mp3", streaming=False)
+music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
 music_player = pyglet.media.Player()
 music_player.queue(music)
 music_player.loop = True
