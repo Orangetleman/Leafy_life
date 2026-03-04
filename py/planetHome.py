@@ -51,24 +51,53 @@ def _planet(page: ft.Page) -> list:
 
     def dialogue(e, scene):
         i_scene = [0]
+
         def next_dialogue(key):
             if key == pynput_keyboard.Key.space:
                 if i_scene[0] < len(scene) - 1:  
                     i_scene[0] += 1
-                    chara_msg.content.value = scene[i_scene[0]] 
-                    chara_msg.update()  
+                    if i_scene[0]%2==0:
+                        npc_msg.content.value = scene[i_scene[0]] 
+                        chara_msg.visible = False
+                        npc_msg.visible = True
+                    else:
+                        chara_msg.content.value = scene[i_scene[0]] 
+                        chara_msg.visible = True
+                        npc_msg.visible = False
+                    chara_msg.update()
+                    npc_msg.update()
+                else:
+                    dialogue_box.visible = False  # 👈 cache tout quand c'est fini
+                    dialogue_box.update()
+                    listener.stop()  # 👈 arrête le listener pynput
+
+
         msg=scene[i_scene[0]]
+        
         chara_msg = ft.Container(
                 content=ft.Text(msg,size= 30),
                 bgcolor=ft.Colors.with_opacity(0.6, "green"),
                 alignment=ft.Alignment.CENTER_RIGHT,
                 height=200,
+                visible=False
             )
-        listener = pynput_keyboard.Listener(on_press=next_dialogue)
-        listener.start()
-        return ft.Container(chara_msg,
+        
+        npc_msg = ft.Container(
+                content=ft.Text(msg,size= 30),
+                bgcolor=ft.Colors.with_opacity(0.6, "green"),
+                alignment=ft.Alignment.CENTER_LEFT,
+                height=200,
+                visible=True
+            )
+        
+        dialogue_box = ft.Container(content= ft.Stack([chara_msg, npc_msg]),
             alignment=ft.Alignment.BOTTOM_CENTER
         )
+        
+        listener = pynput_keyboard.Listener(on_press=next_dialogue)
+        listener.start()
+
+        return dialogue_box
 
 
     """===========================================================plaine===================================================================================="""
