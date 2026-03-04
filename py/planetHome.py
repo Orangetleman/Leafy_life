@@ -102,7 +102,7 @@ def _planet(page: ft.Page) -> list:
                 if keys_pressed["left"]:
                     sprite.left = (sprite.left or 0) - 15
                 
-                biome_height = page.width / biome_img_ratio  # ← recalculé à chaque frame
+                biome_height = page.width / biome_img_ratio
                 sprite.bottom = (biome_height / 4) + (page.height - biome_height)
                 page.update()
                 await asyncio.sleep(0.025)  # 40 FPS
