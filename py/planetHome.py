@@ -2,18 +2,19 @@ import flet as ft
 from pynput import keyboard as pynput_keyboard
 from datacenter import *
 import asyncio
-
+import pyglet
 import threading
-from pydub.playback import play
-from pydub import AudioSegment
 
-song = AudioSegment.from_mp3("assets/musics/frogmusic.mp3")
+# Charge la musique
+music = pyglet.media.load("assets/musics/frogmusic.mp3", streaming=False)
+music_player = pyglet.media.Player()
+music_player.queue(music)
+music_player.loop = True
+music_player.play()
 
-def jouer_musique(song):
-    play(song)
+# Lance pyglet en arrière-plan
+threading.Thread(target=pyglet.app.run, daemon=True).start()
 
-thread = threading.Thread(target=jouer_musique, args=(song,), daemon=True)
-thread.start()
 
 def _planet(page: ft.Page) -> list:
     page.title = "Planet"
