@@ -102,14 +102,6 @@ def _planet(page: ft.Page) -> list:
             content=ft.Stack([
                 biome,
                 ft.Container(
-<<<<<<< HEAD
-                    ft.Image(src="assets/imgs/icons/biome_plain.png",
-                             width= 200,
-                             height= 100),
-                ),
-                sprite,
-            ]),
-=======
                     content=ft.Image(src="assets/imgs/icons/arriere_plaine.jpeg"),
                 ),
                 ft.Container(
@@ -119,7 +111,6 @@ def _planet(page: ft.Page) -> list:
                 ),
                 sprite,
                 dialogue()]),
->>>>>>> 2bcdc308f4f164e3999f19c777c133da95470234
             expand=True
         )
 
