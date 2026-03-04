@@ -3,6 +3,18 @@ from pynput import keyboard as pynput_keyboard
 from datacenter import *
 import asyncio
 
+import threading
+from pydub.playback import play
+from pydub import AudioSegment
+
+song = AudioSegment.from_mp3("assets/musics/frogmusic.mp3")
+
+def jouer_musique(song):
+    play(song)
+
+thread = threading.Thread(target=jouer_musique, args=(song,), daemon=True)
+thread.start()
+
 def _planet(page: ft.Page) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
