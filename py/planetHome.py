@@ -87,10 +87,6 @@ def _planet(page: ft.Page) -> list:
             bottom=50,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
-        biome=ft.Container(
-            content=ft.Image(src="assets/imgs/icons/biome_plain.png"),
-            expand=True,
-        ) # À REGLER LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         listener.start()
 
@@ -104,21 +100,26 @@ def _planet(page: ft.Page) -> list:
         page.window.on_event = on_window_event
 
         async def game_loop():
+            biome_img_ratio = 1250 / 649
             while running[0]:
                 if keys_pressed["right"]:
                     sprite.left = (sprite.left or 0) + 15
                 if keys_pressed["left"]:
                     sprite.left = (sprite.left or 0) - 15
-                #print(f"biome.height: {biome.bottom}, page.height: {page.height}")
-                sprite.bottom = (biome.bottom / 4) + (page.height-biome.bottom) # Garder le sprite à une hauteur fixe peu importe la taille de la fenêtre # laaaaaaaaaaaaaaaa ausssiiiiiiiii
+                
+                biome_height = page.width / biome_img_ratio  # ← recalculé à chaque frame
+                sprite.bottom = (biome_height / 4) + (page.height - biome_height)
                 page.update()
                 await asyncio.sleep(0.025)  # 40 FPS
 
         game_container = ft.Container(
             content=ft.Stack([
-                biome,
                 ft.Container(
-                    content=ft.Image(src="assets/imgs/icons/arriere_plaine.jpeg"),
+                    content=ft.Image(
+                        src="assets/imgs/icons/arriere_plain.png",
+                        fit="cover",
+                    ),
+                    expand=True,
                 ),
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
@@ -131,8 +132,7 @@ def _planet(page: ft.Page) -> list:
         )
 
         page.add(game_container)
-        page.run_task(game_loop)  
-
+        page.run_task(game_loop)
 
     """===========================================================foret===================================================================================="""
 
