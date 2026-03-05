@@ -22,63 +22,63 @@ EVENTS = {
 ITEMS = {
     # Consomables Leafs Mobs (O2):
         # Normaux :
-    3: { "id": 3, "name": "Meat", "use": "food", "price_O2": 64, "specialprice_O2": 32, "is_special": False, "icon": "assets/imgs/items/meat.png",
-        "tags" : ["meat", "growth", "food"],
+    3: { "id": 3, "name": "Viande", "use": "nouriture", "price_O2": 64, "specialprice_O2": 32, "is_special": False, "icon": "assets/imgs/items/meat.png",
+        "tags" : ["meat", "growth", "nouriture"],
         "description": "Riche en protéines et en énergie, cette viande est essentielle au métabolisme des leafs carnivores. Elle soutient leur croissance et leur endurance." },
-    4: { "id": 4, "name": "Grass", "use": "food", "price_O2": 32, "specialprice_O2": 16, "is_special": False, "icon": "assets/imgs/items/grass.png",
-        "tags" : ["grass", "growth", "food"],
+    4: { "id": 4, "name": "Herbe", "use": "nouriture", "price_O2": 32, "specialprice_O2": 16, "is_special": False, "icon": "assets/imgs/items/grass.png",
+        "tags" : ["grass", "growth", "nouriture"],
         "description": "Cette herbe fraîche fournit fibres et nutriments de base aux leafs herbivores. Un apport simple mais vital à leur équilibre digestif." },
-    6: { "id": 6, "name": "Bandage", "use": "heal", "price_O2": 100, "specialprice_O2": 50, "is_special": False, "icon": "assets/imgs/items/bandage.png",
-        "tags" : ["bandage", "heal", "regeneration"],
+    6: { "id": 6, "name": "Bandage", "use": "soin", "price_O2": 100, "specialprice_O2": 50, "is_special": False, "icon": "assets/imgs/items/bandage.png",
+        "tags" : ["bandage", "soin", "regeneration"],
         "description": "Conçu pour stabiliser les tissus et limiter les pertes d’énergie, ce bandage favorise une cicatrisation rapide chez les leafs animaux." },
 
         # Spéciaux :
-    8: { "id": 8, "name": "Milk 🌟", "use": "food", "price_O2": 64, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/milk.png",
-        "tags" : ["milk", "nutrients", "food", "special"],
+    8: { "id": 8, "name": "Lait 🌟", "use": "nouriture", "price_O2": 64, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/milk.png",
+        "tags" : ["milk", "nutrients", "nouriture", "special"],
         "description": "Riche en calcium et en nutriments essentiels, le lait renforce la structure et la vitalité des leafs animaux. Une ressource rare à forte valeur biologique." },
 
     # Consomables Leafs Plantes (CO2): */
         # Normaux :
-    2: { "id": 2, "name": "Fertilizer", "use": "food", "price_CO2": 32, "specialprice_CO2": 16, "is_special": False, "icon": "assets/imgs/items/fertilizer.png",
-        "tags" : ["fertilizer", "growth", "food"],
+    2: { "id": 2, "name": "Fertilisant", "use": "nouriture", "price_CO2": 32, "specialprice_CO2": 16, "is_special": False, "icon": "assets/imgs/items/fertilizer.png",
+        "tags" : ["fertilizer", "growth", "nouriture"],
         "description": "Ce fertilisant enrichit le sol en éléments nutritifs et stimule la photosynthèse des leafs plantes. Indispensable à leur développement." },
-    5: { "id": 5, "name": "Mineral Water", "use": "heal", "price_CO2": 100, "specialprice_CO2": 50, "is_special": False, "icon": "assets/imgs/items/mineral_water.png",
-        "tags" : ["mineral_water", "heal", "regeneration"],
+    5: { "id": 5, "name": "Sève", "use": "soin", "price_CO2": 100, "specialprice_CO2": 50, "is_special": False, "icon": "assets/imgs/items/mineral_water.png",
+        "tags" : ["mineral_water", "soin", "regeneration"],
         "description": "Chargée en minéraux essentiels, cette eau restaure les tissus végétaux et aide les leafs plantes à se régénérer durablement." },
 
         # Spéciaux :
-    9: { "id": 9, "name": "Bone Meal 🌟", "use": "food", "price_O2": 64, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/bone_meal.png",
-        "tags" : ["bone_meal", "growth", "food", "special"],
+    9: { "id": 9, "name": "Poudre d'os 🌟", "use": "nouriture", "price_O2": 64, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/bone_meal.png",
+        "tags" : ["bone_meal", "growth", "nouriture", "special"],
         "description": "Riche en phosphore et en calcium, cette poudre stimule fortement la croissance des leafs plantes. Un engrais puissant issu de matières anciennes." },
 
     # Consomables Leafs Plantes et Mobs (O2 + CO2): */
         # Normaux :
-    1: { "id": 1, "name": "H2O", "use": "beverage", "price_O2": 4, "price_CO2": 4, "specialprice_O2": 2, "specialprice_CO2": 2, "is_special": False, "icon": "assets/imgs/items/water.png",
-        "tags" : ["water", "hydration", "beverage"],
+    1: { "id": 1, "name": "Eau minérale", "use": "boisson", "price_O2": 4, "price_CO2": 4, "specialprice_O2": 2, "specialprice_CO2": 2, "is_special": False, "icon": "assets/imgs/items/water.png",
+        "tags" : ["water", "hydration", "boisson"],
         "description": "Molécule indispensable à toute forme de vie, l’eau régule les échanges internes et maintient l’équilibre vital de tous les leafs." },
-    7: { "id": 7, "name": "Ray of sunshine", "use": "resurrector", "price_O2": 200, "price_CO2": 200, "specialprice_O2": 100, "specialprice_CO2": 100, "is_special": False, "icon": "assets/imgs/items/sunshine.png",
-        "tags" : ["sunshine", "resurrector"],
+    7: { "id": 7, "name": "Rayon de soleil", "use": "revitaliseur", "price_O2": 200, "price_CO2": 200, "specialprice_O2": 100, "specialprice_CO2": 100, "is_special": False, "icon": "assets/imgs/items/sunshine.png",
+        "tags" : ["sunshine", "revitaliseur"],
         "description": "Concentré d’énergie solaire, ce rayon relance les processus vitaux et peut ramener un leaf au seuil de la vie." },
 
         # Spéciaux :
-    10: { "id": 10, "name": "Elixir of life 🌟", "use": "resurrector", "price_O2": 300, "price_CO2": 300, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/elixir.png",
-        "tags" : ["elixir_of_life", "resurrector", "special"],
+    10: { "id": 10, "name": "Elixir de vie 🌟", "use": "revitaliseur", "price_O2": 300, "price_CO2": 300, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/elixir.png",
+        "tags" : ["elixir_of_life", "revitaliseur", "special"],
         "description": "Composé d’essences rares et hautement énergétiques, cet élixir agit directement sur les mécanismes vitaux et défie le cycle naturel de la vie." },
     11: { "id": 11 , "name": "Attack boost potion 🌟", "use": "boost", "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/attack_boost.png",
         "tags" : ["attack_boost", "boost", "special"],
         "description": "Cette potion spéciale augmente temporairement la puissance d’attaque des leafs, leur conférant un avantage stratégique en combat." },
-    12: { "id": 12, "name": "Health boost potion 🌟", "use": "boost", "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/health_boost.png",
+    12: { "id": 12, "name": "Potion de vie 🌟", "use": "boost", "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/health_boost.png",
         "tags" : ["health_boost", "boost", "special"],
         "description": "Cette potion spéciale augmente temporairement les points de vie des leafs, renforçant leur endurance face aux défis environnementaux." },
-    13: {"id": 13, "name": "Book of knowledge 🌟", "use": "boost", "price_O2": 150, "price_CO2": 150, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/book_of_knowledge.png",
+    13: {"id": 13, "name": "Livre de la connaissance 🌟", "use": "boost", "price_O2": 150, "price_CO2": 150, "is_special": True, "rarity": 1, "icon": "assets/imgs/items/book_of_knowledge.png",
         "tags" : ["book_of_knowledge", "boost", "special"],
         "description": "Ce livre ancien renferme des savoirs oubliés qui, une fois assimilés, augmentent les capacités et la sagesse des leafs." }
 }
 TYPES = [
-    { 'id': 1, 'name': "food", 'icon': "assets/imgs/icons/type_food.png" },
-    { 'id': 2, 'name': "heal", 'icon': "assets/imgs/icons/type_heal.png" },
-    { 'id': 3, 'name': "beverage", 'icon': "assets/imgs/icons/type_beverage.png" },
-    { 'id': 4, 'name': "resurrector", 'icon': "assets/imgs/icons/type_resurrector.png" }
+    { 'id': 1, 'name': "nouriture", 'icon': "assets/imgs/icons/type_food.png" },
+    { 'id': 2, 'name': "soin", 'icon': "assets/imgs/icons/type_heal.png" },
+    { 'id': 3, 'name': "boisson", 'icon': "assets/imgs/icons/type_beverage.png" },
+    { 'id': 4, 'name': "revitaliseur", 'icon': "assets/imgs/icons/type_resurrector.png" }
 ]
 
 # ------------------------------------ Leafs palette ------------------------------------
