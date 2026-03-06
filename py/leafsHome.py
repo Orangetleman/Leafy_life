@@ -1,116 +1,206 @@
 from datacenter import *
 import flet as ft
 
-def create_progress_bar(value, max_value, label, color="green"):
-    """Crée une barre de progression stylisée."""
+# ──────────────────────────────────────────────────────────────
+#  Config d'affichage par label
+#  (label → stat_attr, max_value, couleur_barre)
+# ──────────────────────────────────────────────────────────────
+STAT_DISPLAY = {
+    "Points de Vie": ("hp",        10,  "red"),
+    "Nourriture":    ("nutrients", 100, "#ef980c"),
+    "Hydratation":   ("hydration", 100, "#1e90ff"),
+    "Attaque":       ("atk",       10,  "purple"),
+    "Level":         ("level",     100, "yellow"),
+}
+
+# ──────────────────────────────────────────────────────────────
+#  Sélection de l'item à afficher sur le badge selon le leaf
+#  et la stat concernée — on se base sur effect["stat"]
+# ──────────────────────────────────────────────────────────────
+def item_for_stat(leaf, stat_attr):
+    """
+    Retourne l'item de l'inventaire (ou du catalogue) le plus
+    adapté pour agir sur `stat_attr` pour ce leaf.
+    Priorité : item possédé > item catalogue.
+    """
+    species = leaf.species
+    regime  = getattr(leaf, "regime", None)
+    hp      = getattr(leaf, "hp", 1)
+
+    # Candidats selon la stat
+    if stat_attr == "nutrients":
+        if species == "plant":
+            candidates = [ITEMS[2], ITEMS[9]]          # Fertilisant, Poudre d'os
+        elif regime == "carnivore":
+            candidates = [ITEMS[3], ITEMS[8]]          # Viande, Lait
+        else:
+            candidates = [ITEMS[4], ITEMS[8]]          # Herbe, Lait
+
+    elif stat_attr == "hydration":
+        candidates = [ITEMS[1]]                        # Eau minérale
+
+    elif stat_attr == "hp":
+        if hp == 0:
+            candidates = [ITEMS[7], ITEMS[10]]         # Rayon de soleil, Elixir
+        elif species == "plant":
+            candidates = [ITEMS[5]]                    # Sève
+        else:
+            candidates = [ITEMS[6], ITEMS[12]]         # Bandage, Potion de vie
+
+    elif stat_attr == "atk":
+        candidates = [ITEMS[11]]                       # Potion d'attaque
+
+    elif stat_attr == "level":
+        candidates = [ITEMS[13]]                       # Livre de la connaissance
+
+    else:
+        return None
+
+    # Préférer un item que le joueur possède déjà
+    owned_ids = {i["id"] for i in inventory_manager.get_items()}
+    for item in candidates:
+        if item["id"] in owned_ids:
+            return item
+    return candidates[0] if candidates else None
+
+
+# ──────────────────────────────────────────────────────────────
+#  Badge cliquable
+# ──────────────────────────────────────────────────────────────
+def create_badge_button(leaf, item, on_used=None):
+    item_name = item["name"] if item and not item["name"].endswith(" 🌟") else item["name"][:len(item["name"]) - 2]
+    if item is None:
+        return ft.Container(width=32, height=32)
+
+    def on_click(e):
+        # Vérifier que le joueur possède l'item
+        owned = next((i for i in inventory_manager.get_items() if i["id"] == item["id"]), None)
+        if not owned or owned["amount"] < 1:
+            print(f"Pas de {item_name} en inventaire.")
+            return
+        # Appliquer l'effet
+        stat   = item["effect"]["stat"]
+        amount = item["effect"]["amount"]
+        leaf.stat_update(stat, amount)
+        # Consommer l'item
+        inventory_manager.remove_item(item["id"], 1)
+        print(f"{item_name} utilisé sur {leaf.name} (+{amount} {stat})")
+        if on_used:
+            on_used()
+
+    return ft.Container(
+        content=ft.Image(src=item["icon"], width=18, height=18, fit="contain"),
+        padding=5,
+        bgcolor="#2a2a3e",
+        border=ft.border.all(1, "#555"),
+        border_radius=8,
+        width=32,
+        height=32,
+        alignment=ft.Alignment.CENTER,
+        on_click=on_click,
+        tooltip=f"Utiliser : {item['name']}  (+{item['effect']['amount']} {item['effect']['stat']})",
+    )
+
+
+# ──────────────────────────────────────────────────────────────
+#  Barre de progression + badge
+# ──────────────────────────────────────────────────────────────
+def create_progress_bar(leaf, label, on_used=None):
+    stat_attr, _, color = STAT_DISPLAY[label]
+    max_value = leaf.STAT_MAX.get(stat_attr, 100)
+    value = getattr(leaf, stat_attr, 0)
+
+    # Couleurs d'alerte
+    if label == "Nourriture"  and value <= 20: color = "#ef540c"
+    if label == "Hydratation" and value <= 20: color = "#ff0000"
+
     ratio = value / max_value if max_value > 0 else 0
-    
+    item  = item_for_stat(leaf, stat_attr)
+
     return ft.Column([
         ft.Row([
             ft.Text(label, weight=ft.FontWeight.W_500, size=14),
             ft.Text(f"{value}/{max_value}", size=12, color="gray"),
         ]),
-        ft.ProgressBar(
-            value=ratio,
-            color=color,
-            bgcolor="#4C4C4C",
-            width=300,
-            bar_height=20,
-            border_radius=8,
-        )
-    ], spacing=5)
+        ft.Row([
+            ft.ProgressBar(
+                value=ratio,
+                color=color,
+                bgcolor="#4C4C4C",
+                width=260,
+                bar_height=20,
+                border_radius=8,
+            ),
+            create_badge_button(leaf, item, on_used=on_used),
+        ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+    ], spacing=4)
 
-def prepare_leaf_data(leaf):
-    """Prépare les données d'un leaf - assure que tous les attributs existent."""
-    # Ajouter les attributs manquants si elles n'existent pas
-    if not hasattr(leaf, 'nutrients') or leaf.nutrients is None:
-        leaf.nutrients = 100
-        print(f"Attribut 'nutrients' manquant pour {leaf.name}, initialisé à 100.")
-    if not hasattr(leaf, 'atk') or leaf.atk is None:
-        leaf.atk = 0
-        print(f"Attribut 'atk' manquant pour {leaf.name}, initialisé à 0.")
-    if not hasattr(leaf, 'hydration') or leaf.hydration is None:
-        leaf.hydration = 100
-        print(f"Attribut 'hydration' manquant pour {leaf.name}, initialisé à 100.")
-    if not hasattr(leaf, 'regime') or leaf.regime is None:
-        leaf.regime = None
-        print(f"Attribut 'regime' manquant pour {leaf.name}, initialisé à None.")
-    
-    return leaf
 
-def open_leaf_modal(page: ft.Page, leaf_dict):
-    leaf = prepare_leaf_data(leaf_dict)
-
+# ──────────────────────────────────────────────────────────────
+#  Modal leaf
+# ──────────────────────────────────────────────────────────────
+def open_leaf_modal(page: ft.Page, leaf):
     def close_modal(e):
         dialog.open = False
         page.update()
 
-    biome_name = BIOMES[leaf.biome - 1]['name']
-    leaf_type_name = LEAFS_TYPE[leaf.type]['name']
+    def on_stat_used():
+        # Reconstruire le contenu pour rafraîchir les barres
+        dialog.content = build_content()
+        page.update()
+
+    def build_content():
+        biome_name     = BIOMES[leaf.biome - 1]["name"]
+        leaf_type_name = LEAFS_TYPE[leaf.type]["name"]
+        return ft.Column(
+            [
+                ft.Row([
+                    ft.Image(src=leaf.img, width=110, height=110, fit="contain"),
+                    ft.Column([
+                        ft.Row([ft.Text("Biome :",  size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(biome_name,     size=13, color="white")]),
+                        ft.Row([ft.Text("Type :",   size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf_type_name, size=13, color="white")]),
+                        ft.Row([ft.Text("Rareté :", size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf.rarity,    size=13, color="white")]),
+                        ft.Row([ft.Text("Espèce :", size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf.species,   size=13, color="white")]),
+                    ], spacing=4),
+                ], spacing=12),
+                ft.Divider(),
+                ft.Text("Statistiques", weight=ft.FontWeight.BOLD, size=15, color="white"),
+                create_progress_bar(leaf, "Points de Vie", on_used=on_stat_used),
+                create_progress_bar(leaf, "Nourriture",    on_used=on_stat_used),
+                create_progress_bar(leaf, "Hydratation",   on_used=on_stat_used),
+                create_progress_bar(leaf, "Attaque",       on_used=on_stat_used),
+                create_progress_bar(leaf, "Level",         on_used=on_stat_used),
+            ],
+            scroll="auto",
+            tight=True,
+            width=330,
+            spacing=8,
+        )
 
     dialog = ft.AlertDialog(
         modal=True,
         title=ft.Text(leaf.name, weight=ft.FontWeight.BOLD),
-        content=ft.Column(
-            [
-                ft.Row(
-                    controls=[
-                        ft.Image(src=leaf.img, width=150, height=150, fit="contain"),
-                        ft.Divider(),
-                        ft.Column([
-                            ft.Row([
-                                ft.Text("Biome:", size=14, color="white", weight=ft.FontWeight.BOLD),
-                                ft.Text(biome_name, size=14, color="white"),
-                            ]),
-                            ft.Row([
-                                ft.Text("Type:", size=14, color="white", weight=ft.FontWeight.BOLD),
-                                ft.Text(leaf_type_name, size=14, color="white"),
-                            ]),
-                            ft.Row([
-                                ft.Text("Rareté:", size=14, color="white", weight=ft.FontWeight.BOLD),
-                                ft.Text(leaf.rarity, size=14, color="white"),
-                            ]),
-                            ft.Row([
-                                ft.Text("Espèce:", size=14, color="white", weight=ft.FontWeight.BOLD),
-                                ft.Text(leaf.species, size=14, color="white"),
-                            ]),
-                        ])
-                    ],
-                ),
-                ft.Divider(),
-                ft.Text("Statistiques", weight=ft.FontWeight.BOLD),
-                create_progress_bar(leaf.hp, 10, "Points de Vie", color="red"),
-                create_progress_bar(leaf.nutrients, 100, "Nourriture", color="#ef540c" if leaf.nutrients <= 20 else "#ef980c"),
-                create_progress_bar(leaf.hydration, 100, "Hydratation", color="#ff0000" if leaf.hydration <= 20 else "#1e90ff"),
-                create_progress_bar(leaf.atk, 10, "Attaque", color="purple"),
-                create_progress_bar(leaf.xp, 100, "xp", color="yellow"),
-            ],
-            scroll="auto",
-            tight=True,        # ← important pour que la Column ne prenne pas toute la hauteur
-            width=300,
-        ),
-        actions=[
-            ft.TextButton("Fermer", on_click=close_modal),
-        ],
+        bgcolor="#1e1e2e",
+        content=build_content(),
+        actions=[ft.TextButton("Fermer", on_click=close_modal)],
         actions_alignment=ft.MainAxisAlignment.END,
     )
 
-    # ✅ La bonne façon : ajouter à overlay PUIS open=True PUIS update
     page.overlay.append(dialog)
     dialog.open = True
     page.update()
 
+
+# ──────────────────────────────────────────────────────────────
+#  Écran principal
+# ──────────────────────────────────────────────────────────────
 def _build_leafs_home(page: ft.Page) -> list:
-    """Écran des leafs - affiche la collection avec recherche."""
-    
     import asyncio
 
     async def on_leaf_click(e, leaf_row, leaf):
         leaf_row.bgcolor = "#7a9c52"
         leaf_row.update()
-        
         await asyncio.sleep(0.2)
-        
         leaf_row.bgcolor = "#92b368"
         leaf_row.update()
         open_leaf_modal(page, leaf)
@@ -118,25 +208,18 @@ def _build_leafs_home(page: ft.Page) -> list:
     def on_leaf_hover(e, leaf_row):
         leaf_row.bgcolor = "#a8c97a" if e.data else "#92b368"
         leaf_row.update()
-    
+
     def populate_list(query=""):
-        """Remplit la liste en fonction de la recherche."""
         items = []
-        
         for leaf in leafmanager.owned:
-            # Filtrer par recherche
             if query:
-                search_lower = query.lower()
-                biome_name = BIOMES[leaf.biome - 1]['name'].lower()
-                leaf_type_name = LEAFS_TYPE[leaf.type]['name'].lower()
-                
-                if not (search_lower in leaf.name.lower() or 
-                        search_lower in biome_name or 
-                        search_lower in leaf_type_name or
-                        search_lower in leaf.species.lower()):
+                q = query.lower()
+                biome_name     = BIOMES[leaf.biome - 1]["name"].lower()
+                leaf_type_name = LEAFS_TYPE[leaf.type]["name"].lower()
+                if not (q in leaf.name.lower() or q in biome_name
+                        or q in leaf_type_name or q in leaf.species.lower()):
                     continue
 
-            # Et dans le Container :
             leaf_row = ft.Container(
                 content=ft.Row([
                     ft.Container(
@@ -163,30 +246,23 @@ def _build_leafs_home(page: ft.Page) -> list:
                 await on_leaf_click(e, r, l)
 
             leaf_row.on_click = handle_click
-            
             items.append(leaf_row)
-        
+
         list_container.controls = items
         page.update()
-    
-    # Barre de recherche
+
     search = ft.TextField(
         label="🔍 Rechercher par nom, type ou biome...",
         on_change=lambda e: populate_list(e.control.value.lower()),
         width=300,
     )
-    
-    # Conteneur de liste
+
     list_container = ft.Column(scroll="auto", spacing=5)
-    
-    # Remplir la liste au démarrage
     populate_list()
-    
-    return [
-        ft.Column([
-            ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD),
-            search,
-            ft.Divider(),
-            list_container,
-        ], expand=True)
-    ]
+
+    return [ft.Column([
+        ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD),
+        search,
+        ft.Divider(),
+        list_container,
+    ], expand=True)]
