@@ -1,4 +1,5 @@
 from datacenter import *
+from style import *
 import flet as ft
 
 # ──────────────────────────────────────────────────────────────
@@ -6,11 +7,11 @@ import flet as ft
 #  (label → stat_attr, max_value, couleur_barre)
 # ──────────────────────────────────────────────────────────────
 STAT_DISPLAY = {
-    "Points de Vie": ("hp",        10,  "red"),
-    "Nourriture":    ("nutrients", 100, "#ef980c"),
-    "Hydratation":   ("hydration", 100, "#1e90ff"),
-    "Attaque":       ("atk",       10,  "purple"),
-    "Level":         ("level",     100, "yellow"),
+    "Points de Vie": ("hp",        10,  LEAF_CARD_PROGRESS_BAR_HP_COLOR),
+    "Nourriture":    ("nutrients", 100, LEAF_CARD_PROGRESS_BAR_NUTRIENTS_COLOR),
+    "Hydratation":   ("hydration", 100, LEAF_CARD_PROGRESS_BAR_HYDRATION_COLOR),
+    "Attaque":       ("atk",       10,  LEAF_CARD_PROGRESS_BAR_ATK_COLOR),
+    "Level":         ("level",     100, LEAF_CARD_PROGRESS_BAR_LVL_COLOR),
 }
 
 # ──────────────────────────────────────────────────────────────
@@ -111,8 +112,8 @@ def create_progress_bar(leaf, label, on_used=None):
     value = getattr(leaf, stat_attr, 0)
 
     # Couleurs d'alerte
-    if label == "Nourriture"  and value <= 20: color = "#ef540c"
-    if label == "Hydratation" and value <= 20: color = "#ff0000"
+    if label == "Nourriture"  and value <= 20: color = LEAF_CARD_PROGRESS_BAR_NUTRIENTS_ALERT_COLOR
+    if label == "Hydratation" and value <= 20: color = LEAF_CARD_PROGRESS_BAR_HYDRATION_ALERT_COLOR
 
     ratio = value / max_value if max_value > 0 else 0
     item  = item_for_stat(leaf, stat_attr)
@@ -120,13 +121,13 @@ def create_progress_bar(leaf, label, on_used=None):
     return ft.Column([
         ft.Row([
             ft.Text(label, weight=ft.FontWeight.W_500, size=14),
-            ft.Text(f"{value}/{max_value}", size=12, color="gray"),
+            ft.Text(f"{value}/{max_value}", size=12, color=LEAF_CARD_INFO_TEXT_COLOR),
         ]),
         ft.Row([
             ft.ProgressBar(
                 value=ratio,
                 color=color,
-                bgcolor="#4C4C4C",
+                bgcolor=LEAF_CARD_PROGRESS_BAR_BG_COLOR,
                 width=260,
                 bar_height=20,
                 border_radius=8,
@@ -157,14 +158,14 @@ def open_leaf_modal(page: ft.Page, leaf):
                 ft.Row([
                     ft.Image(src=leaf.img, width=110, height=110, fit="contain"),
                     ft.Column([
-                        ft.Row([ft.Text("Biome :",  size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(biome_name,     size=13, color="white")]),
-                        ft.Row([ft.Text("Type :",   size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf_type_name, size=13, color="white")]),
-                        ft.Row([ft.Text("Rareté :", size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf.rarity,    size=13, color="white")]),
-                        ft.Row([ft.Text("Espèce :", size=13, weight=ft.FontWeight.BOLD, color="white"), ft.Text(leaf.species,   size=13, color="white")]),
+                        ft.Row([ft.Text("Biome :",  size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_TITLE_TEXT_COLOR), ft.Text(biome_name,     size=13, color=LEAF_CARD_INFO_TEXT_COLOR)]),
+                        ft.Row([ft.Text("Type :",   size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_TITLE_TEXT_COLOR), ft.Text(leaf_type_name, size=13, color=LEAF_CARD_INFO_TEXT_COLOR)]),
+                        ft.Row([ft.Text("Rareté :", size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_TITLE_TEXT_COLOR), ft.Text(leaf.rarity,    size=13, color=LEAF_CARD_INFO_TEXT_COLOR)]),
+                        ft.Row([ft.Text("Espèce :", size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_TITLE_TEXT_COLOR), ft.Text(leaf.species,   size=13, color=LEAF_CARD_INFO_TEXT_COLOR)]),
                     ], spacing=4),
                 ], spacing=12),
                 ft.Divider(),
-                ft.Text("Statistiques", weight=ft.FontWeight.BOLD, size=15, color="white"),
+                ft.Text("Statistiques", weight=ft.FontWeight.BOLD, size=15, color=LEAF_CARD_TITLE_TEXT_COLOR),
                 create_progress_bar(leaf, "Points de Vie", on_used=on_stat_used),
                 create_progress_bar(leaf, "Nourriture",    on_used=on_stat_used),
                 create_progress_bar(leaf, "Hydratation",   on_used=on_stat_used),
@@ -179,8 +180,8 @@ def open_leaf_modal(page: ft.Page, leaf):
 
     dialog = ft.AlertDialog(
         modal=True,
-        title=ft.Text(leaf.name, weight=ft.FontWeight.BOLD),
-        bgcolor="#1e1e2e",
+        title=ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=18, color=LEAF_CARD_TITLE_TEXT_COLOR),
+        bgcolor= LEAF_CARD_BG_COLOR,
         content=build_content(),
         actions=[ft.TextButton("Fermer", on_click=close_modal)],
         actions_alignment=ft.MainAxisAlignment.END,
@@ -194,19 +195,20 @@ def open_leaf_modal(page: ft.Page, leaf):
 # ──────────────────────────────────────────────────────────────
 #  Écran principal
 # ──────────────────────────────────────────────────────────────
+
 def _build_leafs_home(page: ft.Page) -> list:
     import asyncio
 
     async def on_leaf_click(e, leaf_row, leaf):
-        leaf_row.bgcolor = "#7a9c52"
+        leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_CLICKED
         leaf_row.update()
         await asyncio.sleep(0.2)
-        leaf_row.bgcolor = "#92b368"
+        leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR
         leaf_row.update()
         open_leaf_modal(page, leaf)
 
     def on_leaf_hover(e, leaf_row):
-        leaf_row.bgcolor = "#a8c97a" if e.data else "#92b368"
+        leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_HOVER if e.data else LEAF_BUTTON_BG_COLOR
         leaf_row.update()
 
     def populate_list(query=""):
@@ -225,18 +227,23 @@ def _build_leafs_home(page: ft.Page) -> list:
                     ft.Container(
                         content=ft.Image(src=leaf.img, width=50, height=50, fit="contain"),
                         width=60,
+                        border=ft.border.all(2, LEAF_BUTTON_IMG_BORDER_COLOR),
+                        bgcolor=LEAF_BUTTON_IMG_BG_COLOR,
+                        padding=4,
+                        border_radius=8,
                     ),
                     ft.Column([
-                        ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=14),
+                        ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=14, color=LEAF_BUTTON_NAME_COLOR),
                         ft.Row([
-                            ft.Text(f"Type: {LEAFS_TYPE[leaf.type]['name']}", size=11, color="#45691f"),
-                            ft.Text(f"Biome: {BIOMES[leaf.biome - 1]['name']}", size=11, color="#59842a"),
+                            ft.Text(f"Type: {LEAFS_TYPE[leaf.type]['name']}", size=11, color=LEAF_BUTTON_TYPE_COLOR),
+                            ft.Text(f"Biome: {BIOMES[leaf.biome - 1]['name']}", size=11, color=LEAF_BUTTON_BIOME_COLOR),
                         ]),
                     ], expand=True),
                 ], expand=True),
                 padding=10,
                 border_radius=8,
-                bgcolor="#92b368",
+                border=ft.border.all(2, LEAF_BUTTON_BORDER_COLOR),
+                bgcolor=LEAF_BUTTON_BG_COLOR,
                 animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
             )
 
@@ -251,18 +258,37 @@ def _build_leafs_home(page: ft.Page) -> list:
         list_container.controls = items
         page.update()
 
-    search = ft.TextField(
-        label="🔍 Rechercher par nom, type ou biome...",
-        on_change=lambda e: populate_list(e.control.value.lower()),
-        width=300,
+    search = ft.Container(
+                    ft.TextField(
+                        label="🔍 Rechercher par nom, type ou biome...",
+                        on_change=lambda e: populate_list(e.control.value.lower()),
+                        text_style=ft.TextStyle(color=LEAF_SHEARCHBAR_INPUT_COLOR),
+                        label_style=ft.TextStyle(color=LEAF_SHEARCHBAR_LABEL_COLOR),
+                        hint_style=ft.TextStyle(color=LEAF_SHEARCHBAR_HINT_COLOR),
+                        bgcolor=LEAF_SHEARCHBAR_BG_COLOR,
+                        border_color=LEAF_SHEARCHBAR_BORDER_COLOR,
+                        focused_border_color=LEAF_SHEARCHBAR_BORDER_COLOR_FOCUSED,
+                        width=300,
+                    ),
+                    alignment=ft.Alignment.CENTER,
+                    padding=4,
     )
 
-    list_container = ft.Column(scroll="auto", spacing=5)
+    list_container = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=5, expand=True)
     populate_list()
 
-    return [ft.Column([
-        ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD),
-        search,
-        ft.Divider(),
-        list_container,
-    ], expand=True)]
+    return [ft.Container(
+                content=ft.Column([
+                    ft.Container(
+                        content=ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD, color=LEAF_TITLE_COLOR, text_align=ft.TextAlign.CENTER),
+                        padding=5,
+                        alignment=ft.Alignment.CENTER,
+                    ),
+                    search,
+                    ft.Divider(),
+                    list_container,
+                    ],
+                    expand=True,),
+                bgcolor= LEAF_BG_COLOR,
+                expand=True,
+            )]  

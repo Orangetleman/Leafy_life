@@ -27,14 +27,16 @@ def _build_inventory_home(page: ft.Page) -> list:
         for item in items:
             if is_search_mode():
                 if query.startswith("#"):
+                    # Filtrage par tag si la recherche commence par #
                     tag = query[1:]
                     if any(tag in t.lower() for t in item.get("tags", [])):
                         filtered.append(item)
                 else:
+                    # Filtrage normal par nom
                     if query in item["name"].lower():
                         filtered.append(item)
             else:
-                # Filtrage par catégorie (anciennement "use")
+                # Filtrage par catégorie
                 if active_type:
                     if item.get("category") == active_type["name"]:
                         filtered.append(item)
@@ -48,7 +50,7 @@ def _build_inventory_home(page: ft.Page) -> list:
 
         if not items:
             item_list_container.controls.append(
-                ft.Text("Aucun résultat trouvé", size=16, color="gray")
+                ft.Text("Aucun résultat trouvé", size=16, color="#4B0FFFC5")
             )
         else:
             for item in items:
@@ -157,7 +159,7 @@ def _build_inventory_home(page: ft.Page) -> list:
                 ),
                 ft.Text(type_obj["name"], size=11, text_align=ft.TextAlign.CENTER, color="white"),
             ], alignment=ft.MainAxisAlignment.CENTER, spacing=4,
-               horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER),
             width=80, height=85,
             border_radius=10,
             border=ft.border.all(2, "#555555"),
