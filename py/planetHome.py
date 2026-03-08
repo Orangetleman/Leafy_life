@@ -119,7 +119,7 @@ def _planet(page: ft.Page) -> list:
         event = random.choice(EVENTS["plain"])
 
         new_sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
+            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
 
@@ -181,7 +181,7 @@ def _planet(page: ft.Page) -> list:
                     stop_tp_screen()
                     tp()
                     return
-                if new_sprite.left > page.width:
+                if new_sprite.left > page.width - 150:
                     stop_tp_screen()
                     tp()
                     return
@@ -198,7 +198,7 @@ def _planet(page: ft.Page) -> list:
     def expl_plaine(e):
         page.clean()
         sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
+            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
@@ -245,6 +245,10 @@ def _planet(page: ft.Page) -> list:
                 sprite.bottom = (biome_height / 4) + (page.height - biome_height)
 
                 if sprite.left < 0:
+                    stop_game()
+                    tp()
+                    return
+                if sprite.left > page.width - 150:
                     stop_game()
                     tp()
                     return
