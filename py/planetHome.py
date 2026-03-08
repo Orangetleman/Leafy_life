@@ -7,14 +7,14 @@ import threading
 import random
 
 # Charge la musique
-music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
+'''music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
 music_player = pyglet.media.Player()
 music_player.queue(music)
 music_player.loop = True
 music_player.play()
 
 # Lance pyglet en arrière-plan
-threading.Thread(target=pyglet.app.run, daemon=True).start()
+threading.Thread(target=pyglet.app.run, daemon=True).start()'''
 
 
 def _planet(page: ft.Page) -> list:
@@ -118,6 +118,15 @@ def _planet(page: ft.Page) -> list:
         running[0] = True
         event = random.choice(EVENTS["plain"])
 
+        le_txt = ft.Text('planet', size=30)
+
+        bouton_retour = ft.Container(
+            content=ft.Row(
+                [ft.ElevatedButton(le_txt, on_click=retourneur)],  # ← ajouter []
+                alignment=ft.Alignment.TOP_LEFT,
+            )
+        )
+
         new_sprite = ft.Container(
             content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
@@ -128,11 +137,6 @@ def _planet(page: ft.Page) -> list:
                 content=ft.Image(src="assets/imgs/icons/arriere_plain.png", fit="cover"),
                 expand=True,
             ),
-            ft.Container(
-                content=ft.Text('planet', size=50),
-                alignment=ft.Alignment.TOP_LEFT,
-            ),
-            new_sprite,
         ]
 
         if event["type"] == "enemy":
@@ -150,6 +154,8 @@ def _planet(page: ft.Page) -> list:
                 alignment=emplacement,
             ))
 
+        preset.append(new_sprite)
+        preset.append(bouton_retour)
         event_scene = ft.Container(
             content=ft.Stack(preset),
             expand=True,
@@ -193,25 +199,36 @@ def _planet(page: ft.Page) -> list:
         page.run_task(tp_game_loop)
 
     """===========================================================plaine===================================================================================="""
-
-
-    def expl_plaine(e):
-        page.clean()
-        sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
-            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
-        )
-        listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
-        listener.start()
-
-        def stop_game(e=None):
+    listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
+    def stop_game(e=None):
             print("stop_game appelé")
             running[0] = False
             listener.stop()
             print("listener stoppé, running:", running[0])
 
+    def expl_plaine(e):
+        running[0] = True
+        page.clean()
+        sprite = ft.Container(
+            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
+            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
+        )
+        
+        listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
+        listener.start()
+
         page.stop_current_screen = stop_game
         page.window.on_event = on_window_event
+
+
+        le_txt = ft.Text('planet', size=30)
+
+        bouton_retour = ft.Container(
+            content=ft.Row(
+                [ft.ElevatedButton(le_txt, on_click=retourneur)],
+                alignment=ft.Alignment.TOP_LEFT,
+            )
+        )
 
         game_container = ft.Container(
             content=ft.Stack([
@@ -222,13 +239,14 @@ def _planet(page: ft.Page) -> list:
                     ),
                     expand=True,
                 ),
+                
                 ft.Container(
                     content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
                     right=0,
                     bottom=400
                 ),
                 sprite,
-                dialogue(e,s1)]),
+                dialogue(e,s1),bouton_retour]),
             expand=True
         )
 
@@ -261,7 +279,9 @@ def _planet(page: ft.Page) -> list:
     """===========================================================foret===================================================================================="""
 
 
-    return [ft.Stack([
+
+    
+    planet = ft.Stack([
         ft.Container(
             ft.Image(src="assets/imgs/icons/biome_plain.png"),
             expand=True
@@ -274,4 +294,11 @@ def _planet(page: ft.Page) -> list:
             width=300,
             height=300,
         )
-    ])]
+    ])
+
+    def retourneur(e):
+        stop_game()
+        page.clean()
+        page.add(planet)
+
+    return planet
