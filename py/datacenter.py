@@ -6,7 +6,12 @@ import random
 
 # ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
-    { "id": 1, "name": "Chardon", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "23112025-IMG_0402.jpg"},
+    { "id": 1, "name": "Crabe", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
+]
+
+# ------------------------------------ Npcs palette --------------------------------------
+NPCS = [
+    { "id": 1, "name": "Heron", "biome": "plain", "visual": "assets/imgs/npc/heron.png"}
 ]
 
 # ------------------------------------ Events palette ------------------------------------
@@ -15,6 +20,7 @@ EVENTS = {
         { "type": "enemy", "data": { "enemyId": 1 } },
         { "type": "npc",   "data": { "npcId": 1 } },
         { "type": "lore",  "data": { "leafId": 1 } },
+        { "type": "empty",  "data": { "itemId": 1 } },
     ]
 }
 

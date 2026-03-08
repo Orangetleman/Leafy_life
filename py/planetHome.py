@@ -4,6 +4,7 @@ from datacenter import *
 import asyncio
 import pyglet
 import threading
+import random
 
 # Charge la musique
 music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
@@ -80,9 +81,9 @@ def _planet(page: ft.Page) -> list:
                     chara_msg.update()
                     npc_msg.update()
                 else:
-                    dialogue_box.visible = False  # 👈 cache tout quand c'est fini
+                    dialogue_box.visible = False  
                     dialogue_box.update()
-                    listener.stop()  # 👈 arrête le listener pynput
+                    listener.stop()  
 
 
         msg=scene[i_scene[0]]
@@ -111,7 +112,85 @@ def _planet(page: ft.Page) -> list:
         listener.start()
 
         return dialogue_box
+    
+    def tp():
+        page.clean()
+        running[0] = True
+        event = random.choice(EVENTS["plain"])
 
+        new_sprite = ft.Container(
+            content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
+            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
+        )
+
+        preset = [
+            ft.Container(
+                content=ft.Image(src="assets/imgs/icons/arriere_plain.png", fit="cover"),
+                expand=True,
+            ),
+            ft.Container(
+                content=ft.Text('planet', size=50),
+                alignment=ft.Alignment.TOP_LEFT,
+            ),
+            new_sprite,
+        ]
+
+        if event["type"] == "enemy":
+            enemyid = random.choice(ENEMIES)
+            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
+            preset.append(ft.Container(
+                content=ft.Image(src=enemyid["visual"], width=80, height=60),
+                alignment=emplacement,
+            ))
+        elif event["type"] == "npc":
+            npcid = random.choice(NPCS)
+            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
+            preset.append(ft.Container(
+                content=ft.Image(src=npcid["visual"], width=80, height=60),
+                alignment=emplacement,
+            ))
+
+        event_scene = ft.Container(
+            content=ft.Stack(preset),
+            expand=True,
+        )
+
+        new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
+        new_listener.start()
+
+        def stop_tp_screen(e=None):
+            running[0] = False
+            new_listener.stop()
+
+        page.stop_current_screen = stop_tp_screen
+        page.window.on_event = on_window_event
+
+        async def tp_game_loop():
+            biome_img_ratio = 1250 / 649
+            new_sprite.left = page.width / 2  # ← init immédiate, pas après sleep
+            while running[0]:
+                if keys_pressed["right"]:
+                    new_sprite.left = new_sprite.left + 15
+                if keys_pressed["left"]:
+                    new_sprite.left = new_sprite.left - 15
+
+                biome_height = page.width / biome_img_ratio
+                new_sprite.bottom = (biome_height / 4) + (page.height - biome_height)
+
+                if new_sprite.left < 0:
+                    stop_tp_screen()
+                    tp()
+                    return
+                if new_sprite.left > page.width:
+                    stop_tp_screen()
+                    tp()
+                    return
+
+                page.update()
+                await asyncio.sleep(0.025)
+
+        page.add(event_scene)
+        page.run_task(tp_game_loop)
 
     """===========================================================plaine===================================================================================="""
 
@@ -120,8 +199,6 @@ def _planet(page: ft.Page) -> list:
         page.clean()
         sprite = ft.Container(
             content=ft.Image(src="assets/imgs/icons/type_resurrector.png", width=80, height=60),
-            left=0,
-            bottom=50,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
         listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
@@ -135,19 +212,6 @@ def _planet(page: ft.Page) -> list:
 
         page.stop_current_screen = stop_game
         page.window.on_event = on_window_event
-
-        async def game_loop():
-            biome_img_ratio = 1250 / 649
-            while running[0]:
-                if keys_pressed["right"]:
-                    sprite.left = (sprite.left or 0) + 15
-                if keys_pressed["left"]:
-                    sprite.left = (sprite.left or 0) - 15
-                
-                biome_height = page.width / biome_img_ratio
-                sprite.bottom = (biome_height / 4) + (page.height - biome_height)
-                page.update()
-                await asyncio.sleep(0.025)  # 40 FPS
 
         game_container = ft.Container(
             content=ft.Stack([
@@ -167,6 +231,25 @@ def _planet(page: ft.Page) -> list:
                 dialogue(e,s1)]),
             expand=True
         )
+
+        async def game_loop():
+            biome_img_ratio = 1250 / 649
+            sprite.left=page.width/2
+            while running[0]:
+                if keys_pressed["right"]:
+                    sprite.left = (sprite.left) + 15
+                if keys_pressed["left"]:
+                    sprite.left = (sprite.left) - 15
+                
+                biome_height = page.width / biome_img_ratio
+                sprite.bottom = (biome_height / 4) + (page.height - biome_height)
+
+                if sprite.left < 0:
+                    stop_game()
+                    tp()
+                    return
+                page.update()
+                await asyncio.sleep(0.025)  # 40 FPS
 
         page.add(game_container)
         page.run_task(game_loop)
