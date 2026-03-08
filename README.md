@@ -1,3 +1,27 @@
 # Leafy_life
 Leafy life is a game that improve your knowledge about the biodiversity and its value
 
+
+-> bouton retour planète (Eva)
+-> placement du sprite (et des ennemis/PNJ/objets si besoin) (Chris)
+-> interaction PNJ/objets/ennemi avec la touche (Eva)
+-> mode combat:
+  - interface (Eva)
+  - boutons (Eva)
+  - stats (Chris)
+  - onglet leafs (Chris)
+  - affichage du leaf sélectionné (Eva)
+  - logique de combat (Eva)
+-> wandering shop (Chris)
+-> "pages vides", compléter tp() + faire des objets récupérables (Eva)
+-> pages lore (la mort)
+-> adaptation aux autres biomes (Eva)
+-> remplacement du visuel de la planète après avancement (Eva)
+-> écriture de tous les dialogues (Eva)
+-> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Chris)
+
+-> file "css" pour tout ce qui est couleurs (Chris)
+
+-> ajout des cinématiques (Chris)
+-> ajout de la musique (Eva)
+-> ajouts mineurs (on verra a la fin)
