@@ -5,6 +5,7 @@ import asyncio
 import pyglet
 import threading
 import random
+from main import main
 
 # Charge la musique
 '''music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)

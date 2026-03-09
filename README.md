@@ -1,5 +1,5 @@
 # Leafy_life
-Leafy life is a game that improve your knowledge about the biodiversity and its value
+Leafy life is a game that improves your knowledge about the biodiversity and its value
 
 
 -> bouton retour planète (Eva)
@@ -16,7 +16,7 @@ Leafy life is a game that improve your knowledge about the biodiversity and its 
 -> "pages vides", compléter tp() + faire des objets récupérables (Eva)
 -> pages lore (la mort)
 -> adaptation aux autres biomes (Eva)
--> remplacement du visuel de la planète après avancement (Eva)
+-> remplacement du visuel de la planète après avancement (Eva/Chris)
 -> écriture de tous les dialogues (Eva)
 -> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Chris)
 
@@ -24,4 +24,7 @@ Leafy life is a game that improve your knowledge about the biodiversity and its 
 
 -> ajout des cinématiques (Chris)
 -> ajout de la musique (Eva)
--> ajouts mineurs (on verra a la fin)
+-> ajouts mineurs (on verra a la fin) :
+  tutoriel
+
+Problématique : Comment éduquer en divertissant ?
