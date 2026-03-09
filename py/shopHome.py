@@ -1,5 +1,6 @@
 import flet as ft
 from datacenter import inventory_manager, classic_shop_manager, WANDERINGSHOPS
+from style import *
 
 
 def open_error_modal(page: ft.Page, message: str):
@@ -178,20 +179,20 @@ def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "pl
         price_badges = []
         if item.get("price_O2",  0):
             price_badges.append(ft.Container(
-                ft.Text(f"{item['price_O2']} O2",  size=12, color="white"),
-                bgcolor="#1a3a7c", border=ft.border.all(1, "#006bb3"),
+                ft.Text(f"{item['price_O2']} O2",  size=12, color=SHOP_BUTTON_BADGE_TXT_COLOR),
+                bgcolor=SHOP_BUTTON_BADGE_BG_O2_COLOR, border=ft.border.all(1, SHOP_BUTTON_BADGE_BORDER_O2_COLOR),
                 border_radius=6, padding=ft.padding.symmetric(horizontal=6, vertical=3),
             ))
         if item.get("price_CO2", 0):
             price_badges.append(ft.Container(
-                ft.Text(f"{item['price_CO2']} CO2", size=12, color="white"),
-                bgcolor="#1a4a2a", border=ft.border.all(1, "#2e8b39"),
+                ft.Text(f"{item['price_CO2']} CO2", size=12, color=SHOP_BUTTON_BADGE_TXT_COLOR),
+                bgcolor=SHOP_BUTTON_BADGE_BG_CO2_COLOR, border=ft.border.all(1, SHOP_BUTTON_BADGE_BORDER_CO2_COLOR),
                 border_radius=6, padding=ft.padding.symmetric(horizontal=6, vertical=3),
             ))
-        if stock_qty != float("inf") and stock_qty < 99999:
+        if stock_qty != float("inf") and stock_qty < 9999:
             price_badges.append(ft.Container(
-                ft.Text(f"Stock: {stock_qty}", size=12, color="white"),
-                bgcolor="#7a6a00", border=ft.border.all(1, "#bfa500"),
+                ft.Text(f"Stock: {stock_qty}", size=12, color=SHOP_BUTTON_BADGE_TXT_COLOR),
+                bgcolor=SHOP_BUTTON_BADGE_BG_STOCK_COLOR, border=ft.border.all(1, SHOP_BUTTON_BADGE_BORDER_STOCK_COLOR),
                 border_radius=6, padding=ft.padding.symmetric(horizontal=6, vertical=3),
             ))
 
@@ -200,28 +201,32 @@ def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "pl
                 ft.Row([
                     ft.Container(
                         ft.Image(src=item.get("icon", ""), width=40, height=40, fit="contain",
-                                error_content=ft.Icon(ft.Icons.HELP_OUTLINE, size=24, color="white")),
-                        bgcolor="#2a2a3e", border_radius=8, padding=5,
+                                error_content=ft.Icon(ft.Icons.HELP_OUTLINE, size=24, color=SHOP_BUTTON_IMG_ERROR_TXT_COLOR)),
+                        bgcolor=SHOP_BUTTON_IMG_BG_COLOR, 
+                        border_radius=8, border=ft.border.all(1, SHOP_BUTTON_IMG_BORDER_COLOR),
+                        padding=5,
                     ),
                     ft.Column([
-                        ft.Text(item["name"], size=14, color="white", weight=ft.FontWeight.W_500),
-                        ft.Text(effect_text,  size=11, color="gray"),
+                        ft.Text(item["name"], size=14, color=SHOP_BUTTON_NAME_COLOR, weight=ft.FontWeight.W_500),
+                        ft.Text(effect_text,  size=11, color=SHOP_BUTTON_EFFECT_COLOR),
                     ], spacing=2),
                 ], spacing=10),
                 ft.Row(price_badges, spacing=6),
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
             padding=ft.padding.symmetric(horizontal=14, vertical=10),
             border_radius=10,
-            border=ft.border.all(1, "#444"),
-            bgcolor="#2a2a3e",
+            border=ft.border.all(2, SHOP_BUTTON_BORDER_COLOR),
+            bgcolor=SHOP_BUTTON_BG_COLOR,
             animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
         )
 
         def on_hover(e):
-            row_container.bgcolor = "#3a3a5e" if e.data else "#2a2a3e"
+            row_container.bgcolor = SHOP_BUTTON_BG_COLOR_HOVER if e.data else SHOP_BUTTON_BG_COLOR
             row_container.update()
 
         def on_click(e, i=item):
+            row_container.bgcolor = SHOP_BUTTON_BG_COLOR_CLICKED if e.data else SHOP_BUTTON_BG_COLOR
+            row_container.update()
             open_buy_modal(page, i, shop, on_purchase)
 
         row_container.on_hover = on_hover
@@ -247,29 +252,36 @@ def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "pl
 
     refresh_list()
 
-    return [ft.Column([
-        ft.Container(
-            content=ft.Row([
-                ft.TextField(
-                    hint_text="🔍 Rechercher… (ex: #soin, bandage)",
-                    on_change=on_search_change,
-                    expand=True,
-                    border_color="#555", focused_border_color="#4a9eff",
-                    color="white", hint_style=ft.TextStyle(color="#888"),
-                ),
-                ft.Row([o2_badge, co2_badge], spacing=6),
-            ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
-            padding=ft.padding.symmetric(horizontal=12, vertical=8),
-        ),
-        ft.Container(
-            content=ft.Text("Shop itinérant" if shop_type == "wandering" else "Shop",
-                            size=20, weight=ft.FontWeight.BOLD,
-                            text_align=ft.TextAlign.CENTER, color="white"),
-            alignment=ft.Alignment.CENTER,
-            bgcolor="#7a3a7a", border=ft.border.all(2, "#5a1a5a"),
-            border_radius=8, padding=ft.padding.symmetric(vertical=8),
-            margin=ft.margin.symmetric(horizontal=12),
-        ),
-        ft.Container(content=shop_list, expand=True,
-                    padding=ft.padding.symmetric(horizontal=12, vertical=4)),
-    ], expand=True, spacing=0)]
+    return [ft.Container(
+                    ft.Column([
+                            ft.Container(
+                                content=ft.Row([
+                                    ft.TextField(
+                                        label="🔍 Rechercher… (ex: #soin, bandage)",
+                                        on_change=on_search_change,
+                                        expand=True,
+                                        border_color=SHOP_SHEARCHBAR_BORDER_COLOR, 
+                                        color=SHOP_SHEARCHBAR_INPUT_COLOR, 
+                                        hint_style=ft.TextStyle(color=SHOP_SHEARCHBAR_LABEL_COLOR),
+                                        bgcolor=SHOP_SHEARCHBAR_BG_COLOR,
+                                        focused_bgcolor=SHOP_SHEARCHBAR_COLOR_FOCUSED,
+                                        focused_border_color=SHOP_SHEARCHBAR_BORDER_COLOR_FOCUSED,
+                                    ),
+                                    ft.Row([o2_badge, co2_badge], spacing=6),
+                                ], spacing=12, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                                padding=ft.padding.symmetric(horizontal=12, vertical=8),
+                            ),
+                            ft.Container(
+                                content=ft.Text("Shop itinérant" if shop_type == "wandering" else "Shop",
+                                                size=20, weight=ft.FontWeight.BOLD,
+                                                text_align=ft.TextAlign.CENTER, color=SHOP_TITLE_COLOR),
+                                alignment=ft.Alignment.CENTER,
+                                bgcolor=SHOP_TITLE_BG_COLOR, border=ft.border.all(2, SHOP_TITLE_BORDER_COLOR),
+                                border_radius=8, padding=ft.padding.symmetric(vertical=8),
+                                margin=ft.margin.symmetric(horizontal=12),
+                            ),
+                            ft.Container(content=shop_list, expand=True,
+                                        padding=ft.padding.symmetric(horizontal=12, vertical=4)),
+                        ], expand=True, spacing=0),
+                    expand=True, bgcolor=SHOP_BG_COLOR, padding=0,
+                    )]

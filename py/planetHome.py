@@ -1,6 +1,7 @@
 import flet as ft
 from pynput import keyboard as pynput_keyboard
 from datacenter import *
+from style import *
 import asyncio
 import pyglet
 import threading
@@ -26,7 +27,6 @@ def _planet(page: ft.Page, navigate) -> list:
     keys_pressed = {"right": False, "left": False, "space":False}
     running = [True]
     focused = [True]
-     
 
     def on_press(key):
             if not focused[0]:

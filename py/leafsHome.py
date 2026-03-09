@@ -255,7 +255,7 @@ def _build_leafs_home(page: ft.Page) -> list:
             leaf_row.on_click = handle_click
             items.append(leaf_row)
 
-        list_container.controls = items
+        leaf_column.controls = items
         page.update()
 
     search = ft.Container(
@@ -274,7 +274,8 @@ def _build_leafs_home(page: ft.Page) -> list:
                     padding=4,
     )
 
-    list_container = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=5, expand=True)
+    leaf_column = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=5, expand=True)
+    list_container = ft.Container(leaf_column, expand=True, padding=ft.padding.symmetric(horizontal=10))
     populate_list()
 
     return [ft.Container(

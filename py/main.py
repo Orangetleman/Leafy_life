@@ -49,6 +49,8 @@ def main(page: ft.Page, page_name = "leafs") -> None:
     page.title = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = "#1a1a1a"
+    page.padding = 0
+    page.spacing = 0
 
     def show_screen(name: str):
         if hasattr(page, 'stop_current_screen'):
@@ -72,6 +74,7 @@ def main(page: ft.Page, page_name = "leafs") -> None:
             ft.Container(
                 content=ft.Column(controls=body, expand=True),
                 expand=True,
+                padding=0,
             )
         )
 

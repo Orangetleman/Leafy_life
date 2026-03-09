@@ -192,7 +192,7 @@ def _build_inventory_home(page: ft.Page) -> list:
         type_buttons_container.controls.append(create_type_button(type_obj))
 
     search_input = ft.TextField(
-        hint_text="Rechercher… (ex: #soin, bandage)",
+        label="Rechercher… (ex: #soin, bandage)",
         on_focus=on_search_focus,
         on_blur=on_search_blur,
         on_change=on_search_input,
@@ -204,12 +204,10 @@ def _build_inventory_home(page: ft.Page) -> list:
 
     return [ft.Column([
         ft.Container(
-            content=ft.Text("Inventaire", size=24, weight=ft.FontWeight.BOLD,
-                            text_align=ft.TextAlign.CENTER),
-            alignment=ft.Alignment.CENTER,
+            content=ft.Text("Inventaire", size=24, weight=ft.FontWeight.BOLD,),
             padding=ft.padding.symmetric(vertical=10),
         ),
         ft.Container(content=type_buttons_container, padding=ft.padding.symmetric(vertical=10)),
         ft.Container(content=search_input, padding=ft.padding.symmetric(horizontal=20)),
-        ft.Container(content=item_list_container, padding=ft.padding.all(10), expand=True),
-    ], expand=True, spacing=5)]
+        ft.Container(content=item_list_container, padding=ft.padding.all(10), expand=True, alignment=ft.Alignment(-1,-1)),
+    ], expand=True, spacing=5, horizontal_alignment=ft.CrossAxisAlignment.CENTER)]

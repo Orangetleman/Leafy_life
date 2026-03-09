@@ -16,7 +16,7 @@ LEAF_BUTTON_BG_COLOR = "#8db15e"
 LEAF_BUTTON_BORDER_COLOR = "#607F37"
 LEAF_BUTTON_BG_COLOR_HOVER = "#a7bd8b"
 LEAF_BUTTON_BG_COLOR_CLICKED = "#63853c"
-LEAF_BUTTON_IMG_BG_COLOR = "#476128"
+LEAF_BUTTON_IMG_BG_COLOR = "#6f8b4a"
 LEAF_BUTTON_IMG_BORDER_COLOR = "#59842a"
 LEAF_BUTTON_NAME_COLOR = "#ffffff"
 LEAF_BUTTON_TYPE_COLOR = "#45691f"
@@ -33,3 +33,48 @@ LEAF_CARD_PROGRESS_BAR_HYDRATION_COLOR = "#4b86b4"
 LEAF_CARD_PROGRESS_BAR_HYDRATION_ALERT_COLOR = "#ff0000"
 LEAF_CARD_PROGRESS_BAR_ATK_COLOR = "purple"
 LEAF_CARD_PROGRESS_BAR_LVL_COLOR = "#4b0fffc5"
+
+# —————————————————————————————————————————————————————————
+# ————————————————————— Style Shop ————————————————————————
+# —————————————————————————————————————————————————————————
+    # ------------------- Style général -------------------
+SHOP_BG_COLOR = "#292929"
+SHOP_TITLE_COLOR = "white"
+SHOP_TITLE_COLOR_ITINERANT = "#B68B31C5"
+SHOP_TITLE_BG_COLOR = "#7a3a7a"
+SHOP_TITLE_BORDER_COLOR = "#5a1a5a"
+SHOP_SHEARCHBAR_BG_COLOR = "#393939"
+SHOP_SHEARCHBAR_INPUT_COLOR = "#FFFFFF"
+SHOP_SHEARCHBAR_LABEL_COLOR = "#797979"
+SHOP_SHEARCHBAR_BORDER_COLOR = "#131313"
+SHOP_SHEARCHBAR_COLOR_FOCUSED = "#484848"
+SHOP_SHEARCHBAR_BORDER_COLOR_FOCUSED = "#4a9eff"
+    # ------------------- Style des boutons ---------------
+SHOP_BUTTON_BG_COLOR = "#2a2a3e"
+SHOP_BUTTON_BORDER_COLOR = "#363656"
+SHOP_BUTTON_BG_COLOR_HOVER = "#3a3a5e"
+SHOP_BUTTON_BG_COLOR_CLICKED = "#2a2a47"
+SHOP_BUTTON_IMG_BG_COLOR = "#222235"
+SHOP_BUTTON_IMG_BORDER_COLOR = "#232335"
+SHOP_BUTTON_IMG_ERROR_TXT_COLOR = "#ff8585"
+SHOP_BUTTON_NAME_COLOR = "white"
+SHOP_BUTTON_EFFECT_COLOR = "gray"
+SHOP_BUTTON_BADGE_TXT_COLOR = "white"
+SHOP_BUTTON_BADGE_BG_O2_COLOR = "#1a3a7c"
+SHOP_BUTTON_BADGE_BORDER_O2_COLOR = "#006bb3"
+SHOP_BUTTON_BADGE_BG_CO2_COLOR = "#1a4a2a"
+SHOP_BUTTON_BADGE_BORDER_CO2_COLOR = "#2e8b39"
+SHOP_BUTTON_BADGE_BG_STOCK_COLOR = "#7a6a00"
+SHOP_BUTTON_BADGE_BORDER_STOCK_COLOR = "#bfa500"
+    # ------------------- Style des cartes ----------------
+
+
+# —————————————————————————————————————————————————————————
+# ———————————————————— Style Inventory ————————————————————
+# —————————————————————————————————————————————————————————
+    # ------------------- Style général -------------------
+
+# —————————————————————————————————————————————————————————
+# —————————————————————— Style Planet —————————————————————
+# —————————————————————————————————————————————————————————
+    # ------------------- Style général -------------------
