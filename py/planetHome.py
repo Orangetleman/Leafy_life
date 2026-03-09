@@ -5,7 +5,6 @@ import asyncio
 import pyglet
 import threading
 import random
-from main import main
 
 # Charge la musique
 '''music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
@@ -18,7 +17,7 @@ music_player.play()
 threading.Thread(target=pyglet.app.run, daemon=True).start()'''
 
 
-def _planet(page: ft.Page) -> list:
+def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
@@ -300,6 +299,6 @@ def _planet(page: ft.Page) -> list:
     def retourneur(e):
         stop_game()
         page.clean()
-        page.add(planet)
+        navigate("planet")
 
     return planet

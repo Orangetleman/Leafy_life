@@ -45,7 +45,7 @@ def _build_placeholder(title: str) -> list:
         )
     ]
 
-def main(page: ft.Page) -> None:
+def main(page: ft.Page, page_name = "leafs") -> None:
     page.title = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = "#1a1a1a"
@@ -63,7 +63,7 @@ def main(page: ft.Page) -> None:
         elif name == "inventory":
             body = _build_inventory_home(page)
         elif name == "planet":
-            body = _planet(page)
+            body = _planet(page, show_screen)
         else:
             body = _build_leafs_home(page)
 
@@ -75,7 +75,7 @@ def main(page: ft.Page) -> None:
             )
         )
 
-    show_screen("leafs")
+    show_screen(page_name)
 
 if __name__ == "__main__":
     _seed_test_data()
