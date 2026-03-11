@@ -29,4 +29,12 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 
 Problématique : Comment éduquer en divertissant ?
 
-feur
+Leafy Life : Echoes of the pond
+description 
+
+Pour commencer :
+téléchargez et ouvrez simplement les fichiers pt dans un interpréteur python pour voir le code
+
+démarrage :
+lancez le fichier dependencies.bat 
+si le jeu ne se lance pas directement, le fermer et le re ouvrir
