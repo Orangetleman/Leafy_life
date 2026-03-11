@@ -139,16 +139,15 @@ def _planet(page: ft.Page, navigate) -> list:
             ),
         ]
 
+        emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
         if event["type"] == "enemy":
             enemyid = random.choice(ENEMIES)
-            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
             preset.append(ft.Container(
                 content=ft.Image(src=enemyid["visual"], width=80, height=60),
                 alignment=emplacement,
             ))
         elif event["type"] == "npc":
             npcid = random.choice(NPCS)
-            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
             preset.append(ft.Container(
                 content=ft.Image(src=npcid["visual"], width=80, height=60),
                 alignment=emplacement,
@@ -191,6 +190,9 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp()
                     return
+                if (new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT):
+                    print("entite touchee")
+
 
                 page.update()
                 await asyncio.sleep(0.025)
