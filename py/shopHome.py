@@ -77,8 +77,8 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
 
     dialog = ft.AlertDialog(
         modal=True,
-        title=ft.Text("Confirmer l'achat", weight=ft.FontWeight.BOLD, color="white"),
-        bgcolor="#1e1e2e",
+        title=ft.Text("Confirmer l'achat", weight=ft.FontWeight.BOLD, color=SHOP_CARD_TITLE_TEXT_COLOR),
+        bgcolor=SHOP_BUTTON_BG_COLOR,
         content=ft.Column([
             ft.Row([
                 ft.Container(
