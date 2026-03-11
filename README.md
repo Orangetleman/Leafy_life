@@ -36,5 +36,5 @@ Pour commencer :
 téléchargez et ouvrez simplement les fichiers pt dans un interpréteur python pour voir le code
 
 démarrage :
-lancez le fichier dependencies.bat 
-si le jeu ne se lance pas directement, le fermer et le re ouvrir
+lancez le fichier dependencies.bat et suivez les instructions. Fermez la fenetre.
+Re ouvrez la fenetre, si un message d'erreur s'affiche, fermer et ouvrir de nouveau.

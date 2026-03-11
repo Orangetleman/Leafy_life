@@ -249,12 +249,6 @@ def _planet(page: ft.Page, navigate) -> list:
                     ),
                     expand=True,
                 ),
-                
-                ft.Container(
-                    content=ft.Image(src="assets/imgs/icons/biome_plain.png", width=50, height=50),
-                    right=0,
-                    bottom=400
-                ),
                 sprite,
                 dialogue(e,s1),bouton_retour]),
             expand=True
