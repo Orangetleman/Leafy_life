@@ -83,3 +83,4 @@ def main(page: ft.Page, page_name = "leafs") -> None:
 if __name__ == "__main__":
     _seed_test_data()
     ft.run(main)
+    

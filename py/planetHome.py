@@ -113,7 +113,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         return dialogue_box
     
-    def tp():
+    def tp(e):
         page.clean()
         running[0] = True
         event = random.choice(EVENTS["plain"])
@@ -139,16 +139,15 @@ def _planet(page: ft.Page, navigate) -> list:
             ),
         ]
 
+        emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
         if event["type"] == "enemy":
             enemyid = random.choice(ENEMIES)
-            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
             preset.append(ft.Container(
                 content=ft.Image(src=enemyid["visual"], width=80, height=60),
                 alignment=emplacement,
             ))
         elif event["type"] == "npc":
             npcid = random.choice(NPCS)
-            emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
             preset.append(ft.Container(
                 content=ft.Image(src=npcid["visual"], width=80, height=60),
                 alignment=emplacement,
@@ -156,10 +155,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         preset.append(new_sprite)
         preset.append(bouton_retour)
-        event_scene = ft.Container(
-            content=ft.Stack(preset),
-            expand=True,
-        )
+        
 
         new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         new_listener.start()
@@ -185,18 +181,32 @@ def _planet(page: ft.Page, navigate) -> list:
 
                 if new_sprite.left < 0:
                     stop_tp_screen()
-                    tp()
+                    tp(e)
                     return
                 if new_sprite.left > page.width - 150:
                     stop_tp_screen()
-                    tp()
+                    tp(e)
                     return
+                if (new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT):
+                    combat()
+
 
                 page.update()
                 await asyncio.sleep(0.025)
+        
+        event_scene = ft.Container(
+            content=ft.Stack(preset),
+            expand=True,
+        )
 
         page.add(event_scene)
         page.run_task(tp_game_loop)
+
+    def combat():
+        page.clean()
+        page.add(ft.Container(content=ft.Text('FEUR', size=800)))
+
+
 
     """===========================================================plaine===================================================================================="""
     listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
@@ -264,11 +274,11 @@ def _planet(page: ft.Page, navigate) -> list:
 
                 if sprite.left < 0:
                     stop_game()
-                    tp()
+                    tp(e)
                     return
                 if sprite.left > page.width - 150:
                     stop_game()
-                    tp()
+                    tp(e)
                     return
                 page.update()
                 await asyncio.sleep(0.025)  # 40 FPS

@@ -6,7 +6,8 @@ import random
 
 # ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
-    { "id": 1, "name": "Crabe", "type": "tank", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
+    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
+    { "id": 1, "name": "Snake", "rarity": "rare", "atk": 5, "hp": 15, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
