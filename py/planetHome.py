@@ -204,7 +204,15 @@ def _planet(page: ft.Page, navigate) -> list:
 
     def combat():
         page.clean()
-        page.add(ft.Container(content=ft.Text('FEUR', size=800)))
+        preset = [
+            ft.Container(
+                content=ft.Image(src="assets/imgs/icons/arriere_plain.png", fit="cover"),
+                expand=True,
+            ),
+            ft.Container(content=ft.Text('COMBAT', size=800)),
+        ]
+        page.add(preset)
+        
 
 
 
