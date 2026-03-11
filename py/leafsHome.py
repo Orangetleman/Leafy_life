@@ -73,6 +73,10 @@ def create_badge_button(leaf, item, on_used=None):
     if item is None:
         return ft.Container(width=32, height=32)
 
+    def on_over(e):
+        e.control.bgcolor = LEAF_CARD_BADGE_BG_HOVER_COLOR if e.data else LEAF_CARD_BADGE_BG_COLOR
+        e.control.update()
+
     def on_click(e):
         # Vérifier que le joueur possède l'item
         owned = next((i for i in inventory_manager.get_items() if i["id"] == item["id"]), None)
@@ -92,13 +96,14 @@ def create_badge_button(leaf, item, on_used=None):
     return ft.Container(
         content=ft.Image(src=item["icon"], width=18, height=18, fit="contain"),
         padding=5,
-        bgcolor="#2a2a3e",
-        border=ft.border.all(1, "#555"),
+        bgcolor=LEAF_CARD_BADGE_BG_COLOR,
+        border=ft.border.all(1, LEAF_CARD_BADGE_BORDER_COLOR),
         border_radius=8,
         width=32,
         height=32,
         alignment=ft.Alignment.CENTER,
         on_click=on_click,
+        on_hover=on_over,
         tooltip=f"Utiliser : {item['name']}  (+{item['effect']['amount']} {item['effect']['stat']})",
     )
 
@@ -141,13 +146,13 @@ def create_progress_bar(leaf, label, on_used=None):
 #  Modal leaf
 # ──────────────────────────────────────────────────────────────
 def open_leaf_modal(page: ft.Page, leaf):
+
     def close_modal(e):
-        dialog.open = False
+        overlay.visible = False
         page.update()
 
     def on_stat_used():
-        # Reconstruire le contenu pour rafraîchir les barres
-        dialog.content = build_content()
+        modal_content.content = build_content()
         page.update()
 
     def build_content():
@@ -178,17 +183,40 @@ def open_leaf_modal(page: ft.Page, leaf):
             spacing=8,
         )
 
-    dialog = ft.AlertDialog(
-        modal=True,
-        title=ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=18, color=LEAF_CARD_TITLE_TEXT_COLOR),
-        bgcolor= LEAF_CARD_BG_COLOR,
-        content=build_content(),
-        actions=[ft.TextButton("Fermer", on_click=close_modal)],
-        actions_alignment=ft.MainAxisAlignment.END,
-    )
+    modal_content = ft.Container(content=build_content())
 
-    page.overlay.append(dialog)
-    dialog.open = True
+    overlay = ft.Container(
+                    visible=True,
+                    expand=True,
+                    bgcolor=ft.Colors.with_opacity(LEAF_CARD_SHADOW_COLOR[0], LEAF_CARD_SHADOW_COLOR[1]),
+                    alignment=ft.Alignment(0, 0),
+                    content=ft.GestureDetector(
+                        mouse_cursor=ft.MouseCursor.BASIC,
+                        on_tap=close_modal,
+                        content=ft.Container(
+                            expand=True,
+                            alignment=ft.Alignment(0, 0),
+                            content=ft.Container(
+                                content=ft.Column([
+                                    ft.Text(leaf.name, weight=ft.FontWeight.BOLD, size=18, color=LEAF_CARD_TITLE_TEXT_COLOR),
+                                    ft.Divider(),
+                                    modal_content,
+                                    ft.Row([
+                                        ft.TextButton("Fermer", on_click=close_modal)
+                                    ], alignment=ft.MainAxisAlignment.END),
+                                ], tight=True, spacing=8),
+                                bgcolor=LEAF_CARD_BG_COLOR,
+                                border=ft.border.all(2, LEAF_CARD_BORDER_COLOR),
+                                border_radius=12,
+                                padding=20,
+                                width=380,
+                                on_click=lambda e: None,
+                            )
+                        )
+                    )
+                )
+
+    page.overlay.append(overlay)
     page.update()
 
 
@@ -202,10 +230,11 @@ def _build_leafs_home(page: ft.Page) -> list:
     async def on_leaf_click(e, leaf_row, leaf):
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_CLICKED
         leaf_row.update()
+        await asyncio.sleep(0.05)
+        open_leaf_modal(page, leaf)
         await asyncio.sleep(0.2)
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR
         leaf_row.update()
-        open_leaf_modal(page, leaf)
 
     def on_leaf_hover(e, leaf_row):
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_HOVER if e.data else LEAF_BUTTON_BG_COLOR

@@ -157,7 +157,6 @@ TYPES = [
 
 # ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
-    0:  { "id": 0,  "name": "grenouille", "type": 0, "rarity": "default", "atk": 4,  "hp": 50,  "species": "animal", "regime": "carnivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_frog.png",       "xp": 10 },
     2:  { "id": 2,  "name": "mouton",     "type": 2, "rarity": "default", "atk": 2,  "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0  },
     3:  { "id": 3,  "name": "abeille",    "type": 2, "rarity": "default", "atk": 3,  "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0  },
     5:  { "id": 5,  "name": "loup",       "type": 1, "rarity": "default", "atk": 6,  "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0  },
