@@ -10,9 +10,9 @@ def open_error_modal(page: ft.Page, message: str):
 
     dialog = ft.AlertDialog(
         modal=True,
-        title=ft.Text("Erreur", color="white", weight=ft.FontWeight.BOLD),
-        content=ft.Text(message, color="white"),
-        bgcolor="#cc3333",
+        title=ft.Text("Erreur", color=SHOP_CARD_ALERT_TEXT_COLOR, weight=ft.FontWeight.BOLD),
+        content=ft.Text(message, color=SHOP_CARD_ALERT_TEXT_COLOR),
+        bgcolor=SHOP_CARD_ALERT_BG_COLOR,
         actions=[ft.TextButton("Fermer", on_click=close)],
         actions_alignment=ft.MainAxisAlignment.END,
     )
@@ -37,8 +37,8 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
     state = {"amount": 1}
 
     amount_text    = ft.Text(str(state["amount"]), size=20, weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_TEXT_COLOR)
-    price_o2_text  = ft.Text(f"{price_O2} O2",   size=14, color="#4da6ff") if price_O2  > 0 else None
-    price_co2_text = ft.Text(f"{price_CO2} CO2", size=14, color="#6ecf7a") if price_CO2 > 0 else None
+    price_o2_text  = ft.Text(f"{price_O2} O2",   size=14, color=SHOP_CARD_ITEM_PRICE_O2_TEXT_COLOR) if price_O2  > 0 else None
+    price_co2_text = ft.Text(f"{price_CO2} CO2", size=14, color=SHOP_CARD_ITEM_PRICE_CO2_TEXT_COLOR) if price_CO2 > 0 else None
 
     effect = item.get("effect", {})
     effect_label = f"+{effect.get('amount','?')} {effect.get('stat','?')}" if effect else "—"
@@ -69,9 +69,9 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
         page.update()
 
     price_row = ft.Row([
-        ft.Container(price_o2_text,  bgcolor="#1a3a5c", border_radius=6,
+        ft.Container(price_o2_text,  bgcolor=SHOP_CARD_ITEM_PRICE_O2_BG_COLOR, border_radius=6,
                     padding=ft.padding.symmetric(horizontal=8, vertical=4)) if price_o2_text  else ft.Container(),
-        ft.Container(price_co2_text, bgcolor="#1a4a2a", border_radius=6,
+        ft.Container(price_co2_text, bgcolor=SHOP_CARD_ITEM_PRICE_CO2_BG_COLOR, border_radius=6,
                     padding=ft.padding.symmetric(horizontal=8, vertical=4)) if price_co2_text else ft.Container(),
     ], spacing=8)
     remove_badge = ft.Container(content=ft.Text("-",weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_TEXT_COLOR), bgcolor=SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BG_COLOR,
@@ -130,7 +130,7 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
         ], tight=True, spacing=12, width=280),
         actions=[
             ft.TextButton("Annuler", on_click=cancel, style=ft.ButtonStyle(color="gray")),
-            ft.ElevatedButton("Acheter", on_click=confirm, bgcolor="#27ae60", color="white"),
+            ft.ElevatedButton("Acheter", on_click=confirm, bgcolor=SHOP_CARD_CONFIRM_BUTTON_BG_COLOR, color=SHOP_CARD_CONFIRM_BUTTON_TEXT_COLOR),
         ],
         actions_alignment=ft.MainAxisAlignment.END,
     )
@@ -150,13 +150,13 @@ def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "pl
     state = {"search_query": ""}
 
     o2_badge = ft.Container(
-        content=ft.Text(f"{inventory_manager.money['O2']} O2",  size=13, color="white"),
-        bgcolor="#1a3a7c", border=ft.border.all(1, "#006bb3"),
+        content=ft.Text(f"{inventory_manager.money['O2']} O2",  size=13, color=SHOP_BUTTON_BADGE_TXT_COLOR),
+        bgcolor=SHOP_BUTTON_BADGE_BG_O2_COLOR, border=ft.border.all(1, SHOP_BUTTON_BADGE_BORDER_O2_COLOR),
         border_radius=6, padding=ft.padding.symmetric(horizontal=8, vertical=4),
     )
     co2_badge = ft.Container(
-        content=ft.Text(f"{inventory_manager.money['CO2']} CO2", size=13, color="white"),
-        bgcolor="#1a4a2a", border=ft.border.all(1, "#2e8b39"),
+        content=ft.Text(f"{inventory_manager.money['CO2']} CO2", size=13, color=SHOP_BUTTON_BADGE_TXT_COLOR),
+        bgcolor=SHOP_BUTTON_BADGE_BG_CO2_COLOR, border=ft.border.all(1, SHOP_BUTTON_BADGE_BORDER_CO2_COLOR),
         border_radius=6, padding=ft.padding.symmetric(horizontal=8, vertical=4),
     )
 

@@ -68,7 +68,7 @@ def item_for_stat(leaf, stat_attr):
 # ──────────────────────────────────────────────────────────────
 #  Badge cliquable
 # ──────────────────────────────────────────────────────────────
-def create_badge_button(leaf, item, on_used=None):
+def create_badge_button(leaf, value, max_value, item, on_used=None):
     item_name = item["name"] if item and not item["name"].endswith(" 🌟") else item["name"][:len(item["name"]) - 2]
     if item is None:
         return ft.Container(width=32, height=32)
@@ -82,6 +82,9 @@ def create_badge_button(leaf, item, on_used=None):
         owned = next((i for i in inventory_manager.get_items() if i["id"] == item["id"]), None)
         if not owned or owned["amount"] < 1:
             print(f"Pas de {item_name} en inventaire.")
+            return
+        if value >= max_value:
+            print(f"{leaf.name} a déjà un maximum de {item['effect']['stat']}.")
             return
         # Appliquer l'effet
         stat   = item["effect"]["stat"]
@@ -137,7 +140,7 @@ def create_progress_bar(leaf, label, on_used=None):
                 bar_height=20,
                 border_radius=8,
             ),
-            create_badge_button(leaf, item, on_used=on_used),
+            create_badge_button(leaf, value, max_value, item, on_used=on_used),
         ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
     ], spacing=4)
 
@@ -238,7 +241,6 @@ def _build_leafs_home(page: ft.Page) -> list:
 
     def on_leaf_hover(e, leaf_row):
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_HOVER if e.data else LEAF_BUTTON_BG_COLOR
-        leaf_row.update()
 
     def populate_list(query=""):
         items = []
