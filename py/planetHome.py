@@ -204,7 +204,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     def combat():
         page.clean()
-        page.add(ft.Container(content=ft.Text('FEUR', size=60)))
+        page.add(ft.Container(content=ft.Text('FEUR', size=800)))
 
 
 
