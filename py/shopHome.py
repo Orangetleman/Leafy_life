@@ -36,7 +36,7 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
 
     state = {"amount": 1}
 
-    amount_text    = ft.Text(str(state["amount"]), size=20, weight=ft.FontWeight.BOLD, color="white")
+    amount_text    = ft.Text(str(state["amount"]), size=20, weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_TEXT_COLOR)
     price_o2_text  = ft.Text(f"{price_O2} O2",   size=14, color="#4da6ff") if price_O2  > 0 else None
     price_co2_text = ft.Text(f"{price_CO2} CO2", size=14, color="#6ecf7a") if price_CO2 > 0 else None
 
@@ -74,7 +74,31 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
         ft.Container(price_co2_text, bgcolor="#1a4a2a", border_radius=6,
                     padding=ft.padding.symmetric(horizontal=8, vertical=4)) if price_co2_text else ft.Container(),
     ], spacing=8)
+    remove_badge = ft.Container(content=ft.Text("-",weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_TEXT_COLOR), bgcolor=SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BG_COLOR,
+                        on_click=remove,
+                        border=ft.border.all(SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BORDER_COLOR[0], SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BORDER_COLOR[1]), 
+                        border_radius=8,
+                        padding=ft.padding.symmetric(horizontal=10, vertical=8),
+                        alignment=ft.Alignment(0,0))
 
+    add_badge = ft.Container(content=ft.Text("+",weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_TEXT_COLOR), bgcolor=SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BG_COLOR,
+                        on_click=add,
+                        border=ft.border.all(SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BORDER_COLOR[0], SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BORDER_COLOR[1]), 
+                        border_radius=8,
+                        padding=ft.padding.symmetric(horizontal=10, vertical=8),
+                        alignment=ft.Alignment(0,0))
+    
+    def remove_hover(e):
+        remove_badge.bgcolor = SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BG_HOVER_COLOR if e.data else SHOP_CARD_ITEM_AMOUNT_SELECTOR_REMOVE_BG_COLOR
+        remove_badge.update()
+
+    def add_hover(e):
+        add_badge.bgcolor = SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BG_HOVER_COLOR if e.data else SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BG_COLOR
+        add_badge.update()
+
+    remove_badge.on_hover = remove_hover
+    add_badge.on_hover = add_hover
+    
     dialog = ft.AlertDialog(
         modal=True,
         title=ft.Text("Confirmer l'achat", weight=ft.FontWeight.BOLD, color=SHOP_CARD_TITLE_TEXT_COLOR),
@@ -87,21 +111,20 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
                     bgcolor="#2a2a3e", border_radius=8, padding=8,
                 ),
                 ft.Column([
-                    ft.Text(item["name"], size=16, weight=ft.FontWeight.BOLD, color="white"),
-                    ft.Text(f"Effet : {effect_label}", size=13, color="gray"),
-                    ft.Text(f"En stock : {max_amount}", size=13, color="gray"),
+                    ft.Text(item["name"], size=16, weight=ft.FontWeight.BOLD, color=SHOP_CARD_ITEM_NAME_COLOR),
+                    ft.Text(f"Effet : {effect_label}", size=13, color=SHOP_CARD_ITEM_EFFECT_COLOR),
+                    ft.Text(f"En stock : {max_amount}", size=13, color=SHOP_CARD_ITEM_STOCK_COLOR),
                 ], spacing=4),
             ], spacing=12),
             ft.Divider(color="#444"),
-            ft.Text("Quantité :", size=14, color="white"),
+            ft.Text("Quantité :", size=14, color=SHOP_CARD_ITEM_AMOUNT_SELECTED_TEXT_COLOR),
             ft.Row([
-                ft.IconButton(icon=ft.Icons.REMOVE, icon_color="white", bgcolor="#c0392b",
-                            on_click=remove, style=ft.ButtonStyle(shape=ft.CircleBorder())),
-                ft.Container(content=amount_text, bgcolor="#2a2a3e",
-                            border=ft.border.all(1, "#555"), border_radius=8,
-                            padding=ft.padding.symmetric(horizontal=16, vertical=6)),
-                ft.IconButton(icon=ft.Icons.ADD, icon_color="white", bgcolor="#27ae60",
-                            on_click=add, style=ft.ButtonStyle(shape=ft.CircleBorder())),
+                remove_badge,
+                ft.Container(content=amount_text, bgcolor=SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_BG_COLOR,
+                            border=ft.border.all(SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_BORDER[0], SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_BORDER[1]), border_radius=8,
+                            padding=ft.padding.symmetric(horizontal=10, vertical=4),
+                            alignment=ft.Alignment(0,0)),
+                add_badge,
             ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             price_row,
         ], tight=True, spacing=12, width=280),
