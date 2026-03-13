@@ -22,7 +22,7 @@ def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    content = ft.Text("explore", size=16)
+    plaine = ft.Text("explore plaine", size=30)
 
     keys_pressed = {"right": False, "left": False, "space":False}
     running = [True]
@@ -296,17 +296,17 @@ def _planet(page: ft.Page, navigate) -> list:
     planet = ft.Stack([
         ft.Container(
             ft.Image(src="assets/imgs/icons/biome_plain.png"),
+            alignment=ft.Alignment.CENTER,
             expand=True
         ),
         ft.Container(
             content=ft.Row(
-                [ft.IconButton(content, on_click=expl_plaine)],
-                alignment=ft.MainAxisAlignment.CENTER,
+                [ft.ElevatedButton(plaine, on_click=expl_plaine,bgcolor='green',)],
             ),
-            width=300,
-            height=300,
-        )
-    ])
+            alignment=ft.Alignment.BOTTOM_LEFT,
+            padding=30,   
+        ),
+    ],expand=True)
 
     def retourneur(e):
         stop_game()
