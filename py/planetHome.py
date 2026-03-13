@@ -22,7 +22,7 @@ def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    plaine = ft.Text("explore plaine", size=30)
+    plaine = ft.Text("explore plaine", size=30,color='black')
 
     keys_pressed = {"right": False, "left": False, "space":False}
     running = [True]
