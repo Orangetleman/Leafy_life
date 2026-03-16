@@ -187,8 +187,9 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e)
                     return
-                if (new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT):
-                    combat()
+                if (new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT) and event["type"] == "enemy":
+                    stop_tp_screen()
+                    combat(e,'plain',enemyid)
 
 
                 page.update()
@@ -202,17 +203,70 @@ def _planet(page: ft.Page, navigate) -> list:
         page.add(event_scene)
         page.run_task(tp_game_loop)
 
-    def combat():
+    def combat(e,biome,enemy):
         page.clean()
+        #musique
+        leafsprite = ft.Container(
+            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180), 
+            bottom=page.height * 0.20,
+            left=20,
+            )
+        enemysprite = ft.Container(
+                content=ft.Image(src=enemy["visual"], width=150, height=180),
+                bottom=page.height * 0.20,
+                right=20,
+            )
+        menu = ft.Container(bottom=0, left=0, width=page.width, height=page.height * 0.20, bgcolor=ft.Colors.with_opacity(0.8, "green")) 
+        """CHRIS A AJOUTER BOUTONS (atk,competence et boite_leaf) + BARRE PV ET INFOS LEAF STP"""
+        
         preset = [
             ft.Container(
                 content=ft.Image(src="assets/imgs/icons/arriere_plain.png", fit="cover"),
                 expand=True,
             ),
-            ft.Container(content=ft.Text('COMBAT', size=800)),
+            leafsprite,
+            enemysprite,
+            menu
         ]
-        page.add(preset)
+
+        layout = ft.Container(content=ft.Stack(preset))
+        page.add(layout)
         
+
+    def atk(leaf,enemy):
+        malus = "-" + leaf.atk
+        dgts = ft.Container(ft.Text(malus,size=20),visible=True)
+        leaf.left = page.width - 20
+        page.update()
+        page.add(dgts)
+        #wait 0.2 sec
+        dgts.visible=False
+        leaf.left = 20
+        page.update()
+        enemy.pv -= leaf.atk
+
+    def competence(leaf,enemy):
+        if leaf.type == 'dps':
+            leaf.atk *= 2
+            atk(leaf,enemy)
+            leaf.atk /= 2
+            return None
+        
+        elif leaf.type == 'tank':
+            bouclier = ft.Container(ft.Image(src='leaf_type_tank.png',width=100,height=100),visible=True)
+            page.add(bouclier)
+            enemy.atk /=2
+            tour = 2
+            return tour
+        
+        else:
+            return None
+        
+    def boite_leaf():
+        pass
+    """CHRISSS FAIS ICI"""
+
+
 
 
 
