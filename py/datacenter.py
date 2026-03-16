@@ -15,6 +15,12 @@ NPCS = [
     { "id": 1, "name": "Heron", "biome": "plain", "visual": "assets/imgs/npc/heron.png"}
 ]
 
+# ------------------------------------ Npcs palette --------------------------------------
+OBJECTS = [
+    { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png"},
+    { "id": 1, "name": "rien", "visual": "assets/imgs/icons/Undefined.png"}
+]
+
 # ------------------------------------ Events palette ------------------------------------
 EVENTS = {
     "plain": [

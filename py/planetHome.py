@@ -41,6 +41,8 @@ def _planet(page: ft.Page, navigate) -> list:
                     keys_pressed["right"] = True
                 elif key == pynput_keyboard.Key.left:
                     keys_pressed["left"] = True
+                elif key == pynput_keyboard.Key.space:
+                    keys_pressed["space"] = True
 
     def on_release(key):
         try:
@@ -139,17 +141,24 @@ def _planet(page: ft.Page, navigate) -> list:
             ),
         ]
 
+        id = None
         emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
         if event["type"] == "enemy":
-            enemyid = random.choice(ENEMIES)
+            id = random.choice(ENEMIES)
             preset.append(ft.Container(
-                content=ft.Image(src=enemyid["visual"], width=80, height=60),
+                content=ft.Image(src=id["visual"], width=80, height=60),
                 alignment=emplacement,
             ))
         elif event["type"] == "npc":
-            npcid = random.choice(NPCS)
+            id = random.choice(NPCS)
             preset.append(ft.Container(
-                content=ft.Image(src=npcid["visual"], width=80, height=60),
+                content=ft.Image(src=id["visual"], width=80, height=60),
+                alignment=emplacement,
+            ))
+        elif event["type"] == "empty":
+            id = random.choice(OBJECTS)
+            preset.append(ft.Container(
+                content=ft.Image(src=id["visual"], width=180, height=160),
                 alignment=emplacement,
             ))
 
@@ -187,10 +196,16 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e)
                     return
-                if (new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT) and event["type"] == "enemy":
+                if event["type"] == "enemy" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
                     stop_tp_screen()
-                    combat(e,'plain',enemyid)
+                    combat(e,'plain',id)
+                """if event["type"]=="npc" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
+                    wandering_shop()"""
+                if event["type"] == "empty" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]: 
+                    combat(e,'plain',id)
+                    keys_pressed["space"] = False
 
+            
 
                 page.update()
                 await asyncio.sleep(0.025)
