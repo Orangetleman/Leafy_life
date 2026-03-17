@@ -165,10 +165,12 @@ def _planet(page: ft.Page, navigate) -> list:
             ))
         elif event["type"] == "empty":
             id = random.choice(OBJECTS)
-            preset.append(ft.Container(
+            the_object = ft.Container(
                 content=ft.Image(src=id["visual"], width=180, height=160),
                 alignment=emplacement,
-            ))
+                visible= True
+            )
+            preset.append(the_object)
 
         preset.append(new_sprite)
         preset.append(bouton_retour)
@@ -183,6 +185,7 @@ def _planet(page: ft.Page, navigate) -> list:
         page.stop_current_screen = stop_tp_screen
         page.window.on_event = on_window_event
 
+        first_sip = [True]
         async def tp_game_loop():
             biome_img_ratio = 1250 / 649
             new_sprite.left = page.width / 2
@@ -206,14 +209,20 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e)
                     return
-                if event["type"] == "enemy" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
+                if event["type"] == "enemy" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
                     stop_tp_screen()
+                    keys_pressed["space"] = False
                     combat(e, 'plain', id)
                     return
                 """if event["type"]=="npc" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
                     wandering_shop()"""
                 if event["type"] == "empty" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
-                    print("eau recupérée")
+                    if first_sip[0] == True and id["gives"] == "Eau minérale":
+                        ITEMS[1]["effect"]["amount"] += 3
+                        first_sip[0] = False
+                        print("eau recupérée",ITEMS[1]["effect"]["amount"])
+                        the_object.visible = False
+                        page.update()
                     keys_pressed["space"] = False
 
                 page.update()

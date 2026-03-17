@@ -17,8 +17,8 @@ NPCS = [
 
 # ------------------------------------ Npcs palette --------------------------------------
 OBJECTS = [
-    { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png"},
-    { "id": 1, "name": "rien", "visual": "assets/imgs/icons/Undefined.png"}
+    { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png", "gives": "Eau minérale"},
+    { "id": 1, "name": "rien", "visual": "assets/imgs/icons/Undefined.png", "gives": "Eau minérale"}
 ]
 
 # ------------------------------------ Events palette ------------------------------------
