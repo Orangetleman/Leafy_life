@@ -11,9 +11,9 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
   - stats (Chris)
   - onglet leafs (Chris)
   - affichage du leaf sélectionné (Eva)
-  - logique de combat (Eva)                                                                                 FAIT
+  - logique de combat (Eva)                                                                                 EN COURS
 -> wandering shop (Chris)
--> "pages vides", compléter tp() + faire des objets récupérables (Eva)
+-> "pages vides", compléter tp() + faire des objets récupérables (Eva)                                      FAIT
 -> pages lore (la mort)
 -> adaptation aux autres biomes (Eva)
 -> remplacement du visuel de la planète après avancement (Eva/Chris)
