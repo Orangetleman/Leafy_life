@@ -383,4 +383,5 @@ WANDERINGSHOPS = [
 ]
 
 # ── Dialogues ────────────────────────────────────────────────────────────────────────────
+victoire = ["bravo! vous avez vaicu l'ennemi!"]
 s1 = ["hey", "bonjour", "tfq", "rien et toi", "quoi", "feur"]

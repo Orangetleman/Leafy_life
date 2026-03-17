@@ -238,6 +238,14 @@ def _planet(page: ft.Page, navigate) -> list:
 
     def combat(e, biome, enemy):
         page.clean()
+        def end():
+            if enemy.pv == 0:
+                bravo = dialogue(e,victoire,dialogue_active)
+                preset.append(bravo)
+                page.update
+                #wait 3 sec
+                if keys_pressed["space"]:
+                    tp(e)
         leafsprite = ft.Container(
             content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
             bottom=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
