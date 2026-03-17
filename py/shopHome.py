@@ -116,7 +116,7 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
                     ft.Text(f"En stock : {max_amount}", size=13, color=SHOP_CARD_ITEM_STOCK_COLOR),
                 ], spacing=4),
             ], spacing=12),
-            ft.Divider(color="#444"),
+            ft.Divider(height=1, color="#6A6775"),
             ft.Text("Quantité :", size=14, color=SHOP_CARD_ITEM_AMOUNT_SELECTED_TEXT_COLOR),
             ft.Row([
                 remove_badge,
