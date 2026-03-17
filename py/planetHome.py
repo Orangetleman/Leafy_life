@@ -130,10 +130,11 @@ def _planet(page: ft.Page, navigate) -> list:
         bouton_retour = ft.Container(
             content=ft.Row(
                 [ft.Container(
-                content=ft.Text("planète", size=20, color="white"),
+                content=ft.Text("planète", size=20, color='black'),
+                bgcolor="green",
                 padding=10,
-                border_radius=8,
-                on_click=retourneur,  # ← on_click directement sur Container
+                border_radius=100,
+                on_click=retourneur, 
             )],  
                 alignment=ft.Alignment.TOP_LEFT,
             )
