@@ -124,7 +124,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         bouton_retour = ft.Container(
             content=ft.Row(
-                [ft.ElevatedButton(le_txt, on_click=retourneur)],  # ← ajouter []
+                [ft.ElevatedButton(le_txt, on_click=retourneur)],  
                 alignment=ft.Alignment.TOP_LEFT,
             )
         )
@@ -189,10 +189,12 @@ def _planet(page: ft.Page, navigate) -> list:
                 new_sprite.bottom = (biome_height / 4) + (page.height - biome_height)
 
                 if new_sprite.left < 0:
+                    print(f"sortie gauche: left={new_sprite.left}")
                     stop_tp_screen()
                     tp(e)
                     return
                 if new_sprite.left > page.width - 150:
+                    print(f"sortie droite: left={new_sprite.left}, width={page.width}")
                     stop_tp_screen()
                     tp(e)
                     return
@@ -202,7 +204,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 """if event["type"]=="npc" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
                     wandering_shop()"""
                 if event["type"] == "empty" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]: 
-                    combat(e,'plain',id)
+                    print("eau recupérée")
                     keys_pressed["space"] = False
 
             
