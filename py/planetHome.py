@@ -245,6 +245,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 page.update
                 #wait 3 sec
                 if keys_pressed["space"]:
+                    keys_pressed["space"] = False
                     tp(e)
         leafsprite = ft.Container(
             content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
