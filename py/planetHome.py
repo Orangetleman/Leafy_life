@@ -25,11 +25,14 @@ def _planet(page: ft.Page, navigate) -> list:
     plaine = ft.Text("explore plaine", size=30,color='black')
 
     keys_pressed = {"right": False, "left": False, "space":False}
+    dialogue_active = [False]
     running = [True]
     focused = [True]
 
     def on_press(key):
             if not focused[0]:
+                return
+            if dialogue_active[0]:  # ← bloquer toutes les touches pendant le dialogue
                 return
             try:
                 if key.char in ("d", "D"):
@@ -55,6 +58,8 @@ def _planet(page: ft.Page, navigate) -> list:
                 keys_pressed["right"] = False
             elif key == pynput_keyboard.Key.left:
                 keys_pressed["left"] = False
+            elif key == pynput_keyboard.Key.space: 
+                keys_pressed["space"] = False
 
     
     def on_window_event(e):
@@ -65,7 +70,7 @@ def _planet(page: ft.Page, navigate) -> list:
             keys_pressed["right"] = False
             keys_pressed["left"] = False
 
-    def dialogue(e, scene):
+    def dialogue(e, scene, dialogue_active):
         i_scene = [0]
 
         def next_dialogue(key):
@@ -80,11 +85,11 @@ def _planet(page: ft.Page, navigate) -> list:
                         chara_msg.content.value = scene[i_scene[0]] 
                         chara_msg.visible = True
                         npc_msg.visible = False
-                    chara_msg.update()
-                    npc_msg.update()
+                        page.update()
                 else:
                     dialogue_box.visible = False  
-                    dialogue_box.update()
+                    dialogue_active[0] = False
+                    page.update()
                     listener.stop()  
 
 
@@ -124,7 +129,12 @@ def _planet(page: ft.Page, navigate) -> list:
 
         bouton_retour = ft.Container(
             content=ft.Row(
-                [ft.ElevatedButton(le_txt, on_click=retourneur)],  
+                [ft.Container(
+                content=ft.Text("planète", size=20, color="white"),
+                padding=10,
+                border_radius=8,
+                on_click=retourneur,  # ← on_click directement sur Container
+            )],  
                 alignment=ft.Alignment.TOP_LEFT,
             )
         )
@@ -180,6 +190,9 @@ def _planet(page: ft.Page, navigate) -> list:
             biome_img_ratio = 1250 / 649
             new_sprite.left = page.width / 2  # ← init immédiate, pas après sleep
             while running[0]:
+                if dialogue_active[0]:  # ← rien ne se passe pendant le dialogue
+                    await asyncio.sleep(0.025)
+                    continue
                 if keys_pressed["right"]:
                     new_sprite.left = new_sprite.left + 15
                 if keys_pressed["left"]:
@@ -284,86 +297,6 @@ def _planet(page: ft.Page, navigate) -> list:
     """CHRISSS FAIS ICI"""
 
 
-
-
-
-    """===========================================================plaine===================================================================================="""
-    listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
-    def stop_game(e=None):
-            print("stop_game appelé")
-            running[0] = False
-            listener.stop()
-            print("listener stoppé, running:", running[0])
-
-    def expl_plaine(e):
-        running[0] = True
-        page.clean()
-        sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
-            animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
-        )
-        
-        listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
-        listener.start()
-
-        page.stop_current_screen = stop_game
-        page.window.on_event = on_window_event
-
-
-        le_txt = ft.Text('planet', size=30)
-
-        bouton_retour = ft.Container(
-            content=ft.Row(
-                [ft.ElevatedButton(le_txt, on_click=retourneur)],
-                alignment=ft.Alignment.TOP_LEFT,
-            )
-        )
-
-        game_container = ft.Container(
-            content=ft.Stack([
-                ft.Container(
-                    content=ft.Image(
-                        src="assets/imgs/icons/arriere_plain.png",
-                        fit="cover",
-                    ),
-                    expand=True,
-                ),
-                sprite,
-                dialogue(e,s1),bouton_retour]),
-            expand=True
-        )
-
-        async def game_loop():
-            biome_img_ratio = 1250 / 649
-            sprite.left=page.width/2
-            while running[0]:
-                if keys_pressed["right"]:
-                    sprite.left = (sprite.left) + 15
-                if keys_pressed["left"]:
-                    sprite.left = (sprite.left) - 15
-                
-                biome_height = page.width / biome_img_ratio
-                sprite.bottom = (biome_height / 4) + (page.height - biome_height)
-
-                if sprite.left < 0:
-                    stop_game()
-                    tp(e)
-                    return
-                if sprite.left > page.width - 150:
-                    stop_game()
-                    tp(e)
-                    return
-                page.update()
-                await asyncio.sleep(0.025)  # 40 FPS
-
-        page.add(game_container)
-        page.run_task(game_loop)
-
-    """===========================================================foret===================================================================================="""
-
-
-
-    
     planet = ft.Stack([
         ft.Container(
             ft.Image(src="assets/imgs/icons/biome_plain.png"),
@@ -372,7 +305,7 @@ def _planet(page: ft.Page, navigate) -> list:
         ),
         ft.Container(
             content=ft.Row(
-                [ft.ElevatedButton(plaine, on_click=expl_plaine,bgcolor='green',)],
+                [ft.ElevatedButton(plaine, on_click=tp,bgcolor='green',)],
             ),
             alignment=ft.Alignment.BOTTOM_LEFT,
             padding=30,   
@@ -380,7 +313,6 @@ def _planet(page: ft.Page, navigate) -> list:
     ],expand=True)
 
     def retourneur(e):
-        stop_game()
         page.clean()
         navigate("planet")
 
