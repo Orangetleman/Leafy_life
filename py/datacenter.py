@@ -6,8 +6,8 @@ import random
 
 # ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
-    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
-    { "id": 1, "name": "Snake", "rarity": "rare", "atk": 5, "hp": 15, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
+    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": "plain", "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
+    { "id": 1, "name": "Snake", "rarity": "rare", "atk": 5, "hp": 15, "biome": "plain", "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
@@ -22,14 +22,8 @@ OBJECTS = [
 ]
 
 # ------------------------------------ Events palette ------------------------------------
-EVENTS = {
-    "plain": [
-        { "type": "enemy", "data": { "enemyId": 1 } },
-        { "type": "npc",   "data": { "npcId": 1 } },
-        { "type": "lore",  "data": { "leafId": 1 } },
-        { "type": "empty",  "data": { "itemId": 1 } },
-    ]
-}
+EVENTS = ["enemy","npc","lore","empty"]
+
 
 # ------------------------------------ Items palette ------------------------------------
 # category  : clé de filtrage UI (inventaire / shop)
@@ -187,10 +181,10 @@ LEAFS_TYPE = [
 ]
 
 BIOMES = [
-    { "id": 1, "name": "plain",    "icon": "assets/imgs/icons/biome_plain.png"    },
-    { "id": 2, "name": "forest",   "icon": "assets/imgs/icons/biome_forest.png"   },
-    { "id": 3, "name": "lake",     "icon": "assets/imgs/icons/biome_lake.png"     },
-    { "id": 4, "name": "mountain", "icon": "assets/imgs/icons/biome_mountain.png" },
+    { "id": 1, "name": "plain",    "icon": "assets/imgs/icons/arriere_plain.png"    },
+    { "id": 2, "name": "forest",   "icon": "assets/imgs/icons/arriere_forest.png"   },
+    { "id": 3, "name": "lake",     "icon": "assets/imgs/icons/arriere_lake.png"     },
+    { "id": 4, "name": "mountain", "icon": "assets/imgs/icons/arriere_mountain.png" },
 ]
 
 PLANETS = [

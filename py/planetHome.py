@@ -23,6 +23,11 @@ def _planet(page: ft.Page, navigate) -> list:
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
     plaine = ft.Text("explore plaine", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+    foret = ft.Text("explore foret", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+    montagne = ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+    lac = ft.Text("explore lac", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+
+
 
     keys_pressed = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
@@ -119,10 +124,11 @@ def _planet(page: ft.Page, navigate) -> list:
 
         return dialogue_box
 
-    def tp(e):
+    def tp(e,biome):
         page.clean()
         running[0] = True
-        event = random.choice(EVENTS["plain"])
+        event = random.choice(EVENTS)
+        biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
 
         bouton_retour = ft.Container(
             content=ft.Row(
@@ -144,26 +150,26 @@ def _planet(page: ft.Page, navigate) -> list:
 
         preset = [
             ft.Container(
-                content=ft.Image(src="assets/imgs/icons/arriere_plain.png", fit="cover"),
+                content=ft.Image(src=biome_icon, fit="cover"),
                 expand=True,
             ),
         ]
 
         id = None
         emplacement = random.choice([ft.Alignment.CENTER_LEFT, ft.Alignment.CENTER_RIGHT])
-        if event["type"] == "enemy":
+        if event== "enemy":
             id = random.choice(ENEMIES)
             preset.append(ft.Container(
                 content=ft.Image(src=id["visual"], width=80, height=60),
                 alignment=emplacement,
             ))
-        elif event["type"] == "npc":
+        elif event== "npc":
             id = random.choice(NPCS)
             preset.append(ft.Container(
                 content=ft.Image(src=id["visual"], width=80, height=60),
                 alignment=emplacement,
             ))
-        elif event["type"] == "empty":
+        elif event== "empty":
             id = random.choice(OBJECTS)
             the_object = ft.Container(
                 content=ft.Image(src=id["visual"], width=180, height=160),
@@ -203,20 +209,20 @@ def _planet(page: ft.Page, navigate) -> list:
 
                 if new_sprite.left < 0:
                     stop_tp_screen()
-                    tp(e)
+                    tp(e,biome)
                     return
                 if new_sprite.left > page.width - 150:
                     stop_tp_screen()
-                    tp(e)
+                    tp(e,biome)
                     return
-                if event["type"] == "enemy" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
+                if event== "enemy" and ((new_sprite.left < 200 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 300) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
                     stop_tp_screen()
                     keys_pressed["space"] = False
-                    combat(e, 'plain', id)
+                    combat(e, biome, id)
                     return
-                """if event["type"]=="npc" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)):
+                """if event=="npc" and ((new_sprite.left < 200 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 300) and emplacement == ft.Alignment.CENTER_RIGHT)):
                     wandering_shop()"""
-                if event["type"] == "empty" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
+                if event== "empty" and ((new_sprite.left < 200 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 300) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
                     if first_sip[0] == True and id["gives"] == "Eau minérale":
                         inventory_manager.append_item(ITEMS[1],3)
                         first_sip[0] = False
@@ -316,10 +322,27 @@ def _planet(page: ft.Page, navigate) -> list:
         ),
         ft.Container(
             content=ft.Row(
-                [ft.ElevatedButton(plaine, on_click=tp, bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)],
+                [ft.ElevatedButton(plaine, on_click=lambda e, b="plain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)],
             ),
-            alignment=ft.Alignment.BOTTOM_LEFT,
-            padding=30,
+            bottom=30, left=30,
+        ),
+        ft.Container(
+            content=ft.Row(
+                [ft.ElevatedButton(foret, on_click=lambda e, b="forest": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)],
+            ),
+            bottom=30, right=30,
+        ),
+        ft.Container(
+            content=ft.Row(
+                [ft.ElevatedButton(montagne, on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)],
+            ),
+            top=30, right=30,
+        ),
+        ft.Container(
+            content=ft.Row(
+                [ft.ElevatedButton(lac, on_click=lambda e, b="lake": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)],
+            ),
+            top=30, left=30,
         ),
     ], expand=True)
 
