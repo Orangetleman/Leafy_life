@@ -26,25 +26,39 @@ LEAF_CARD_SHADOW_COLOR = (0.6, '#000000')           # ✅
 LEAF_CARD_BG_COLOR = "#1a1a1a"                      # ✅
 LEAF_CARD_BORDER_COLOR = "#555555"                  # ✅
 LEAF_CARD_TITLE_TEXT_COLOR = "#ffffff"              # ✅
-LEAF_CARD_INFO_TEXT_COLOR = "gray"                    # ✅
+LEAF_CARD_INFO_TEXT_COLOR = "gray"                  # ✅
 LEAF_CARD_BADGE_BG_COLOR = "#2a2a3e"                # ✅
 LEAF_CARD_BADGE_BG_HOVER_COLOR = "#40405c"          # ✅
-LEAF_CARD_BADGE_BORDER_COLOR = "#131313"            # ✅
+LEAF_CARD_BADGE_BORDER_COLOR = "#555555"            # ✅
+LEAF_CARD_BADGE_BOOST_BORDER_COLOR = "#f0a040"      # ✅  bordure dorée pour badges boost
+LEAF_CARD_BADGE_WARNING_BORDER_COLOR = "#ff4444"    # ✅  bordure rouge si item manquant
 LEAF_CARD_PROGRESS_BAR_BG_COLOR = "#4E4E4E"         # ✅
 LEAF_CARD_PROGRESS_BAR_HP_COLOR = "#92b368"         # ✅
 LEAF_CARD_PROGRESS_BAR_NUTRIENTS_COLOR = "#f2c14e"          # ✅
 LEAF_CARD_PROGRESS_BAR_NUTRIENTS_ALERT_COLOR = "#ef540c"    # ✅
 LEAF_CARD_PROGRESS_BAR_HYDRATION_COLOR = "#4b86b4"          # ✅
 LEAF_CARD_PROGRESS_BAR_HYDRATION_ALERT_COLOR = "#ff0000"    # ✅
-LEAF_CARD_PROGRESS_BAR_ATK_COLOR = "purple"           # ✅
-LEAF_CARD_PROGRESS_BAR_LVL_COLOR = "#4b0fffc5"      # ✅
+LEAF_CARD_PROGRESS_BAR_ATK_COLOR = "purple"                 # ✅
+LEAF_CARD_PROGRESS_BAR_LVL_COLOR = "#4b0fffc5"              # ✅
+    # ------------------- Style des barres boost ----------
+LEAF_CARD_PROGRESS_BAR_BOOST_HP_COLOR = "#c8e6a0"           # ✅  vert clair (overlay hp boost)
+LEAF_CARD_PROGRESS_BAR_BOOST_NUTRIENTS_COLOR = "#f7e08a"    # ✅  jaune clair (overlay nutrients boost)
+LEAF_CARD_PROGRESS_BAR_BOOST_ATK_COLOR = "#e0a0e0"          # ✅  violet clair (overlay atk boost)
+LEAF_CARD_BOOST_SEPARATOR_COLOR = "#888888"                 # ✅  ligne séparatrice base/boost
+    # ------------------- Style du bouton récolte ---------
+LEAF_CARD_HARVEST_BUTTON_BG_COLOR = "#2a5a3a"               # ✅
+LEAF_CARD_HARVEST_BUTTON_BG_HOVER_COLOR = "#3a7a4e"         # ✅
+LEAF_CARD_HARVEST_BUTTON_BG_EMPTY_COLOR = "#3a3a3a"         # ✅  grisé si rien à récolter
+LEAF_CARD_HARVEST_BUTTON_TEXT_COLOR = "#ffffff"             # ✅
+LEAF_CARD_HARVEST_BUTTON_BORDER_COLOR = "#1a3a2a"           # ✅
+LEAF_CARD_HARVEST_BADGE_BG_COLOR = "#1a3a2a"                # ✅  fond du badge montrant la quantité
 
 # —————————————————————————————————————————————————————————
 # ————————————————————— Style Shop ————————————————————————
 # —————————————————————————————————————————————————————————
     # ------------------- Style général -------------------
 SHOP_BG_COLOR = "#292929"                           # ✅
-SHOP_TITLE_COLOR = "white"                            # ✅
+SHOP_TITLE_COLOR = "white"                          # ✅
 SHOP_TITLE_COLOR_ITINERANT = "#B68B31C5"            # ✅
 SHOP_TITLE_BG_COLOR = "#7a3a7a"                     # ✅
 SHOP_TITLE_BORDER_COLOR = "#5a1a5a"                 # ✅
@@ -72,11 +86,11 @@ SHOP_BUTTON_BADGE_BORDER_CO2_COLOR = "#2e8b39"      # ✅
 SHOP_BUTTON_BADGE_BG_STOCK_COLOR = "#7a6a00"        # ✅
 SHOP_BUTTON_BADGE_BORDER_STOCK_COLOR = "#bfa500"    # ✅
     # ------------------- Style des cartes ----------------
-SHOP_CARD_BG_COLOR = "#1e1e2e"                      # ✅
-SHOP_CARD_TITLE_TEXT_COLOR = "#ffffff"              # ✅
-SHOP_CARD_ITEM_NAME_COLOR = "#ffffff"               # ✅
-SHOP_CARD_ITEM_EFFECT_COLOR = "gray"                  # ✅
-SHOP_CARD_ITEM_STOCK_COLOR = "#c6b544"              # ✅
+SHOP_CARD_BG_COLOR = "#1e1e2e"                                      # ✅
+SHOP_CARD_TITLE_TEXT_COLOR = "#ffffff"                              # ✅
+SHOP_CARD_ITEM_NAME_COLOR = "#ffffff"                               # ✅
+SHOP_CARD_ITEM_EFFECT_COLOR = "gray"                                  # ✅
+SHOP_CARD_ITEM_STOCK_COLOR = "#c6b544"                              # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTED_TEXT_COLOR = "#cccccc"               # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_TEXT_COLOR = "white"             # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTED_BADGE_BG_COLOR = "#313540"           # ✅
@@ -89,14 +103,14 @@ SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BG_COLOR = "#27ae60"             # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BG_HOVER_COLOR = "#35cc74"       # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_BORDER_COLOR = (1, "#1e8449")    # ✅
 SHOP_CARD_ITEM_AMOUNT_SELECTOR_ADD_TEXT_COLOR = "white"               # ✅
-SHOP_CARD_ITEM_PRICE_O2_TEXT_COLOR = "#4da6ff"      # ✅
-SHOP_CARD_ITEM_PRICE_O2_BG_COLOR = "#1a3a7c"        # ✅
-SHOP_CARD_ITEM_PRICE_CO2_TEXT_COLOR = "#6ecf7a"     # ✅
-SHOP_CARD_ITEM_PRICE_CO2_BG_COLOR = "#1a4a2a"       # ✅
-SHOP_CARD_CONFIRM_BUTTON_TEXT_COLOR = "white"         # ✅
-SHOP_CARD_CONFIRM_BUTTON_BG_COLOR = "#27ae60"       # ✅
-SHOP_CARD_ALERT_TEXT_COLOR = "white"                  # ✅
-SHOP_CARD_ALERT_BG_COLOR = "#cc3333"                # ✅
+SHOP_CARD_ITEM_PRICE_O2_TEXT_COLOR = "#4da6ff"                      # ✅
+SHOP_CARD_ITEM_PRICE_O2_BG_COLOR = "#1a3a7c"                        # ✅
+SHOP_CARD_ITEM_PRICE_CO2_TEXT_COLOR = "#6ecf7a"                     # ✅
+SHOP_CARD_ITEM_PRICE_CO2_BG_COLOR = "#1a4a2a"                       # ✅
+SHOP_CARD_CONFIRM_BUTTON_TEXT_COLOR = "white"                         # ✅
+SHOP_CARD_CONFIRM_BUTTON_BG_COLOR = "#27ae60"                       # ✅
+SHOP_CARD_ALERT_TEXT_COLOR = "white"                                  # ✅
+SHOP_CARD_ALERT_BG_COLOR = "#cc3333"                                # ✅
 
 # —————————————————————————————————————————————————————————
 # ———————————————————— Style Inventory ————————————————————
@@ -122,8 +136,8 @@ INVENTORY_BUTTON_AMOUNT_BADGE_TEXT_COLOR = "white"        # ✅
     # ------------------- Style des cartes ----------------
 INVENTORY_CARD_BG_COLOR = "#2a2a2a"                     # ✅
 INVENTORY_CARD_BORDER_COLOR = "#444444"                 # ✅
-INVENTORY_CARD_TITLE_TEXT_COLOR = "#ffffff"             # 💢 (pas encore implémenté)
-INVENTORY_CARD_INFO_TEXT_COLOR = "gray"                   # 💢 (pas encore implémenté)
+INVENTORY_CARD_TITLE_TEXT_COLOR = "#ffffff"             # ✅
+INVENTORY_CARD_INFO_TEXT_COLOR = "gray"                   # ✅
     # ------------------- Style des types -----------------
 INVENTORY_TYPE_BG_COLOR = "#2a2a2a"                     # ✅
 INVENTORY_TYPE_BORDER_COLOR = "#555555"                 # ✅
