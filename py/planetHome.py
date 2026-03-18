@@ -218,9 +218,9 @@ def _planet(page: ft.Page, navigate) -> list:
                     wandering_shop()"""
                 if event["type"] == "empty" and ((new_sprite.left < 100 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 200) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
                     if first_sip[0] == True and id["gives"] == "Eau minérale":
-                        ITEMS[1]["effect"]["amount"] += 3
+                        inventory_manager.append_item(ITEMS[1],3)
                         first_sip[0] = False
-                        print("eau recupérée",ITEMS[1]["effect"]["amount"])
+                        print("eau recuperee")
                         the_object.visible = False
                         page.update()
                     keys_pressed["space"] = False
