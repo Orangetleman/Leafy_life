@@ -23,14 +23,13 @@ OBJECTS = [
 ]
 
 # ------------------------------------ Events palette ------------------------------------
-EVENTS = {
-    "plain": [
-        { "type": "enemy", "data": { "enemyId": 1 } },
-        { "type": "npc",   "data": { "npcId": 1 } },
-        { "type": "lore",  "data": { "leafId": 1 } },
-        { "type": "empty", "data": { "itemId": 1 } },
+EVENTS = [
+        "enemy",
+        "npc",
+        "lore",
+        "empty"
     ]
-}
+
 
 # ------------------------------------ Items palette ------------------------------------
 ITEMS = {
