@@ -76,6 +76,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     def dialogue(e, scene, dialogue_active):
         i_scene = [0]
+        dialogue_active[0] = True
 
         def next_dialogue(key):
             if key == pynput_keyboard.Key.space:
@@ -197,13 +198,11 @@ def _planet(page: ft.Page, navigate) -> list:
             biome_img_ratio = 1250 / 649
             new_sprite.left = page.width / 2
             while running[0]:
-                if dialogue_active[0]:
-                    await asyncio.sleep(0.025)
-                    continue
-                if keys_pressed["right"]:
-                    new_sprite.left = new_sprite.left + 15
-                if keys_pressed["left"]:
-                    new_sprite.left = new_sprite.left - 15
+                if not dialogue_active[0]:
+                    if keys_pressed["right"]:
+                        new_sprite.left = new_sprite.left + 15
+                    if keys_pressed["left"]:
+                        new_sprite.left = new_sprite.left - 15
 
                 biome_height = page.width / biome_img_ratio
                 new_sprite.bottom = (biome_height / 4) + (page.height - biome_height)
