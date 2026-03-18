@@ -28,7 +28,7 @@ def _planet(page: ft.Page, navigate) -> list:
     lac = ft.Text("explore lac", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
 
 
-
+    scene_actu = [0]
     keys_pressed = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
     running = [True]
@@ -180,6 +180,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         preset.append(new_sprite)
         preset.append(bouton_retour)
+        preset.append(dialogue(e,LORE[scene_actu[0]]['dialogue'],dialogue_active))
 
         new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         new_listener.start()

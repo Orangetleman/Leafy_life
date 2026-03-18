@@ -378,4 +378,9 @@ WANDERINGSHOPS = [
 
 # ── Dialogues ────────────────────────────────────────────────────────────────────────────
 victoire = ["bravo! vous avez vaicu l'ennemi!"]
-s1 = ["hey", "bonjour", "tfq", "rien et toi", "quoi", "feur"]
+
+s1 = ["Tiens, un pissenlit...", "Bonsoir! Je ne t'ai encore jamais vu dans ces plaines, tu es nouveau?", "Bonjour, oui, je m'appelle Froggy", "Un voyageur ! C'est rare par ici! Quelle est ta destination ?", "Je voyage pour trouver un point d'eau pour mes oeufs, tu sais où je peux en trouver un ?", "Il n'y en a pas d'appropriés par ici, mais tu en trouveras peut etre un dans la forêt!", "Où est elle?","Pas très loin, je pense.","Tu penses?","Je ne me suis jamais aventuré très loin, à cause de tous les voisins aggressifs... Je peux peut être t'accompagner!","Si soudainement?","Je vais te protéger des locaux, et je souhaite voir le monde au delà de ma motte de terre!","Eh bien, si t'insistes, je ne suis pas contre un peu de compagnie pour la route."]
+s2 = ["caca","feur"]
+
+
+LORE = [{'dialogue':s1,'visuel':'pissenlit','combat':False},{'dialogue':s2,'visuel':'criquet','combat':False},]
