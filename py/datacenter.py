@@ -1,4 +1,5 @@
 import random
+import asyncio
 
 # ————————————————————————————————————————————————————————————————————————————————————————
 # ————————————————————————————————————— DATA PALETTE —————————————————————————————————————
@@ -6,8 +7,8 @@ import random
 
 # ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
-    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": "plain", "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
-    { "id": 1, "name": "Snake", "rarity": "rare", "atk": 5, "hp": 15, "biome": "plain", "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
+    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
+    { "id": 2, "name": "Snake", "rarity": "rare",   "atk": 5, "hp": 15, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
@@ -15,21 +16,23 @@ NPCS = [
     { "id": 1, "name": "Heron", "biome": "plain", "visual": "assets/imgs/npc/heron.png"}
 ]
 
-# ------------------------------------ Npcs palette --------------------------------------
+# ------------------------------------ Objects palette -----------------------------------
 OBJECTS = [
-    { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png", "gives": "Eau minérale"},
-    { "id": 1, "name": "rien", "visual": "assets/imgs/icons/Undefined.png", "gives": "Eau minérale"}
+    { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png",    "gives": "Eau minérale"},
+    { "id": 2, "name": "rien",   "visual": "assets/imgs/icons/Undefined.png", "gives": "Eau minérale"}
 ]
 
 # ------------------------------------ Events palette ------------------------------------
-EVENTS = ["enemy","npc","lore","empty"]
-
+EVENTS = {
+    "plain": [
+        { "type": "enemy", "data": { "enemyId": 1 } },
+        { "type": "npc",   "data": { "npcId": 1 } },
+        { "type": "lore",  "data": { "leafId": 1 } },
+        { "type": "empty", "data": { "itemId": 1 } },
+    ]
+}
 
 # ------------------------------------ Items palette ------------------------------------
-# category  : clé de filtrage UI (inventaire / shop)
-# effect    : { "stat": nom_attribut_LeafStat, "amount": valeur appliquée }
-#             stat = None pour les revitaliseurs (logique spéciale hp=0)
-
 ITEMS = {
     # ── Animaux (O2) ────────────────────────────────────────────────────────────────────
     3: {
@@ -38,7 +41,7 @@ ITEMS = {
         "price_O2": 64, "specialprice_O2": 32, "is_special": False,
         "icon": "assets/imgs/items/meat.png",
         "tags": ["meat", "growth", "nouriture"],
-        "description": "Riche en protéines et en énergie, cette viande est essentielle au métabolisme des leafs carnivores. Elle soutient leur croissance et leur endurance.",
+        "description": "Riche en protéines et en énergie, cette viande est essentielle au métabolisme des leafs carnivores.",
         "species": ["animal"], "regime": ["carnivore"],
     },
     4: {
@@ -47,7 +50,7 @@ ITEMS = {
         "price_O2": 32, "specialprice_O2": 16, "is_special": False,
         "icon": "assets/imgs/items/grass.png",
         "tags": ["grass", "growth", "nouriture"],
-        "description": "Cette herbe fraîche fournit fibres et nutriments de base aux leafs herbivores. Un apport simple mais vital à leur équilibre digestif.",
+        "description": "Cette herbe fraîche fournit fibres et nutriments de base aux leafs herbivores.",
         "species": ["animal"], "regime": ["herbivore"],
     },
     6: {
@@ -56,7 +59,7 @@ ITEMS = {
         "price_O2": 100, "specialprice_O2": 50, "is_special": False,
         "icon": "assets/imgs/items/bandage.png",
         "tags": ["bandage", "soin", "regeneration"],
-        "description": "Conçu pour stabiliser les tissus et limiter les pertes d'énergie, ce bandage favorise une cicatrisation rapide chez les leafs animaux.",
+        "description": "Conçu pour stabiliser les tissus, ce bandage favorise une cicatrisation rapide chez les leafs animaux.",
         "species": ["animal"],
     },
     8: {
@@ -65,10 +68,9 @@ ITEMS = {
         "price_O2": 64, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/milk.png",
         "tags": ["milk", "nutrients", "nouriture", "special"],
-        "description": "Riche en calcium et en nutriments essentiels, le lait renforce la structure et la vitalité des leafs animaux. Une ressource rare à forte valeur biologique.",
+        "description": "Riche en calcium, le lait booste durablement les nutriments des leafs animaux.",
         "species": ["animal"],
     },
-
     # ── Plantes (CO2) ────────────────────────────────────────────────────────────────────
     2: {
         "id": 2, "name": "Fertilisant", "category": "nouriture",
@@ -76,7 +78,7 @@ ITEMS = {
         "price_CO2": 32, "specialprice_CO2": 16, "is_special": False,
         "icon": "assets/imgs/items/fertilizer.png",
         "tags": ["fertilizer", "growth", "nouriture"],
-        "description": "Ce fertilisant enrichit le sol en éléments nutritifs et stimule la photosynthèse des leafs plantes. Indispensable à leur développement.",
+        "description": "Ce fertilisant enrichit le sol et stimule la photosynthèse des leafs plantes.",
         "species": ["plant"],
     },
     5: {
@@ -85,7 +87,7 @@ ITEMS = {
         "price_CO2": 100, "specialprice_CO2": 50, "is_special": False,
         "icon": "assets/imgs/items/mineral_water.png",
         "tags": ["seve", "soin", "regeneration"],
-        "description": "Cette sève régénératrice restaure les tissus végétaux et aide les leafs plantes à se régénérer durablement.",
+        "description": "Cette sève régénératrice restaure les tissus végétaux.",
         "species": ["plant"],
     },
     9: {
@@ -94,10 +96,9 @@ ITEMS = {
         "price_CO2": 64, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/bone_meal.png",
         "tags": ["bone_meal", "growth", "nouriture", "special"],
-        "description": "Riche en phosphore et en calcium, cette poudre stimule fortement la croissance des leafs plantes. Un engrais puissant issu de matières anciennes.",
+        "description": "Riche en phosphore, cette poudre booste durablement les nutriments des leafs plantes.",
         "species": ["plant"],
     },
-
     # ── Universels (O2 + CO2) ────────────────────────────────────────────────────────────
     1: {
         "id": 1, "name": "Eau minérale", "category": "boisson",
@@ -105,23 +106,23 @@ ITEMS = {
         "price_O2": 4, "price_CO2": 4, "specialprice_O2": 2, "specialprice_CO2": 2, "is_special": False,
         "icon": "assets/imgs/items/water.png",
         "tags": ["water", "hydration", "boisson"],
-        "description": "Indispensable à toute forme de vie, l'eau minérale régule les échanges internes et maintient l'équilibre vital de tous les leafs.",
+        "description": "Indispensable à toute forme de vie, l'eau minérale maintient l'équilibre vital de tous les leafs.",
     },
     7: {
         "id": 7, "name": "Rayon de soleil", "category": "revitaliseur",
-        "effect": {"stat": "hp", "amount": 1},   # revitalise depuis hp=0
+        "effect": {"stat": "hp", "amount": 1},
         "price_O2": 200, "price_CO2": 200, "specialprice_O2": 100, "specialprice_CO2": 100, "is_special": False,
         "icon": "assets/imgs/items/sunshine.png",
         "tags": ["sunshine", "revitaliseur"],
-        "description": "Concentré d'énergie solaire, ce rayon relance les processus vitaux et peut ramener un leaf au seuil de la vie.",
+        "description": "Concentré d'énergie solaire, ce rayon peut ramener un leaf au seuil de la vie.",
     },
     10: {
         "id": 10, "name": "Elixir de vie 🌟", "category": "revitaliseur",
-        "effect": {"stat": "hp", "amount": 5},   # revitalise + soigne davantage
+        "effect": {"stat": "hp", "amount": 5},
         "price_O2": 300, "price_CO2": 300, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/elixir.png",
         "tags": ["elixir_of_life", "revitaliseur", "special"],
-        "description": "Composé d'essences rares et hautement énergétiques, cet élixir agit directement sur les mécanismes vitaux et défie le cycle naturel de la vie.",
+        "description": "Cet élixir agit directement sur les mécanismes vitaux et défie le cycle naturel de la vie.",
     },
     11: {
         "id": 11, "name": "Potion d'attaque 🌟", "category": "boost",
@@ -129,7 +130,7 @@ ITEMS = {
         "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/attack_boost.png",
         "tags": ["attack_boost", "boost", "special"],
-        "description": "Cette potion spéciale augmente temporairement la puissance d'attaque des leafs, leur conférant un avantage stratégique en combat.",
+        "description": "Booste temporairement l'attaque pour toute la durée d'un combat.",
     },
     12: {
         "id": 12, "name": "Potion de vie 🌟", "category": "boost",
@@ -137,7 +138,7 @@ ITEMS = {
         "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/health_boost.png",
         "tags": ["health_boost", "boost", "special"],
-        "description": "Cette potion spéciale augmente les points de vie des leafs, renforçant leur endurance face aux défis environnementaux.",
+        "description": "Augmente durablement le maximum de points de vie d'un leaf.",
     },
     13: {
         "id": 13, "name": "Livre de la connaissance 🌟", "category": "boost",
@@ -145,32 +146,32 @@ ITEMS = {
         "price_O2": 150, "price_CO2": 150, "is_special": True, "rarity": 1,
         "icon": "assets/imgs/items/book_of_knowledge.png",
         "tags": ["book_of_knowledge", "boost", "special"],
-        "description": "Ce livre ancien renferme des savoirs oubliés qui, une fois assimilés, augmentent les capacités et la sagesse des leafs.",
+        "description": "Ce livre ancien augmente les capacités et la sagesse des leafs.",
     },
 }
 
 TYPES = [
-    { "id": 1, "name": "nouriture",   "icon": "assets/imgs/icons/type_food.png" },
-    { "id": 2, "name": "soin",        "icon": "assets/imgs/icons/type_heal.png" },
-    { "id": 3, "name": "boisson",     "icon": "assets/imgs/icons/type_beverage.png" },
-    { "id": 4, "name": "revitaliseur","icon": "assets/imgs/icons/type_resurrector.png" },
+    { "id": 1, "name": "nouriture",    "icon": "assets/imgs/icons/type_food.png" },
+    { "id": 2, "name": "soin",         "icon": "assets/imgs/icons/type_heal.png" },
+    { "id": 3, "name": "boisson",      "icon": "assets/imgs/icons/type_beverage.png" },
+    { "id": 4, "name": "revitaliseur", "icon": "assets/imgs/icons/type_resurrector.png" },
 ]
 
 # ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
-    2:  { "id": 2,  "name": "mouton",     "type": 2, "rarity": "default", "atk": 2,  "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0  },
-    3:  { "id": 3,  "name": "abeille",    "type": 2, "rarity": "default", "atk": 3,  "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0  },
-    5:  { "id": 5,  "name": "loup",       "type": 1, "rarity": "default", "atk": 6,  "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0  },
-    8:  { "id": 8,  "name": "poisson",    "type": 1, "rarity": "default", "atk": 5,  "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0  },
-    9:  { "id": 9,  "name": "chèvre",     "type": 3, "rarity": "default", "atk": 2,  "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0  },
-    12: { "id": 12, "name": "aigle",      "type": 1, "rarity": "default", "atk": 4,  "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0  },
-    13: { "id": 13, "name": "trefle",     "type": 3, "rarity": "default", "atk": 7,  "hp": 120, "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",      "xp": 0  },
-    1:  { "id": 1,  "name": "pissenlit",  "type": 1, "rarity": "default", "atk": 5,  "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0  },
-    4:  { "id": 4,  "name": "sapin",      "type": 3, "rarity": "default", "atk": 3,  "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0  },
-    6:  { "id": 6,  "name": "fraisier",   "type": 2, "rarity": "default", "atk": 3,  "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0  },
-    7:  { "id": 7,  "name": "roseaux",    "type": 3, "rarity": "default", "atk": 3,  "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0  },
-    10: { "id": 10, "name": "arbuste",    "type": 3, "rarity": "default", "atk": 1,  "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0  },
-    11: { "id": 11, "name": "nénuphare",  "type": 2, "rarity": "default", "atk": 1,  "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0  },
+    2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0 },
+    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0 },
+    5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0 },
+    8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0 },
+    9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0 },
+    12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0 },
+    13: { "id": 13, "name": "ours",      "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "animal", "regime": "carnivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bear.png",       "xp": 0 },
+    1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0 },
+    4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0 },
+    6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0 },
+    7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0 },
+    10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0 },
+    11: { "id": 11, "name": "nénuphare", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0 },
 }
 
 LEAFS_TYPE = [
@@ -196,23 +197,43 @@ PLANETS = [
 # ————————————————————————————————————————————————————————————————————————————————————————
 
 class LeafStat:
+    # ── Constantes de classe ──────────────────────────────────────────────────────────────
+    CURRENCY_PRODUCED = {"animal": "CO2", "plant": "O2"}
+    # Consommation par tick : nutrients -2, hydration -4 (rapport 1:2)
+    TICK_CONSUMPTION  = {"nutrients": 2, "hydration": 4}
+
     def __init__(self, leaf):
-        self.id            = leaf["id"]
-        self.name          = leaf["name"]
-        self.type          = leaf["type"]
-        self.rarity        = leaf["rarity"]
-        self.atk           = leaf["atk"]
-        self.hp            = leaf["hp"]
-        self.species       = leaf["species"]
-        self.biome         = leaf["biome"]
-        self.level         = leaf["level"]
-        self.img           = leaf["img"]
-        self.nutrients     = 100
-        self.hydration     = 100
-        self.regime        = leaf.get("regime", None)
-        self.xp            = leaf["xp"]
-        self.hp_max        = leaf["hp"]
-        self.atk_max       = leaf["atk"]
+        self.id        = leaf["id"]
+        self.name      = leaf["name"]
+        self.type      = leaf["type"]
+        self.rarity    = leaf["rarity"]
+        self.atk       = leaf["atk"]
+        self.hp        = leaf["hp"]
+        self.species   = leaf["species"]
+        self.biome     = leaf["biome"]
+        self.level     = leaf["level"]
+        self.img       = leaf["img"]
+        self.nutrients = 100
+        self.hydration = 100
+        self.regime    = leaf.get("regime", None)
+        self.xp        = leaf["xp"]
+        self.hp_max    = leaf["hp"]
+        self.atk_max   = leaf["atk"]
+
+        # ── Boosts ───────────────────────────────────────────────────────────────────────
+        self.atk_boost       = 0   # temporaire (reset après combat)
+        self.hp_boost        = 0   # permanent  (max hp supplémentaire, non regen par items basiques)
+        self.nutrients_boost = 0   # permanent  (nutriments bonus)
+
+        # Plafonds des boosts : moitié du max de base
+        self.HP_BOOST_MAX        = max(1, self.hp_max // 2)
+        self.NUTRIENTS_BOOST_MAX = 50   # moitié de 100
+        self.ATK_BOOST_MAX       = max(1, self.atk_max // 2)
+
+        # ── Production en attente (à récolter manuellement) ──────────────────────────────
+        self.pending_currency = 0.0   # accumulé entre deux récoltes
+
+        # ── Limites max par stat (base, sans boost) ───────────────────────────────────────
         self.STAT_MAX = {
             "hp":        self.hp_max,
             "nutrients": 100,
@@ -221,11 +242,7 @@ class LeafStat:
             "level":     100,
         }
 
-    # Limites max par stat
-    STAT_MAX = {
-        "hp": 10, "nutrients": 100, "hydration": 100, "atk": 10, "level": 100,
-    }
-
+    # ── Mise à jour classique (clampée) ──────────────────────────────────────────────────
     def stat_update(self, stat: str, amount: int):
         if not hasattr(self, stat):
             print(f"Stat '{stat}' inexistante pour {self.name}.")
@@ -235,6 +252,85 @@ class LeafStat:
         new_val = max(0, min(current + amount, max_val))
         setattr(self, stat, new_val)
         print(f"{self.name} - {stat} : {current} -> {new_val}")
+
+    # ── Application d'un item (gère la logique boost vs base) ────────────────────────────
+    def apply_item(self, item: dict):
+        """
+        - Items spéciaux nutrients/hp : remplit la base d'abord, puis le boost (capped).
+        - Items spéciaux atk           : boost temporaire (capped à ATK_BOOST_MAX).
+        - Autres items                 : stat_update classique.
+        """
+        stat     = item["effect"]["stat"]
+        amount   = item["effect"]["amount"]
+        special  = item.get("is_special", False)
+
+        if special and stat in ("nutrients", "hp"):
+            base_max   = self.STAT_MAX[stat]
+            current    = getattr(self, stat)
+            boost_attr = f"{stat}_boost"
+            boost_max  = getattr(self, f"{stat.upper()}_BOOST_MAX", 0)
+
+            # 1. Remplir la base d'abord
+            fill      = min(amount, max(0, base_max - current))
+            setattr(self, stat, current + fill)
+            remaining = amount - fill
+
+            # 2. Le surplus va dans le boost
+            if remaining > 0:
+                cur_boost = getattr(self, boost_attr, 0)
+                setattr(self, boost_attr, min(cur_boost + remaining, boost_max))
+            print(f"{self.name} - {stat} boost : +{amount} (base +{fill}, boost +{remaining})")
+
+        elif special and stat == "atk":
+            old = self.atk_boost
+            self.atk_boost = min(self.atk_boost + amount, self.ATK_BOOST_MAX)
+            print(f"{self.name} - atk_boost : {old} -> {self.atk_boost}")
+
+        else:
+            self.stat_update(stat, amount)
+
+    # ── Reset des boosts temporaires (fin de combat) ─────────────────────────────────────
+    def reset_combat_boosts(self):
+        self.atk_boost = 0
+
+    # ── Tick de gestion (appelé par GameClock) ────────────────────────────────────────────
+    def tick(self):
+        if self.hp <= 0:
+            return
+
+        for stat, need in self.TICK_CONSUMPTION.items():
+            boost_attr = f"{stat}_boost"
+            cur_boost  = getattr(self, boost_attr, 0)
+
+            if cur_boost >= need:
+                # Le boost absorbe tout
+                setattr(self, boost_attr, cur_boost - need)
+            else:
+                # Le boost absorbe ce qu'il peut, le reste vient de la base
+                remaining = need - cur_boost
+                setattr(self, boost_attr, 0)
+                cur_base = getattr(self, stat)
+                setattr(self, stat, max(0, cur_base - remaining))
+
+        # Production
+        nut_total = self.nutrients + self.nutrients_boost
+        ratio     = ((nut_total / 150.0) + (self.hydration / 100.0)) / 2.0
+        self.pending_currency += ratio
+
+    # ── Récolte manuelle de la production accumulée ──────────────────────────────────────
+    def harvest(self):
+        """
+        Ajoute floor(pending_currency) à l'inventaire du joueur.
+        Retourne (currency_type, amount) ou (None, 0).
+        """
+        amount = int(self.pending_currency)
+        if amount <= 0:
+            return None, 0
+        self.pending_currency -= amount
+        currency = self.CURRENCY_PRODUCED[self.species]
+        inventory_manager.append_money(currency, amount)
+        print(f"{self.name} — récolte : {amount} {currency}")
+        return currency, amount
 
 
 class LeafManager:
@@ -295,8 +391,8 @@ class InventoryManager:
             return self.money["CO2"] >= item["price_CO2"]
         return True
 
-    def get_items(self):  return self.items
-    def get_money(self):  return self.money
+    def get_items(self): return self.items
+    def get_money(self): return self.money
 
 
 class ShopManager:
@@ -343,10 +439,10 @@ def get_classic_shop_items():
     return [{**item, "amount": float("inf")} for item in ITEMS.values() if not item["is_special"]]
 
 def get_wandering_shop_items(biome):
-    specials   = [{**i, "amount": 50} for i in ITEMS.values() if i["is_special"] and roll(i["rarity"])]
+    specials    = [{**i, "amount": 50} for i in ITEMS.values() if i["is_special"] and roll(i["rarity"])]
     non_special = [i for i in ITEMS.values() if not i["is_special"]]
     random.shuffle(non_special)
-    discounted = [
+    discounted  = [
         {**i,
         "price_O2":  i.get("specialprice_O2"),
         "price_CO2": i.get("specialprice_CO2"),
@@ -375,6 +471,50 @@ WANDERINGSHOPS = [
     {"id": 2, "shop": wandering_shop_manager_lake,     "biome": "lake"},
     {"id": 3, "shop": wandering_shop_manager_mountain, "biome": "mountain"},
 ]
+
+
+# ————————————————————————————————————————————————————————————————————————————————————————
+# ———————————————————————————————————— GAME CLOCK ————————————————————————————————————————
+# ————————————————————————————————————————————————————————————————————————————————————————
+
+class GameClock:
+    """
+    Horloge de jeu : tick toutes les TICK_INTERVAL secondes.
+    À chaque tick : consommation + production de chaque leaf vivant.
+    Les callbacks enregistrés sont appelés après le tick (pour rafraîchir l'UI).
+    """
+    TICK_INTERVAL = 60.0  # secondes (1 minute)
+
+    def __init__(self):
+        self.running   = False
+        self.callbacks = []
+
+    def add_callback(self, fn):
+        self.callbacks.append(fn)
+
+    async def _loop(self):
+        while self.running:
+            await asyncio.sleep(self.TICK_INTERVAL)
+            for leaf in leafmanager.owned:
+                leaf.tick()
+            for cb in self.callbacks:
+                try:
+                    cb()
+                except Exception as e:
+                    print(f"GameClock callback error: {e}")
+
+    def start(self, page):
+        self.running = True
+        page.run_task(self._loop)
+        print(f"GameClock démarrée (tick toutes les {self.TICK_INTERVAL}s)")
+
+    def stop(self):
+        self.running = False
+        print("GameClock arrêtée")
+
+
+game_clock = GameClock()
+
 
 # ── Dialogues ────────────────────────────────────────────────────────────────────────────
 victoire = ["bravo! vous avez vaicu l'ennemi!"]
