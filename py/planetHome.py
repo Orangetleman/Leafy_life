@@ -177,6 +177,13 @@ def _planet(page: ft.Page, navigate) -> list:
                 alignment=emplacement,
                 visible= True
             )
+        else:
+            id = LORE[scene_actu[0]]
+            preset.append(ft.Container(
+                content=ft.Image(src=id["visual"], width=80, height=60),
+                alignment=emplacement,
+            ))
+
             preset.append(the_object)
 
         preset.append(new_sprite)
@@ -231,6 +238,8 @@ def _planet(page: ft.Page, navigate) -> list:
                         page.update()
                     keys_pressed["space"] = False
 
+                if event== "lore" and ((new_sprite.left < 200 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 300) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
+                    declenche_scene(e,biome,scene_actu[0])
                 page.update()
                 await asyncio.sleep(0.025)
 
@@ -313,6 +322,27 @@ def _planet(page: ft.Page, navigate) -> list:
     def boite_leaf():
         pass
     """CHRISSS FAIS ICI"""
+
+    def declenche_scene(e,biome,n):
+        dialogue_active[0]=True
+        page.clean()
+        bcground = BIOMES[biome]["visual"]
+        locuteur = LORE[n]["visual"]
+        sprite = ft.Container(
+            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
+            bottom=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
+            left=20,
+        )
+        paroles = dialogue(e, LORE[n]["dialogue"],dialogue_active)
+        preset = [ft.Container(ft.Image(src=bcground,fit="cover")),ft.Container(ft.Image(locuteur,width=150, height=180), bottom=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO, right=20),sprite,paroles]
+        if dialogue_active[0]==False and LORE[n]["combat"]==False:
+            scene_actu[0]+=1
+            tp(e,biome)
+        elif dialogue_active[0]==False and LORE[n]["combat"]==True:
+            enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+            combat(e,biome,enemy)
+        page.add(ft.Stack(preset))
+
 
     planet = ft.Stack([
         ft.Container(
