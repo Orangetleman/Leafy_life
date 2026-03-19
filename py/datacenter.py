@@ -522,4 +522,4 @@ s1 = ["Tiens, un pissenlit...", "Bonsoir! Je ne t'ai encore jamais vu dans ces p
 s2 = ["caca","feur"]
 
 
-LORE = [{'dialogue':s1,'visuel':'pissenlit','combat':False},{'dialogue':s2,'visuel':'criquet','combat':False},]
+LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False},{'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False},]

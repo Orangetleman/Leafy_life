@@ -14,7 +14,7 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
   - logique de combat (Eva)                                                                                 EN COURS
 -> wandering shop (Chris)
 -> "pages vides", compléter tp() + faire des objets récupérables (Eva)                                      FAIT
--> pages lore (la mort)
+-> pages lore (la mort)                                                                                     FAIT
 -> adaptation aux autres biomes (Eva)
 -> remplacement du visuel de la planète après avancement (Eva/Chris)
 -> écriture de tous les dialogues (Eva)
