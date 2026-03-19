@@ -17,6 +17,7 @@ music_player.play()
 # Lance pyglet en arrière-plan
 threading.Thread(target=pyglet.app.run, daemon=True).start()'''
 
+scene_actu = [0]
 
 def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
@@ -27,8 +28,6 @@ def _planet(page: ft.Page, navigate) -> list:
     montagne = ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
     lac = ft.Text("explore lac", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
 
-
-    scene_actu = [0]
     keys_pressed = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
     running = [True]
@@ -74,7 +73,7 @@ def _planet(page: ft.Page, navigate) -> list:
             keys_pressed["right"] = False
             keys_pressed["left"] = False
 
-    def dialogue(e, scene, dialogue_active):
+    def dialogue(e, scene, dialogue_active, on_end=None):
         i_scene = [0]
         dialogue_active[0] = True
 
@@ -90,12 +89,16 @@ def _planet(page: ft.Page, navigate) -> list:
                         chara_msg.content.value = scene[i_scene[0]]
                         chara_msg.visible = True
                         npc_msg.visible = False
-                    page.update()
+                    page.run_thread(page.update)
                 else:
                     dialogue_box.visible = False
                     dialogue_active[0] = False
-                    page.update()
-                    listener.stop()
+                    page.run_thread(page.update)
+                    def finish():
+                        listener.stop()
+                        if on_end:
+                            on_end()
+                    threading.Thread(target=finish, daemon=True).start()
 
         msg = scene[i_scene[0]]
 
@@ -125,11 +128,14 @@ def _planet(page: ft.Page, navigate) -> list:
 
         return dialogue_box
 
+
     def tp(e,biome):
         page.clean()
         running[0] = True
         event = random.choice(EVENTS)
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
+        keys_pressed["space"] = False    
+        dialogue_active[0] = False
 
         bouton_retour = ft.Container(
             content=ft.Row(
@@ -177,18 +183,16 @@ def _planet(page: ft.Page, navigate) -> list:
                 alignment=emplacement,
                 visible= True
             )
+            preset.append(the_object)   
         else:
-            id = LORE[scene_actu[0]]
+            id = LORE[scene_actu[0]]["visual"]
             preset.append(ft.Container(
-                content=ft.Image(src=id["visual"], width=80, height=60),
+                content=ft.Image(src=id, width=80, height=60),
                 alignment=emplacement,
             ))
 
-            preset.append(the_object)
-
         preset.append(new_sprite)
         preset.append(bouton_retour)
-        preset.append(dialogue(e,LORE[scene_actu[0]]['dialogue'],dialogue_active))
 
         new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         new_listener.start()
@@ -239,7 +243,11 @@ def _planet(page: ft.Page, navigate) -> list:
                     keys_pressed["space"] = False
 
                 if event== "lore" and ((new_sprite.left < 200 and emplacement == ft.Alignment.CENTER_LEFT) or (new_sprite.left > (page.width - 300) and emplacement == ft.Alignment.CENTER_RIGHT)) and keys_pressed["space"]:
+                    keys_pressed["space"] = False
+                    stop_tp_screen()
                     declenche_scene(e,biome,scene_actu[0])
+                    return
+                
                 page.update()
                 await asyncio.sleep(0.025)
 
@@ -324,23 +332,27 @@ def _planet(page: ft.Page, navigate) -> list:
     """CHRISSS FAIS ICI"""
 
     def declenche_scene(e,biome,n):
-        dialogue_active[0]=True
+        if hasattr(page, 'stop_current_screen'):
+            page.stop_current_screen()       
+        dialogue_active[0] = True
         page.clean()
-        bcground = BIOMES[biome]["visual"]
+        bcground = next(b["icon"] for b in BIOMES if b["name"] == biome)
         locuteur = LORE[n]["visual"]
         sprite = ft.Container(
             content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=150, height=180),
             bottom=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
             left=20,
         )
-        paroles = dialogue(e, LORE[n]["dialogue"],dialogue_active)
+        def on_end(): 
+            scene_actu[0] += 1
+            if LORE[n]["combat"] == False:
+                tp(e, biome)
+            else:
+                enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+                combat(e, biome, enemy)
+        paroles = dialogue(e, LORE[n]["dialogue"],dialogue_active,on_end=on_end)
         preset = [ft.Container(ft.Image(src=bcground,fit="cover")),ft.Container(ft.Image(locuteur,width=150, height=180), bottom=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO, right=20),sprite,paroles]
-        if dialogue_active[0]==False and LORE[n]["combat"]==False:
-            scene_actu[0]+=1
-            tp(e,biome)
-        elif dialogue_active[0]==False and LORE[n]["combat"]==True:
-            enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
-            combat(e,biome,enemy)
+      
         page.add(ft.Stack(preset))
 
 
