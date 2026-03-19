@@ -273,8 +273,9 @@ def open_leaf_modal(page: ft.Page, leaf):
 
     def close_modal(e):
         overlay.visible = False
+        if tick_refresh in game_clock.callbacks:
+            game_clock.callbacks.remove(tick_refresh)
         page.update()
-
     def on_stat_used():
         modal_content.content = build_content()
         page.update()
@@ -350,6 +351,12 @@ def open_leaf_modal(page: ft.Page, leaf):
         )
     )
 
+    def tick_refresh():
+        if overlay.visible:
+            modal_content.content = build_content()
+            page.update()
+
+    game_clock.add_callback(tick_refresh)
     page.overlay.append(overlay)
     page.update()
 

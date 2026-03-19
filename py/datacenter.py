@@ -198,8 +198,8 @@ PLANETS = [
 class LeafStat:
     # ── Constantes de classe ──────────────────────────────────────────────────────────────
     CURRENCY_PRODUCED = {"animal": "CO2", "plant": "O2"}
-    # Consommation par tick : nutrients -2, hydration -4 (rapport 1:2)
-    TICK_CONSUMPTION  = {"nutrients": 2, "hydration": 4}
+    # Consommation par tick : nutrients -1, hydration -2 (rapport 1:2)
+    TICK_CONSUMPTION  = {"nutrients": 1, "hydration": 2}
 
     def __init__(self, leaf):
         self.id        = leaf["id"]
@@ -312,8 +312,13 @@ class LeafStat:
                 setattr(self, stat, max(0, cur_base - remaining))
 
         # Production
-        nut_total = self.nutrients + self.nutrients_boost
-        ratio     = ((nut_total / 150.0) + (self.hydration / 100.0)) / 2.0 # 150 = 100 base + 50 boost max et 100 hydration max / 2.0 pour faire la moyenne
+        nut_base_ratio  = self.nutrients / 100.0                           # 0.0 à 1.0
+        nut_boost_ratio = self.nutrients_boost / self.NUTRIENTS_BOOST_MAX  # 0.0 à 1.0 en bonus
+        hyd_ratio       = self.hydration / 100.0                           # 0.0 à 1.0
+
+        # Base : moyenne des deux stats (0.0 à 1.0)
+        # Bonus : le boost nutrients ajoute jusqu'à +0.5 en plus
+        ratio = (nut_base_ratio + hyd_ratio) / 2.0 + (nut_boost_ratio * 0.5)
         self.pending_currency += ratio
 
     # ── Récolte manuelle de la production accumulée ──────────────────────────────────────
