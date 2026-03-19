@@ -313,7 +313,7 @@ class LeafStat:
 
         # Production
         nut_total = self.nutrients + self.nutrients_boost
-        ratio     = ((nut_total / 150.0) + (self.hydration / 100.0)) / 2.0
+        ratio     = ((nut_total / 150.0) + (self.hydration / 100.0)) / 2.0 # 150 = 100 base + 50 boost max et 100 hydration max / 2.0 pour faire la moyenne
         self.pending_currency += ratio
 
     # ── Récolte manuelle de la production accumulée ──────────────────────────────────────
@@ -328,7 +328,7 @@ class LeafStat:
         self.pending_currency -= amount
         currency = self.CURRENCY_PRODUCED[self.species]
         inventory_manager.append_money(currency, amount)
-        print(f"{self.name} — récolte : {amount} {currency}")
+        print(f"{self.name} - récolte : {amount} {currency}")
         return currency, amount
 
 
@@ -482,11 +482,11 @@ class GameClock:
     À chaque tick : consommation + production de chaque leaf vivant.
     Les callbacks enregistrés sont appelés après le tick (pour rafraîchir l'UI).
     """
-    TICK_INTERVAL = 60.0  # secondes (1 minute)
+    TICK_INTERVAL = 30.0  # secondes
 
     def __init__(self):
         self.running   = False
-        self.callbacks = []
+        self.callbacks = [] # fonctions à appeler après chaque tick (ex: rafraîchir l'UI)
 
     def add_callback(self, fn):
         self.callbacks.append(fn)
