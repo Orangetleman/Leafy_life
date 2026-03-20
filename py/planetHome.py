@@ -30,7 +30,7 @@ BIOME_LAYOUT = {
 
 # Vitesse de référence en pixels de l'image ORIGINALE par frame.
 # Elle sera multipliée par scale pour donner la vitesse en pixels-écran.
-BASE_SPEED = 15
+BASE_SPEED = 200
 
 # Marge horizontale fixe (px depuis le bord de la page) pour les entités.
 ENTITY_MARGIN = 80
@@ -370,11 +370,11 @@ def _planet(page: ft.Page, navigate) -> list:
                     near = page_x > page.width - 300
 
                 # ── Sorties latérales → nouvelle zone ─────────────────────────────────
-                if page_x < -50:
+                if page_x < -100:
                     stop_tp_screen()
                     tp(e, biome)
                     return
-                if page_x > page.width + 50:
+                if page_x > page.width - 100:
                     stop_tp_screen()
                     tp(e, biome)
                     return
