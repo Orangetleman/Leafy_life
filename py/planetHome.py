@@ -322,6 +322,10 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e, biome)
                     return
+                if scene_actu[0]==0:
+                    stop_tp_screen()
+                    declenche_scene(e, biome, scene_actu[0])
+                    return
                 if event == "lore" and scene_actu[0]>=len(LORE):
                     EVENTS.pop(3)
                     stop_tp_screen()
