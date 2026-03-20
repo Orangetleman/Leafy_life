@@ -252,6 +252,16 @@ class LeafStat:
         setattr(self, stat, new_val)
         print(f"{self.name} - {stat} : {current} -> {new_val}")
 
+    # ─ Calcul de l'attaque max et des hp max en fonction du niveau (exponentielle douce) ─
+    def calculate_atk_from_level(self):
+        base_atk = self.atk_max
+        level_factor = 1 + (self.level * 0.05)  # +5% d'attaque par niveau
+        return int(base_atk * level_factor)
+    def calculate_hp_from_level(self):
+        base_hp = self.hp_max
+        level_factor = 1 + (self.level * 0.1)  # +10% de hp par niveau
+        return int(base_hp * level_factor)
+
     # ── Application d'un item (gère la logique boost vs base) ────────────────────────────
     def apply_item(self, item: dict):
         """
@@ -284,6 +294,19 @@ class LeafStat:
             old = self.atk_boost
             self.atk_boost = min(self.atk_boost + amount, self.ATK_BOOST_MAX)
             print(f"{self.name} - atk_boost : {old} -> {self.atk_boost}")
+        
+        elif special and stat == "level":
+            self.stat_update(stat, amount)
+            new_atk = self.calculate_atk_from_level()
+            new_hp  = self.calculate_hp_from_level()
+            self.atk     = new_atk   # valeur actuelle
+            self.atk_max = new_atk   # plafond
+            self.hp_max  = new_hp
+            self.STAT_MAX["atk"] = new_atk
+            self.STAT_MAX["hp"]  = new_hp
+            self.HP_BOOST_MAX    = max(1, new_hp  // 2)
+            self.ATK_BOOST_MAX   = max(1, new_atk // 2)
+            print(f"{self.name} - atk : {self.atk} | hp_max : {self.hp_max}")
 
         else:
             self.stat_update(stat, amount)
