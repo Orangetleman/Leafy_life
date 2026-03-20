@@ -4,7 +4,7 @@ import flet as ft
 
 # ──────────────────────────────────────────────────────────────
 #  Config d'affichage par label
-#  (label → stat_attr, couleur_base, couleur_boost|None)
+#  (label -> stat_attr, couleur_base, couleur_boost|None)
 # ──────────────────────────────────────────────────────────────
 STAT_DISPLAY = {
     "Points de Vie": ("hp",        LEAF_CARD_PROGRESS_BAR_HP_COLOR,        LEAF_CARD_PROGRESS_BAR_BOOST_HP_COLOR),
@@ -111,8 +111,8 @@ def create_stat_bar(value, base_max, boost_value, boost_max, color, boost_color)
 # ──────────────────────────────────────────────────────────────
 def create_badge_button(leaf, current_value, max_value, item, is_boost=False, on_used=None):
     """
-    is_boost=False → item de base : toujours affiché, warning si absent de l'inventaire.
-    is_boost=True  → item boost   : affiché seulement si en inventaire (vérifié par l'appelant).
+    is_boost=False -> item de base : toujours affiché, warning si absent de l'inventaire.
+    is_boost=True  -> item boost   : affiché seulement si en inventaire (vérifié par l'appelant).
     """
     if item is None:
         return ft.Container(width=0, height=0, visible=False)

@@ -176,7 +176,7 @@ def _planet(page: ft.Page, navigate) -> list:
         # ── Sprite joueur ─────────────────────────────────────────────────────────────
         # Position en px-page, initialisée au centre de l'image affichée.
         # sprite_ratio : position relative dans l'image (0=bord gauche, 1=bord droit)
-        # conservée au resize pour replacer le sprite sans le téléporter.
+        # conservée au resize pour replacer le sprite sans le "téléporter" (il n'est pas vraiment tp mais c'était l'image qui glisait derrière lui).
         sprite_ratio  = [0.5]
         sprite_page_x = [offset_x + img_disp_w * sprite_ratio[0]]
 
@@ -189,8 +189,8 @@ def _planet(page: ft.Page, navigate) -> list:
 
         # ── Entité ────────────────────────────────────────────────────────────────────
         # Position en px-page, exprimée comme ratio sur l'image affichée :
-        # côté gauche → ratio_entity ≈ ENTITY_MARGIN / img_disp_w
-        # côté droit  → ratio_entity ≈ 1 - (ENTITY_MARGIN + largeur_entité) / img_disp_w
+        # côté gauche -> ratio_entity ≈ ENTITY_MARGIN / img_disp_w
+        # côté droit  -> ratio_entity ≈ 1 - (ENTITY_MARGIN + largeur_entité) / img_disp_w
         entity_id        = None
         entity_container = None
         entity_side_left = random.choice([True, False])
@@ -217,7 +217,7 @@ def _planet(page: ft.Page, navigate) -> list:
             entity_container = _make_entity(entity_id["visual"], EMPTY_W, EMPTY_H)
             entity_w         = EMPTY_W
         else:  # lore
-            if not scene_actu[0]>=len(LORE):
+            if not scene_actu[0] >= len(LORE):
                 entity_id        = LORE[scene_actu[0]]["visual"]
             else:
                 entity_id        = "assets/imgs/icons/leaf.png"
@@ -322,7 +322,7 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e, biome)
                     return
-                if event == "lore" and scene_actu[0]>=len(LORE):
+                if event == "lore" and scene_actu[0] >= len(LORE):
                     EVENTS.pop(3)
                     stop_tp_screen()
                     tp(e,biome)
@@ -368,8 +368,7 @@ def _planet(page: ft.Page, navigate) -> list:
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
 
-        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
-            compute_layout(page.width, page.height, biome)
+        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
 
         bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
@@ -377,6 +376,8 @@ def _planet(page: ft.Page, navigate) -> list:
         # Froggy à 10% depuis la gauche, ennemi à 10% depuis la droite de l'image
         leaf_page_x  = offset_x + img_disp_w * 0.10
         enemy_page_x = offset_x + img_disp_w * 0.90 - SPRITE_W
+
+        """selected_leaf = open_leaf_selection_interface()""" # À FAIRE CHRIS
 
         leafsprite = ft.Container(
             content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
@@ -387,6 +388,7 @@ def _planet(page: ft.Page, navigate) -> list:
             bottom=ground_bot, left=enemy_page_x,
         )
         menu = ft.Container(
+            # content = creer_combat_menu()
             bottom=0, left=0,
             width=page.width,
             height=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
@@ -439,9 +441,9 @@ def _planet(page: ft.Page, navigate) -> list:
             return 2
         return None
 
-    def boite_leaf():
+    def open_leaf_selection_interface():
         pass
-    """CHRISSS FAIS ICI"""
+    """CHRISSS FAIS ICI""" # J'ai comprsi tkt -_-
 
     # ─────────────────────────────────────────────────────────────────────────────────────
 
@@ -457,8 +459,7 @@ def _planet(page: ft.Page, navigate) -> list:
             biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
             locuteur   = LORE[n]["visual"]
 
-            scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
-                compute_layout(page.width, page.height, biome)
+            scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
 
             bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
             bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
