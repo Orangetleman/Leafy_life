@@ -365,9 +365,9 @@ def _planet(page: ft.Page, navigate) -> list:
                 # ── Détection de proximité avec l'entité ──────────────────────────────
                 # L'entité est à ENTITY_MARGIN depuis le bord gauche ou droit de la page.
                 if entity_side_left:
-                    near = page_x < 250
+                    near = page_x < (0.3 * page.width)
                 else:
-                    near = page_x > page.width - 300
+                    near = page_x > (page.width - (0.3 * page.width))
 
                 # ── Sorties latérales → nouvelle zone ─────────────────────────────────
                 if page_x < -100:
@@ -496,6 +496,8 @@ def _planet(page: ft.Page, navigate) -> list:
     # ─────────────────────────────────────────────────────────────────────────────────────
 
     def declenche_scene(e, biome, n):
+        if scene_actu[0]==len(LORE):
+            tp(e,biome)
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
         dialogue_active[0] = True
