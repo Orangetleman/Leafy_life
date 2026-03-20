@@ -16,7 +16,7 @@ BIOME_LAYOUT = {
     "lake":     (1888, 999,  41   / 111 ),  # ← mettre les vraies dimensions de arriere_lake.png
     "mountain": (1888, 999,  31   / 111 ),  # ← mettre les vraies dimensions de arriere_mountain.png
 }
-BASE_SPEED = 15  # vitesse de référence en pixels à résolution originale de l'image
+BASE_SPEED = 100  # vitesse de référence en pixels à résolution originale de l'image
 
 
 def compute_layout(page_w, page_h, biome_name):
