@@ -181,10 +181,10 @@ LEAFS_TYPE = [
 ]
 
 BIOMES = [
-    { "id": 1, "name": "plain",    "icon": "assets/imgs/icons/arriere_plain.png"    },
-    { "id": 2, "name": "forest",   "icon": "assets/imgs/icons/arriere_forest.png"   },
-    { "id": 3, "name": "lake",     "icon": "assets/imgs/icons/arriere_lake.png"     },
-    { "id": 4, "name": "mountain", "icon": "assets/imgs/icons/arriere_mountain.png" },
+    { "id": 1, "name": "plain",    "icon": "assets/imgs/biomes/arriere_plain.png"    },
+    { "id": 2, "name": "forest",   "icon": "assets/imgs/biomes/arriere_forest.png"   },
+    { "id": 3, "name": "lake",     "icon": "assets/imgs/biomes/arriere_lake.png"     },
+    { "id": 4, "name": "mountain", "icon": "assets/imgs/biomes/arriere_mountain.png" },
 ]
 
 PLANETS = [
