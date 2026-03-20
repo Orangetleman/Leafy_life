@@ -26,8 +26,8 @@ OBJECTS = [
 EVENTS = [
         "enemy",
         "npc",
-        "lore",
-        "empty"
+        "empty",
+        "lore"
     ]
 
 

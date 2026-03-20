@@ -27,7 +27,7 @@ BIOME_LAYOUT = {
     "mountain": (1888,  999,  31   / 111 ),
 }
 
-SPRITE_SPEED  = 8    # px-page par frame, constant quelle que soit la résolution
+SPRITE_SPEED  = 30    # px-page par frame, constant quelle que soit la résolution
 SPRITE_W      = 150  # largeur du sprite joueur en px-page
 ENTITY_MARGIN = 80   # marge depuis le bord de l'image affichée, en px-page
 
@@ -217,7 +217,10 @@ def _planet(page: ft.Page, navigate) -> list:
             entity_container = _make_entity(entity_id["visual"], EMPTY_W, EMPTY_H)
             entity_w         = EMPTY_W
         else:  # lore
-            entity_id        = LORE[scene_actu[0]]["visual"]
+            if not scene_actu[0]>=len(LORE):
+                entity_id        = LORE[scene_actu[0]]["visual"]
+            else:
+                entity_id        = "assets/imgs/icons/leaf.png"
             entity_container = _make_entity(entity_id, NPC_W, NPC_H)
             entity_w         = NPC_W
 
@@ -319,6 +322,11 @@ def _planet(page: ft.Page, navigate) -> list:
                     stop_tp_screen()
                     tp(e, biome)
                     return
+                if event == "lore" and scene_actu[0]>=len(LORE):
+                    EVENTS.pop(3)
+                    stop_tp_screen()
+                    tp(e,biome)
+
 
                 # Proximité entité
                 ent_px = ox + dw * entity_ratio
@@ -438,59 +446,60 @@ def _planet(page: ft.Page, navigate) -> list:
     # ─────────────────────────────────────────────────────────────────────────────────────
 
     def declenche_scene(e, biome, n):
-        if scene_actu[0]==len(LORE):
-            tp(e,biome)
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
-        dialogue_active[0] = True
-        page.clean()
+        if scene_actu[0]>=len(LORE):
+            tp(e,biome)
+        else:
+            dialogue_active[0] = True
+            page.clean()
 
-        biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
-        locuteur   = LORE[n]["visual"]
+            biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
+            locuteur   = LORE[n]["visual"]
 
-        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
-            compute_layout(page.width, page.height, biome)
+            scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
+                compute_layout(page.width, page.height, biome)
 
-        bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
-        bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
+            bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
+            bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
 
-        sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
-            bottom=ground_bot,
-            left=offset_x + img_disp_w * 0.10,
-        )
-        npc_sprite = ft.Container(
-            content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
-            bottom=ground_bot,
-            left=offset_x + img_disp_w * 0.90 - SPRITE_W,
-        )
+            sprite = ft.Container(
+                content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
+                bottom=ground_bot,
+                left=offset_x + img_disp_w * 0.10,
+            )
+            npc_sprite = ft.Container(
+                content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
+                bottom=ground_bot,
+                left=offset_x + img_disp_w * 0.90 - SPRITE_W,
+            )
 
-        def on_resize_scene(ev):
-            s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
-            bg_img.width  = dw
-            bg_img.height = dh
-            bg.left = ox
-            bg.top  = oy
-            sprite.bottom     = g
-            sprite.left       = ox + dw * 0.10
-            npc_sprite.bottom = g
-            npc_sprite.left   = ox + dw * 0.90 - SPRITE_W
-            page.update()
+            def on_resize_scene(ev):
+                s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
+                bg_img.width  = dw
+                bg_img.height = dh
+                bg.left = ox
+                bg.top  = oy
+                sprite.bottom     = g
+                sprite.left       = ox + dw * 0.10
+                npc_sprite.bottom = g
+                npc_sprite.left   = ox + dw * 0.90 - SPRITE_W
+                page.update()
 
-        page.on_resize = on_resize_scene
+            page.on_resize = on_resize_scene
 
-        def on_end():
-            page.on_resize = None
-            scene_actu[0] += 1
-            if not LORE[n]["combat"]:
-                tp(e, biome)
-            else:
-                enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
-                combat(e, biome, enemy)
+            def on_end():
+                page.on_resize = None
+                scene_actu[0] += 1
+                if not LORE[n]["combat"]:
+                    tp(e, biome)
+                else:
+                    enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+                    combat(e, biome, enemy)
 
-        paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
-        preset  = [bg, npc_sprite, sprite, paroles]
-        page.add(ft.Stack(preset, expand=True))
+            paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
+            preset  = [bg, npc_sprite, sprite, paroles]
+            page.add(ft.Stack(preset, expand=True))
 
     # ─────────────────────────────────────────────────────────────────────────────────────
 
