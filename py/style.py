@@ -9,7 +9,6 @@ LEAF_SHEARCHBAR_INPUT_COLOR = "#FFFFFF"             # ✅
 LEAF_SHEARCHBAR_LABEL_COLOR = "#276E31"             # ✅
 LEAF_SHEARCHBAR_HINT_COLOR = "#276E31"              # ✅
 LEAF_SHEARCHBAR_BORDER_COLOR = "#131313"            # ✅
-LEAF_SHEARCHBAR_COLOR_FOCUSED = "#575757"           # ✅
 LEAF_SHEARCHBAR_BORDER_COLOR_FOCUSED = "#2b2b2b"    # ✅
     # ------------------- Style des boutons ---------------
 LEAF_BUTTON_BG_COLOR = "#8db15e"                    # ✅
@@ -44,7 +43,6 @@ LEAF_CARD_PROGRESS_BAR_LVL_COLOR = "#4b0fffc5"              # ✅
 LEAF_CARD_PROGRESS_BAR_BOOST_HP_COLOR = "#c8e6a0"           # ✅  vert clair (overlay hp boost)
 LEAF_CARD_PROGRESS_BAR_BOOST_NUTRIENTS_COLOR = "#f7e08a"    # ✅  jaune clair (overlay nutrients boost)
 LEAF_CARD_PROGRESS_BAR_BOOST_ATK_COLOR = "#e0a0e0"          # ✅  violet clair (overlay atk boost)
-LEAF_CARD_BOOST_SEPARATOR_COLOR = "#888888"                 # ✅  ligne séparatrice base/boost
     # ------------------- Style du bouton récolte ---------
 LEAF_CARD_HARVEST_BUTTON_BG_COLOR = "#2a5a3a"               # ✅
 LEAF_CARD_HARVEST_BUTTON_BG_HOVER_COLOR = "#3a7a4e"         # ✅

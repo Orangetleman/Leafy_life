@@ -198,8 +198,8 @@ PLANETS = [
 class LeafStat:
     # ── Constantes de classe ──────────────────────────────────────────────────────────────
     CURRENCY_PRODUCED = {"animal": "CO2", "plant": "O2"}
-    # Consommation par tick : nutrients -2, hydration -4 (rapport 1:2)
-    TICK_CONSUMPTION  = {"nutrients": 2, "hydration": 4}
+    # Consommation par tick : nutrients -1, hydration -2 (rapport 1:2)
+    TICK_CONSUMPTION  = {"nutrients": 1, "hydration": 2}
 
     def __init__(self, leaf):
         self.id        = leaf["id"]
@@ -252,6 +252,16 @@ class LeafStat:
         setattr(self, stat, new_val)
         print(f"{self.name} - {stat} : {current} -> {new_val}")
 
+    # ─ Calcul de l'attaque max et des hp max en fonction du niveau (exponentielle douce) ─
+    def calculate_atk_from_level(self):
+        base_atk = self.atk_max
+        level_factor = 1 + (self.level * 0.05)  # +5% d'attaque par niveau
+        return int(base_atk * level_factor)
+    def calculate_hp_from_level(self):
+        base_hp = self.hp_max
+        level_factor = 1 + (self.level * 0.1)  # +10% de hp par niveau
+        return int(base_hp * level_factor)
+
     # ── Application d'un item (gère la logique boost vs base) ────────────────────────────
     def apply_item(self, item: dict):
         """
@@ -284,6 +294,19 @@ class LeafStat:
             old = self.atk_boost
             self.atk_boost = min(self.atk_boost + amount, self.ATK_BOOST_MAX)
             print(f"{self.name} - atk_boost : {old} -> {self.atk_boost}")
+        
+        elif special and stat == "level":
+            self.stat_update(stat, amount)
+            new_atk = self.calculate_atk_from_level()
+            new_hp  = self.calculate_hp_from_level()
+            self.atk     = new_atk   # valeur actuelle
+            self.atk_max = new_atk   # plafond
+            self.hp_max  = new_hp
+            self.STAT_MAX["atk"] = new_atk
+            self.STAT_MAX["hp"]  = new_hp
+            self.HP_BOOST_MAX    = max(1, new_hp  // 2)
+            self.ATK_BOOST_MAX   = max(1, new_atk // 2)
+            print(f"{self.name} - atk : {self.atk} | hp_max : {self.hp_max}")
 
         else:
             self.stat_update(stat, amount)
@@ -312,8 +335,13 @@ class LeafStat:
                 setattr(self, stat, max(0, cur_base - remaining))
 
         # Production
-        nut_total = self.nutrients + self.nutrients_boost
-        ratio     = ((nut_total / 150.0) + (self.hydration / 100.0)) / 2.0
+        nut_base_ratio  = self.nutrients / 100.0                           # 0.0 à 1.0
+        nut_boost_ratio = self.nutrients_boost / self.NUTRIENTS_BOOST_MAX  # 0.0 à 1.0 en bonus
+        hyd_ratio       = self.hydration / 100.0                           # 0.0 à 1.0
+
+        # Base : moyenne des deux stats (0.0 à 1.0)
+        # Bonus : le boost nutrients ajoute jusqu'à +0.5 en plus
+        ratio = (nut_base_ratio + hyd_ratio) / 2.0 + (nut_boost_ratio * 0.5)
         self.pending_currency += ratio
 
     # ── Récolte manuelle de la production accumulée ──────────────────────────────────────
@@ -328,7 +356,7 @@ class LeafStat:
         self.pending_currency -= amount
         currency = self.CURRENCY_PRODUCED[self.species]
         inventory_manager.append_money(currency, amount)
-        print(f"{self.name} — récolte : {amount} {currency}")
+        print(f"{self.name} - récolte : {amount} {currency}")
         return currency, amount
 
 
@@ -482,11 +510,11 @@ class GameClock:
     À chaque tick : consommation + production de chaque leaf vivant.
     Les callbacks enregistrés sont appelés après le tick (pour rafraîchir l'UI).
     """
-    TICK_INTERVAL = 60.0  # secondes (1 minute)
+    TICK_INTERVAL = 30.0  # secondes
 
     def __init__(self):
         self.running   = False
-        self.callbacks = []
+        self.callbacks = [] # fonctions à appeler après chaque tick (ex: rafraîchir l'UI)
 
     def add_callback(self, fn):
         self.callbacks.append(fn)
