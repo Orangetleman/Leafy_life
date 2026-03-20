@@ -492,6 +492,8 @@ def _planet(page: ft.Page, navigate) -> list:
                 page.on_resize = None
                 scene_actu[0] += 1
                 if not LORE[n]["combat"]:
+                    if LORE[n]["add"] != None:
+                        leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
                     tp(e, biome)
                 else:
                     enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
