@@ -118,7 +118,7 @@ def build_trail_canvas(page_w, page_h, active_biome_keys, button_refs):
         py = planet_top  + ay * scale_y
 
         corner = {"plaine": "bottom_left", "foret": "bottom_right",
-                  "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
+                "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
 
         if corner == "bottom_left":
             bx = BUTTON_MARGIN_X + 100;           by = page_h - BUTTON_MARGIN_Y - BTN_H / 2
@@ -526,7 +526,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         leafsprite = ft.Container(
             content=ft.Image(src=current_leaf_ref[0].img if current_leaf_ref[0] else "assets/imgs/leafs/Froggy.png",
-                             width=SPRITE_W, height=180),
+                            width=SPRITE_W, height=180),
             bottom=ground_bot, left=lx,
             animate_position=ft.Animation(200, ft.AnimationCurve.EASE_IN_OUT),
         )
@@ -715,7 +715,7 @@ def _planet(page: ft.Page, navigate) -> list:
                         refresh_menu()
                         await enemy_turn_async()
                     player_turn[0] = False; set_buttons(False)
-                    page.run_task(hide_and_continue())
+                    page.run_task(hide_and_continue)
                 open_leaf_selection_interface(page, [None], on_heal_selected, exclude_current=False)
 
             elif leaf_type == 3:  # Tank : bouclier
@@ -755,12 +755,12 @@ def _planet(page: ft.Page, navigate) -> list:
         # ── Boutons ────────────────────────────────────────────────────────────────────
         btn_atk = ft.ElevatedButton(
             "⚔️ Attaquer",
-            on_click=lambda e: page.run_task(do_attack(e)),
+            on_click=lambda e: page.run_task(do_attack, e),
             bgcolor="#c0392b", color="white", width=130,
         )
         btn_comp = ft.ElevatedButton(
             "✨ Compétence",
-            on_click=lambda e: page.run_task(do_competence(e)),
+            on_click=lambda e: page.run_task(do_competence, e),
             bgcolor="#1565c0", color="white", width=130,
         )
         btn_leaf = ft.ElevatedButton(
@@ -772,7 +772,7 @@ def _planet(page: ft.Page, navigate) -> list:
         # ── Menu 3 colonnes ────────────────────────────────────────────────────────────
         col_stats = ft.Column([
             ft.Container(content=leaf_img_w, width=55, height=55,
-                         bgcolor=ft.Colors.with_opacity(0.3, "black"), border_radius=8, padding=3),
+                        bgcolor=ft.Colors.with_opacity(0.3, "black"), border_radius=8, padding=3),
             leaf_name_t, leaf_hp_bar, leaf_hp_t, leaf_atk_t, leaf_type_t, shield_hp_t,
             ft.Divider(color="#27ae60", height=8),
             ft.Text("Ennemi", size=10, color="#aaaaaa"),
@@ -782,12 +782,12 @@ def _planet(page: ft.Page, navigate) -> list:
         col_actions = ft.Column([
             action_status, btn_atk, btn_comp,
         ], spacing=10, horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-           alignment=ft.MainAxisAlignment.CENTER, expand=True)
+        alignment=ft.MainAxisAlignment.CENTER, expand=True)
 
         col_leaf = ft.Column([
             btn_leaf,
         ], alignment=ft.MainAxisAlignment.CENTER,
-           horizontal_alignment=ft.CrossAxisAlignment.CENTER, expand=True)
+        horizontal_alignment=ft.CrossAxisAlignment.CENTER, expand=True)
 
         menu = ft.Container(
             content=ft.Row([
