@@ -59,10 +59,18 @@ def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    plaine   = ft.Text("explore plaine",   size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    foret    = ft.Text("explore foret",    size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    montagne = ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    lac      = ft.Text("explore lac",      size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+    plaine   = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore plaine",   size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30,visible= True)]
+    foret    = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore foret",    size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30, visible=False)]
+    montagne = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR), on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30, visible=False)]
+    lac      = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore lac",      size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),      on_click=lambda e, b="lake":     tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, left=30, visible=False)]
+    pp =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True, visible= True)]
+    ff =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_forest.png"), alignment=ft.Alignment.CENTER, expand=True, visible=False)]
+    mm =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_mountain.png"), alignment=ft.Alignment.CENTER, expand=True,visible=False)]
+    ll =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_lake.png"), alignment=ft.Alignment.CENTER, expand=True,visible=False)]
+    f1 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=True)]
+    f2 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil2.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=False)]
+    f3 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil3.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=False)]
+    f4 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil4.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=False)]
 
     keys_pressed    = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
@@ -496,6 +504,13 @@ def _planet(page: ft.Page, navigate) -> list:
             def on_end():
                 page.on_resize = None
                 scene_actu[0] += 1
+                if scene_actu == 2:
+                    pp[0].visible = False
+                    f1[0].visible = False
+                    foret[0].visible = True
+                    ff[0].visible = True
+                    f2[0].visible = True
+                    navigate("planet")
                 if not LORE[n]["combat"]:
                     if LORE[n]["add"] != None:
                         leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
@@ -511,12 +526,18 @@ def _planet(page: ft.Page, navigate) -> list:
     # ─────────────────────────────────────────────────────────────────────────────────────
 
     planet = ft.Stack([
-        ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True),
-        ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True),
-        ft.Container(content=ft.Row([ft.ElevatedButton(plaine,   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(foret,    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(montagne, on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(lac,      on_click=lambda e, b="lake":     tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, left=30),
+        pp[0],
+        ff[0],
+        mm[0],
+        ll[0],
+        f1[0],
+        f2[0],
+        f3[0],
+        f4[0],
+        plaine[0],
+        foret[0],
+        montagne[0],
+        lac[0]
     ], expand=True)
 
     def retourneur(e):
