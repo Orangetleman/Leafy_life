@@ -255,11 +255,11 @@ class LeafStat:
     # ─ Calcul de l'attaque max et des hp max en fonction du niveau (exponentielle douce) ─
     def calculate_atk_from_level(self):
         base_atk = self.atk_max
-        level_factor = 1 + (self.level * 0.05)  # +5% d'attaque par niveau
+        level_factor = 1 + (self.level * 0.025)  # +2.5% d'attaque par niveau
         return int(base_atk * level_factor)
     def calculate_hp_from_level(self):
         base_hp = self.hp_max
-        level_factor = 1 + (self.level * 0.1)  # +10% de hp par niveau
+        level_factor = 1 + (self.level * 0.05)  # +5% de hp par niveau
         return int(base_hp * level_factor)
 
     # ── Application d'un item (gère la logique boost vs base) ────────────────────────────
