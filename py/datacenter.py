@@ -64,7 +64,7 @@ ITEMS = {
     8: {
         "id": 8, "name": "Lait 🌟", "category": "nouriture",
         "effect": {"stat": "nutrients", "amount": 40},
-        "price_O2": 64, "is_special": True, "rarity": 1,
+        "price_O2": 64, "is_special": True, "rarity": 0.3,
         "icon": "assets/imgs/items/milk.png",
         "tags": ["milk", "nutrients", "nouriture", "special"],
         "description": "Riche en calcium, le lait booste durablement les nutriments des leafs animaux.",
@@ -92,7 +92,7 @@ ITEMS = {
     9: {
         "id": 9, "name": "Poudre d'os 🌟", "category": "nouriture",
         "effect": {"stat": "nutrients", "amount": 40},
-        "price_CO2": 64, "is_special": True, "rarity": 1,
+        "price_CO2": 64, "is_special": True, "rarity": 0.3,
         "icon": "assets/imgs/items/bone_meal.png",
         "tags": ["bone_meal", "growth", "nouriture", "special"],
         "description": "Riche en phosphore, cette poudre booste durablement les nutriments des leafs plantes.",
@@ -118,7 +118,7 @@ ITEMS = {
     10: {
         "id": 10, "name": "Elixir de vie 🌟", "category": "revitaliseur",
         "effect": {"stat": "hp", "amount": 5},
-        "price_O2": 300, "price_CO2": 300, "is_special": True, "rarity": 1,
+        "price_O2": 300, "price_CO2": 300, "is_special": True, "rarity": 0.2,
         "icon": "assets/imgs/items/elixir.png",
         "tags": ["elixir_of_life", "revitaliseur", "special"],
         "description": "Cet élixir agit directement sur les mécanismes vitaux et défie le cycle naturel de la vie.",
@@ -126,7 +126,7 @@ ITEMS = {
     11: {
         "id": 11, "name": "Potion d'attaque 🌟", "category": "boost",
         "effect": {"stat": "atk", "amount": 2},
-        "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1,
+        "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 0.2,
         "icon": "assets/imgs/items/attack_boost.png",
         "tags": ["attack_boost", "boost", "special"],
         "description": "Booste temporairement l'attaque pour toute la durée d'un combat.",
@@ -134,7 +134,7 @@ ITEMS = {
     12: {
         "id": 12, "name": "Potion de vie 🌟", "category": "boost",
         "effect": {"stat": "hp", "amount": 3},
-        "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 1,
+        "price_O2": 100, "price_CO2": 100, "is_special": True, "rarity": 0.2,
         "icon": "assets/imgs/items/health_boost.png",
         "tags": ["health_boost", "boost", "special"],
         "description": "Augmente durablement le maximum de points de vie d'un leaf.",
@@ -142,7 +142,7 @@ ITEMS = {
     13: {
         "id": 13, "name": "Livre de la connaissance 🌟", "category": "boost",
         "effect": {"stat": "level", "amount": 5},
-        "price_O2": 150, "price_CO2": 150, "is_special": True, "rarity": 1,
+        "price_O2": 150, "price_CO2": 150, "is_special": True, "rarity": 0.1,
         "icon": "assets/imgs/items/book_of_knowledge.png",
         "tags": ["book_of_knowledge", "boost", "special"],
         "description": "Ce livre ancien augmente les capacités et la sagesse des leafs.",
@@ -408,8 +408,8 @@ class InventoryManager:
         return any(i["id"] == item_id for i in self.items)
 
     def is_enough_money(self, item):
-        needs_O2  = item.get("price_O2",  0) > 0
-        needs_CO2 = item.get("price_CO2", 0) > 0
+        needs_O2  = (item.get("price_O2")  or 0) > 0
+        needs_CO2 = (item.get("price_CO2") or 0) > 0
         if needs_O2 and needs_CO2:
             return self.money["O2"] >= item["price_O2"] and self.money["CO2"] >= item["price_CO2"]
         if needs_O2:
@@ -469,10 +469,10 @@ def get_wandering_shop_items(biome):
     specials    = [{**i, "amount": 50} for i in ITEMS.values() if i["is_special"] and roll(i["rarity"])]
     non_special = [i for i in ITEMS.values() if not i["is_special"]]
     random.shuffle(non_special)
-    discounted  = [
+    discounted = [
         {**i,
-        "price_O2":  i.get("specialprice_O2"),
-        "price_CO2": i.get("specialprice_CO2"),
+        "price_O2":  i.get("specialprice_O2") or i.get("price_O2"),
+        "price_CO2": i.get("specialprice_CO2") or i.get("price_CO2"),
         "amount": 50}
         for i in non_special[:2]
     ]
