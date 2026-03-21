@@ -570,23 +570,30 @@ def _planet(page: ft.Page, navigate) -> list:
         if scene_actu[0] >= len(LORE):
             tp(e, biome); return
         dialogue_active[0] = True
+        
         page.clean()
+        
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
         locuteur   = LORE[n]["visual"]
+        
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
+        
         bg_img     = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg         = ft.Container(content=bg_img, left=offset_x, top=offset_y)
         sprite     = ft.Container(content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
                                   bottom=ground_bot, left=offset_x + img_disp_w * 0.10)
         npc_sprite = ft.Container(content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
                                   bottom=ground_bot, left=offset_x + img_disp_w * 0.90 - SPRITE_W)
+        
         def on_resize_scene(ev):
             s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
             bg_img.width = dw; bg_img.height = dh; bg.left = ox; bg.top = oy
             sprite.bottom = g;     sprite.left     = ox + dw * 0.10
             npc_sprite.bottom = g; npc_sprite.left = ox + dw * 0.90 - SPRITE_W
             page.update()
+            
         page.on_resize = on_resize_scene
+        
         def on_end():
             page.on_resize = None
             scene_actu[0] += 1
@@ -606,9 +613,121 @@ def _planet(page: ft.Page, navigate) -> list:
             else:
                 enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
                 combat(e, biome, enemy)
+        
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
         page.add(ft.Stack([bg, npc_sprite, sprite, paroles], expand=True))
+        if scene_actu[0]>=len(LORE):
+            tp(e,biome)
+        else:
+            dialogue_active[0] = True
+            page.clean()
 
+            biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
+            locuteur   = LORE[n]["visual"]
+            if not LORE[n]["combat"]:
+                entity = next(b for b in LEAFS.values() if b["img"] == locuteur)
+            else:
+                entity = next(b for b in ENEMIES if b["visual"] == locuteur)
+
+            scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
+
+            bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
+            bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
+
+            sprite = ft.Container(
+                content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
+                bottom=ground_bot,
+                left=offset_x + img_disp_w * 0.10,
+            )
+            npc_sprite = ft.Container(
+                content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
+                bottom=ground_bot,
+                left=offset_x + img_disp_w * 0.90 - SPRITE_W,
+            )
+
+            def on_resize_scene(ev):
+                s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
+                bg_img.width  = dw
+                bg_img.height = dh
+                bg.left = ox
+                bg.top  = oy
+                sprite.bottom     = g
+                sprite.left       = ox + dw * 0.10
+                npc_sprite.bottom = g
+                npc_sprite.left   = ox + dw * 0.90 - SPRITE_W
+                page.update()
+
+            page.on_resize = on_resize_scene
+
+            def on_end():
+                page.on_resize = None
+                
+                boite = explique(entity)
+                if boite is not None:
+                    page.overlay.append(boite)
+                    page.update()
+                    def toi(key):
+                        if key == pynput_keyboard.Key.space:
+                            listener.stop()
+                            page.overlay.remove(boite)
+                            page.update()
+                            suite()
+                    listener = pynput_keyboard.Listener(on_press=toi)
+                    listener.start()
+                else:
+                    suite()
+
+            def suite():
+                scene_actu[0] += 1
+                if scene_actu[0] == 2:
+                    biomes_state["pp"]     = False
+                    biomes_state["foret"]  = True
+                    biomes_state["ff"]     = True
+                    biomes_state["f2"]     = True
+
+                if scene_actu[0] == 3:
+                    biomes_state["ff"]       = False
+                    biomes_state["montagne"] = True
+                    biomes_state["mm"]       = True
+                    biomes_state["f3"]       = True
+
+                if scene_actu[0] == 4:
+                    biomes_state["mm"]  = False
+                    biomes_state["lac"] = True
+                    biomes_state["ll"]  = True
+                    biomes_state["f4"]  = True
+
+                if not LORE[n]["combat"]:
+                    if LORE[n]["add"] != None:
+                        leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
+                    if scene_actu[0] in (2, 3, 4):
+                        navigate("planet")
+                    else:
+                        tp(e, biome)
+                else:
+                    enemy = next(b for b in ENEMIES.values() if b["visual"] == locuteur)
+                    combat(e, biome, enemy)
+
+            paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
+            preset  = [bg, npc_sprite, sprite, paroles]
+            page.add(ft.Stack(preset, expand=True))
+
+    def explique(entity):
+        if entity["met"] == False:
+            boite = ft.Container(
+                content=ft.Text(entity["prez"], size=20, color="white"),
+                bgcolor='black',
+                alignment=ft.Alignment.CENTER_LEFT,
+                height=page.height,   
+                width=page.width * 0.5,      
+                padding=20,
+                border=ft.border.all(3, "green"),
+                border_radius=ft.border_radius.all(20),
+            )
+            entity["met"] = True
+            return boite
+        else:
+            return None
     # ─────────────────────────────────────────────────────────────────────────────────────
     def retourneur(e):
         page.on_resize = None

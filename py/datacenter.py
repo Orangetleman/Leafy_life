@@ -7,8 +7,8 @@ import asyncio
 
 # ------------------------------------ Enemies palette -----------------------------------
 ENEMIES = [
-    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png"},
-    { "id": 2, "name": "Snake", "rarity": "rare",   "atk": 5, "hp": 15, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/snake.png"},
+    { "id": 1, "name": "Crabe", "rarity": "common", "atk": 3, "hp": 10, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/crab.png", "met": False, "prez":"hehe"},
+    { "id": 2, "name": "Snake", "rarity": "rare",   "atk": 5, "hp": 15, "biome": ["plain"], "lvl": 2, "visual": "assets/imgs/npc/snake.png", "met": False, "prez":"hehe"},
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
@@ -158,19 +158,19 @@ TYPES = [
 
 # ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
-    2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0 },
-    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0 },
-    5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0 },
-    8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0 },
-    9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0 },
-    12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0 },
-    13: { "id": 13, "name": "trefle",      "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "plant", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",       "xp": 0 },
-    1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0 },
-    4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0 },
-    6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0 },
-    7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0 },
-    10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0 },
-    11: { "id": 11, "name": "nénuphare", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0 },
+    2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0, "met": False, "prez":"hehe" },
+    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0, "met": False, "prez":"hehe" },
+    5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0, "met": False, "prez":"hehe" },
+    8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0, "met": False, "prez":"hehe" },
+    9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0, "met": False, "prez":"hehe" },
+    12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0, "met": False, "prez":"hehe" },
+    13: { "id": 13, "name": "trefle",      "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "plant", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",       "xp": 0, "met": False, "prez":"hehe" },
+    1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0, "met": False, "prez":"hehe" },
+    4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0, "met": False, "prez":"hehe" },
+    6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0, "met": False, "prez":"hehe" },
+    7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0, "met": False , "prez":"hehe"},
+    10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0, "met": False, "prez":"hehe" },
+    11: { "id": 11, "name": "nénuphare", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0, "met": False, "prez":"hehe" },
 }
 
 LEAFS_TYPE = [
