@@ -512,6 +512,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     planet = ft.Stack([
         ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True),
+        ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True),
         ft.Container(content=ft.Row([ft.ElevatedButton(plaine,   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30),
         ft.Container(content=ft.Row([ft.ElevatedButton(foret,    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30),
         ft.Container(content=ft.Row([ft.ElevatedButton(montagne, on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30),
