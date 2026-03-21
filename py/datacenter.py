@@ -561,7 +561,7 @@ s1 = ["Tiens, un pissenlit...",
         "Eh bien, si t'insistes, je ne suis pas contre un peu de compagnie pour la route.",
         ]
 s2 = ["caca",
-        "feur"
+        "feur",
         ]
 
 

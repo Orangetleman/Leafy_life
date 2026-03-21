@@ -139,7 +139,7 @@ def open_buy_modal(page: ft.Page, item: dict, shop, on_confirm):
     page.update()
 
 
-def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "plain") -> list:
+def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "plain", on_back = None) -> list:
     if shop_type == "classic":
         shop = classic_shop_manager
     else:
@@ -279,6 +279,12 @@ def _build_shop_home(page: ft.Page, shop_type: str = "classic", biome: str = "pl
                     ft.Column([
                             ft.Container(
                                 content=ft.Row([
+                                    ft.TextButton(
+                                        "← Retour",
+                                        on_click=on_back,
+                                        visible=shop_type == "wandering",
+                                        style=ft.ButtonStyle(color="white"),
+                                        ) if on_back else ft.Container(width=0),
                                     ft.TextField(
                                         label="🔍 Rechercher… (ex: #soin, bandage)",
                                         on_change=on_search_change,
