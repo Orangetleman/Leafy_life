@@ -15,8 +15,8 @@ from shopHome import _build_shop_home
 def _seed_test_data():
     inventory_manager.append_money("CO2", 1000)
     inventory_manager.append_money("O2",  1000)
-    #for key in range(1, 14):
-        #leafmanager.add_leaf(LEAFS[key])
+    for key in range(1, 14):
+        leafmanager.add_leaf(LEAFS[key])
     for item in range(1, 14):
         inventory_manager.append_item(ITEMS[item], amount=100)
     pass
