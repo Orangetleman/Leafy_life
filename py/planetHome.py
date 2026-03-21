@@ -1,6 +1,7 @@
 import flet as ft
 from pynput import keyboard as pynput_keyboard
 from datacenter import *
+from shopHome import _build_shop_home
 from style import *
 import asyncio
 import threading
@@ -327,7 +328,8 @@ def _planet(page: ft.Page, navigate) -> list:
                     declenche_scene(e, biome, scene_actu[0])
                     return
                 if event == "lore" and scene_actu[0] >= len(LORE):
-                    EVENTS.pop(3)
+                    if len(EVENTS) <= 4:
+                        EVENTS.pop(3)
                     stop_tp_screen()
                     tp(e,biome)
 
@@ -337,6 +339,10 @@ def _planet(page: ft.Page, navigate) -> list:
                 near   = abs(px - ent_px) < 170
 
                 # Interactions
+                if event == "npc" and near and keys_pressed["space"]:
+                    stop_tp_screen()
+                    keys_pressed["space"] = False
+                    shop(e, biome)
                 if event == "enemy" and near and keys_pressed["space"]:
                     stop_tp_screen()
                     keys_pressed["space"] = False
@@ -368,6 +374,24 @@ def _planet(page: ft.Page, navigate) -> list:
 
     # ─────────────────────────────────────────────────────────────────────────────────────
 
+    def shop(e, biome):
+        page.clean()
+        page.on_resize = None
+
+        def on_back(e):
+            page.clean()
+            tp(e, biome)
+
+        shop_ui = _build_shop_home(page, "wandering", biome, on_back=on_back)
+
+        page.add(
+            ft.Container(
+                content=ft.Column(controls=shop_ui, expand=True),
+                expand=True,
+                padding=0,
+            )
+        )
+    
     def combat(e, biome, enemy):
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
