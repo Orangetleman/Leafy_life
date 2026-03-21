@@ -21,6 +21,7 @@ def _seed_test_data():
         inventory_manager.append_item(ITEMS[item], amount=100)
     pass
 
+NAVBAR_HEIGHT = 60
 
 def _build_navbar(navigate) -> ft.Row:
     return ft.Row(
@@ -46,6 +47,7 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
             del page.stop_current_screen
+        page.on_resize = None
         page.clean()
 
         if name == "leafs":
@@ -59,13 +61,17 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
         else:
             body = _build_leafs_home(page)
 
+        body_container = ft.Container(
+            content=ft.Column(controls=body, expand=True),
+            expand=True,
+            padding=0,
+        )
+        page.body_container = body_container
+        page.navbar_height = NAVBAR_HEIGHT
+
         page.add(
             ft.Container(content=_build_navbar(show_screen), padding=8, bgcolor="#131313"),
-            ft.Container(
-                content=ft.Column(controls=body, expand=True),
-                expand=True,
-                padding=0,
-            )
+            body_container,
         )
 
     # ── Démarrage du game clock ──────────────────────────────────────────────────────────

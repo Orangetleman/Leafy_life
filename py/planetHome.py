@@ -1,4 +1,5 @@
 import flet as ft
+import flet.canvas as cv
 from pynput import keyboard as pynput_keyboard
 from datacenter import *
 from shopHome import _build_shop_home
@@ -23,10 +24,6 @@ biomes_state = {
     "ff":       False,
     "mm":       False,
     "ll":       False,
-    "f1":       True,
-    "f2":       False,
-    "f3":       False,
-    "f4":       False,
     "plaine":   True,
     "foret":    False,
     "montagne": False,
@@ -43,9 +40,40 @@ BIOME_LAYOUT = {
     "mountain": (1888,  999,  31   / 111 ),
 }
 
-SPRITE_SPEED  = 30    # px-page par frame, constant quelle que soit la résolution
-SPRITE_W      = 150  # largeur du sprite joueur en px-page
-ENTITY_MARGIN = 80   # marge depuis le bord de l'image affichée, en px-page
+SPRITE_SPEED  = 30
+SPRITE_W      = 150
+ENTITY_MARGIN = 80
+
+# ── Planète : dimensions originales de l'image ───────────────────────────────────────────
+PLANET_IMG_W = 439
+PLANET_IMG_H = 435
+
+# ── Points d'ancrage sur l'image planète (px dans l'image originale 439x435) ────────────
+# Ces coordonnées sont depuis le coin HAUT GAUCHE de l'image
+BIOME_ANCHORS = {
+    "plain":    (130, 320),
+    "forest":   (300, 280),
+    "mountain": (300, 80),
+    "lake":     (100, 160),
+}
+
+# Clé biomes_state → clé BIOME_ANCHORS
+BIOME_KEY_MAP = {
+    "plaine":   "plain",
+    "foret":    "forest",
+    "montagne": "mountain",
+    "lac":      "lake",
+}
+
+# Distance du bord de la fenêtre pour les boutons
+BUTTON_MARGIN_X = 40
+BUTTON_MARGIN_Y = 40
+BTN_H = 50  # hauteur boutons de navigation entre biomes
+
+# Taille affichée de la planète (la même image pour tous, mise à l'échelle dynamiquement)
+# La planète s'affiche dans un Container expand=True centré → on calcule sa taille réelle
+# en fonction de la page via min(page_w, page_h) * PLANET_DISPLAY_RATIO
+PLANET_DISPLAY_RATIO = 0.55   # la planète occupe ~55% du plus petit côté de la fenêtre
 
 
 def compute_layout(page_w, page_h, biome_name):
@@ -71,22 +99,115 @@ def compute_layout(page_w, page_h, biome_name):
     return scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h
 
 
+def compute_planet_layout(page_w, page_h):
+    """
+    Retourne (planet_disp_w, planet_disp_h, planet_left, planet_top)
+    — taille et position de l'image planète dans la page.
+    """
+    size         = min(page_w, page_h) * PLANET_DISPLAY_RATIO
+    planet_disp_w = size * (PLANET_IMG_W / max(PLANET_IMG_W, PLANET_IMG_H))
+    planet_disp_h = size * (PLANET_IMG_H / max(PLANET_IMG_W, PLANET_IMG_H))
+    planet_left  = (page_w - planet_disp_w) / 2.0
+    planet_top   = (page_h - planet_disp_h) / 2.0
+    return planet_disp_w, planet_disp_h, planet_left, planet_top
+
+
+def compute_button_pos(biome_key, page_w, page_h):
+    """
+    Retourne (left, top, bottom, right) pour le Container du bouton.
+    Seuls left/bottom ou right/top sont définis selon le coin.
+    """
+    corners = {
+        "plaine":   "bottom_left",
+        "foret":    "bottom_right",
+        "montagne": "top_right",
+        "lac":      "top_left",
+    }
+    corner = corners.get(biome_key, "bottom_left")
+    if corner == "bottom_left":
+        return {"left": BUTTON_MARGIN_X, "bottom": BUTTON_MARGIN_Y}
+    elif corner == "bottom_right":
+        return {"right": BUTTON_MARGIN_X, "bottom": BUTTON_MARGIN_Y}
+    elif corner == "top_right":
+        return {"right": BUTTON_MARGIN_X, "top": BUTTON_MARGIN_Y}
+    elif corner == "top_left":
+        return {"left": BUTTON_MARGIN_X, "top": BUTTON_MARGIN_Y}
+
+
+def build_trail_canvas(page_w, page_h, active_biome_keys, button_refs):
+    """
+    Construit un Canvas SVG avec les traits courbes reliant les biomes actifs
+    à leurs boutons respectifs.
+    button_refs : dict biome_key → ft.Container du bouton (pour lire sa position)
+    """
+    planet_disp_w, planet_disp_h, planet_left, planet_top = compute_planet_layout(page_w, page_h)
+    scale_x = planet_disp_w / PLANET_IMG_W
+    scale_y = planet_disp_h / PLANET_IMG_H
+
+    shapes = []
+    for bk in active_biome_keys:
+        anchor_key = BIOME_KEY_MAP.get(bk)
+        if anchor_key not in BIOME_ANCHORS:
+            continue
+
+        ax, ay = BIOME_ANCHORS[anchor_key]
+        px = planet_left + ax * scale_x
+        py = planet_top  + ay * scale_y
+
+        corner = {
+            "plaine":   "bottom_left",
+            "foret":    "bottom_right",
+            "montagne": "top_right",
+            "lac":      "top_left",
+        }.get(bk, "bottom_left")
+
+        if corner == "bottom_left":
+            bx = BUTTON_MARGIN_X + 100
+            by = page_h - BUTTON_MARGIN_Y - BTN_H / 2
+        elif corner == "bottom_right":
+            bx = page_w - BUTTON_MARGIN_X - 100
+            by = page_h - BUTTON_MARGIN_Y - BTN_H / 2
+        elif corner == "top_right":
+            bx = page_w - BUTTON_MARGIN_X - 100
+            by = BUTTON_MARGIN_Y + BTN_H / 2
+        elif corner == "top_left":
+            bx = BUTTON_MARGIN_X + 100
+            by = BUTTON_MARGIN_Y + BTN_H / 2
+
+        # Point de contrôle de Bézier légèrement décalé vers le centre de la page
+        cx_ = (px + bx) / 2 + (page_w / 2 - (px + bx) / 2) * 0.65
+        cy_ = (py + by) / 2 + (page_h / 2 - (py + by) / 2) * 0.01
+
+        shapes.append(cv.Path(
+            [
+                cv.Path.MoveTo(px, py),
+                cv.Path.QuadraticTo(cx_, cy_, bx, by),
+            ],
+            paint=ft.Paint(
+                stroke_width=3,
+                color="#ffffff",
+                style=ft.PaintingStyle.STROKE,
+            ),
+        ))
+        shapes.append(cv.Circle(
+            x=bx, y=by, radius=5,
+            paint=ft.Paint(color="#ffffff", style=ft.PaintingStyle.FILL),
+        ))
+        shapes.append(cv.Circle(
+            x=px, y=py, radius=5,
+            paint=ft.Paint(color="#ffffff", style=ft.PaintingStyle.FILL),
+        ))
+
+    return cv.Canvas(
+        shapes=shapes,
+        width=page_w,
+        height=page_h,
+    )
+
+
 def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
-
-    plaine   = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore plaine",   size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30,visible= biomes_state["plaine"])]
-    foret    = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore foret",    size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30, visible=biomes_state["foret"])]
-    montagne = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR), on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30, visible=biomes_state["montagne"])]
-    lac      = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore lac",      size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),      on_click=lambda e, b="lake":     tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, left=30, visible=biomes_state["lac"])]
-    pp =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True, visible= biomes_state["pp"])]
-    ff =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_forest.png"), alignment=ft.Alignment.CENTER, expand=True, visible=biomes_state["ff"])]
-    mm =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_mountain.png"), alignment=ft.Alignment.CENTER, expand=True,visible=biomes_state["mm"])]
-    ll =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_lake.png"), alignment=ft.Alignment.CENTER, expand=True,visible=biomes_state["ll"])]
-    f1 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f1"])]
-    f2 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil2.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f2"])]
-    f3 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil3.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f3"])]
-    f4 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil4.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f4"])]
 
     keys_pressed    = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
@@ -120,6 +241,7 @@ def _planet(page: ft.Page, navigate) -> list:
             focused[0] = False
             keys_pressed["right"] = False
             keys_pressed["left"]  = False
+    page.window.on_event = on_window_event
 
     def dialogue(e, scene, dialogue_active, on_end=None):
         i_scene = [0]
@@ -171,9 +293,56 @@ def _planet(page: ft.Page, navigate) -> list:
         listener.start()
         return dialogue_box
 
-    # ─────────────────────────────────────────────────────────────────────────────────────
+    # ── Écran planète ─────────────────────────────────────────────────────────────────────
+    def build_planet_screen():
+        """Construit et retourne le Stack de l'écran planète."""
+        pw = page.width  or 800
+        ph = (page.height or 600) - getattr(page, "navbar_height", 60)
 
+        planet_disp_w, planet_disp_h, planet_left, planet_top = compute_planet_layout(pw, ph)
+
+        # Image planète selon l'état des biomes
+        if   biomes_state["ll"]: planet_src = "assets/imgs/icons/biome_lake.png"
+        elif biomes_state["mm"]: planet_src = "assets/imgs/icons/biome_mountain.png"
+        elif biomes_state["ff"]: planet_src = "assets/imgs/icons/biome_forest.png"
+        else:                    planet_src = "assets/imgs/icons/biome_plain.png"
+
+        planet_img = ft.Container(
+            content=ft.Image(src=planet_src, width=planet_disp_w, height=planet_disp_h, fit="fill"),
+            left=planet_left,
+            top=planet_top,
+        )
+
+        # Traits SVG
+        active_biome_keys = [bk for bk in ["plaine", "foret", "montagne", "lac"] if biomes_state[bk]]
+        trail_canvas_obj  = build_trail_canvas(pw, ph, active_biome_keys, {})
+
+        # Boutons
+        btn_containers = []
+        for bk in ["plaine", "foret", "montagne", "lac"]:
+            if not biomes_state[bk]:
+                continue
+            biome_str = {"plaine": "plain", "foret": "forest", "montagne": "mountain", "lac": "lake"}[bk]
+            label     = {"plaine": "explore plaine", "foret": "explore foret",
+                        "montagne": "explore montagne", "lac": "explore lac"}[bk]
+            pos = compute_button_pos(bk, pw, ph)
+            btn = ft.Container(
+                content=ft.ElevatedButton(
+                    ft.Text(label, size=20, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),
+                    on_click=lambda e, b=biome_str: tp(e, b),
+                    bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR,
+                ),
+                height=BTN_H,
+                **pos, # Développe le dictionnaire pour attribuer les caractéristiques de pos au Container
+            )
+            btn_containers.append(btn)
+
+        children = [planet_img, trail_canvas_obj] + btn_containers
+        return ft.Stack(children, expand=True)
+
+    # ─────────────────────────────────────────────────────────────────────────────────────
     def tp(e, biome):
+        page.on_resize = None
         page.clean()
         running[0]            = True
         event                 = random.choice(EVENTS)
@@ -181,26 +350,19 @@ def _planet(page: ft.Page, navigate) -> list:
         keys_pressed["space"] = False
         dialogue_active[0]    = False
 
-        # ── Layout initial ────────────────────────────────────────────────────────────
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
             compute_layout(page.width, page.height, biome)
 
-        # layout stocke uniquement ce dont la boucle a besoin en temps réel
         layout = {
-            "offset_x":    offset_x,
-            "offset_y":    offset_y,
-            "ground_bot":  ground_bot,
-            "img_disp_w":  img_disp_w,
+            "offset_x":   offset_x,
+            "offset_y":   offset_y,
+            "ground_bot": ground_bot,
+            "img_disp_w": img_disp_w,
         }
 
-        # ── Fond ──────────────────────────────────────────────────────────────────────
         bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
 
-        # ── Sprite joueur ─────────────────────────────────────────────────────────────
-        # Position en px-page, initialisée au centre de l'image affichée.
-        # sprite_ratio : position relative dans l'image (0=bord gauche, 1=bord droit)
-        # conservée au resize pour replacer le sprite sans le "téléporter" (il n'est pas vraiment tp mais c'était l'image qui glisait derrière lui).
         sprite_ratio  = [0.5]
         sprite_page_x = [offset_x + img_disp_w * sprite_ratio[0]]
 
@@ -211,16 +373,10 @@ def _planet(page: ft.Page, navigate) -> list:
         new_sprite.bottom = ground_bot
         new_sprite.left   = sprite_page_x[0]
 
-        # ── Entité ────────────────────────────────────────────────────────────────────
-        # Position en px-page, exprimée comme ratio sur l'image affichée :
-        # côté gauche -> ratio_entity ≈ ENTITY_MARGIN / img_disp_w
-        # côté droit  -> ratio_entity ≈ 1 - (ENTITY_MARGIN + largeur_entité) / img_disp_w
         entity_id        = None
         entity_container = None
         entity_side_left = random.choice([True, False])
 
-        # Toutes les tailles en proportion de la hauteur du sprite joueur (180px)
-        # pour garder une cohérence visuelle quelle que soit la résolution de l'image.
         ENEMY_W, ENEMY_H = 120, 140
         NPC_W,   NPC_H   = 100, 120
         EMPTY_W, EMPTY_H = 120, 100
@@ -240,16 +396,11 @@ def _planet(page: ft.Page, navigate) -> list:
             entity_id        = random.choice(OBJECTS)
             entity_container = _make_entity(entity_id["visual"], EMPTY_W, EMPTY_H)
             entity_w         = EMPTY_W
-        else:  # lore
-            if not scene_actu[0] >= len(LORE):
-                entity_id        = LORE[scene_actu[0]]["visual"]
-            else:
-                entity_id        = "assets/imgs/icons/leaf.png"
+        else:
+            entity_id        = LORE[scene_actu[0]]["visual"] if scene_actu[0] < len(LORE) else "assets/imgs/icons/leaf.png"
             entity_container = _make_entity(entity_id, NPC_W, NPC_H)
             entity_w         = NPC_W
 
-        # entity_ratio : position du COIN GAUCHE de l'entité dans l'image affichée
-        # calculé APRÈS avoir fixé entity_w pour être cohérent
         if entity_side_left:
             entity_ratio = ENTITY_MARGIN / img_disp_w
         else:
@@ -259,7 +410,6 @@ def _planet(page: ft.Page, navigate) -> list:
         entity_container.bottom = ground_bot
         entity_container.left   = entity_page_x
 
-        # ── Bouton retour ─────────────────────────────────────────────────────────────
         bouton_retour = ft.Container(
             content=ft.Row([ft.Container(
                 content=ft.Text("planète", size=20, color=PLANET_BACK_BUTTON_TEXT_COLOR),
@@ -272,23 +422,16 @@ def _planet(page: ft.Page, navigate) -> list:
 
         preset = [bg, entity_container, new_sprite, bouton_retour]
 
-        # ── Resize ────────────────────────────────────────────────────────────────────
         def update_layout(w, h):
             s, ox, oy, g, dw, dh = compute_layout(w, h, biome)
             layout.update({"offset_x": ox, "offset_y": oy, "ground_bot": g, "img_disp_w": dw})
-
-            # Fond
             bg_img.width  = dw
             bg_img.height = dh
             bg.left = ox
             bg.top  = oy
-
-            # Sprite : conserver sa position relative sur l'image
             sprite_page_x[0] = ox + dw * sprite_ratio[0]
             new_sprite.bottom = g
             new_sprite.left   = sprite_page_x[0]
-
-            # Entité : conserver sa position relative sur l'image
             entity_container.bottom = g
             entity_container.left   = ox + dw * entity_ratio
 
@@ -298,7 +441,6 @@ def _planet(page: ft.Page, navigate) -> list:
 
         page.on_resize = on_resize
 
-        # ── Listener clavier ──────────────────────────────────────────────────────────
         new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
         new_listener.start()
 
@@ -312,11 +454,9 @@ def _planet(page: ft.Page, navigate) -> list:
 
         first_sip = [True]
 
-        # ── Boucle de jeu ─────────────────────────────────────────────────────────────
         async def tp_game_loop():
             while running[0]:
                 moved = False
-
                 if not dialogue_active[0]:
                     if keys_pressed["right"]:
                         sprite_page_x[0] += SPRITE_SPEED
@@ -325,66 +465,42 @@ def _planet(page: ft.Page, navigate) -> list:
                         sprite_page_x[0] -= SPRITE_SPEED
                         moved = True
 
-                ox   = layout["offset_x"]
-                dw   = layout["img_disp_w"]
-                px   = sprite_page_x[0]
+                ox = layout["offset_x"]
+                dw = layout["img_disp_w"]
+                px = sprite_page_x[0]
 
-                # Bords de l'image affichée en px-page
                 img_left  = ox
                 img_right = ox + dw
 
-                # Mise à jour du ratio (pour le resize)
                 if dw > 0:
                     sprite_ratio[0] = (px - ox) / dw
 
-                # Sorties latérales
                 if px <= img_left:
-                    stop_tp_screen()
-                    tp(e, biome)
-                    return
+                    stop_tp_screen(); tp(e, biome); return
                 if px + SPRITE_W >= img_right:
-                    stop_tp_screen()
-                    tp(e, biome)
-                    return
-                if scene_actu[0]==0:
-                    stop_tp_screen()
-                    declenche_scene(e, biome, scene_actu[0])
-                    return
+                    stop_tp_screen(); tp(e, biome); return
+                if scene_actu[0] == 0:
+                    stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
                 if event == "lore" and scene_actu[0] >= len(LORE):
-                    if len(EVENTS) <= 4:
-                        EVENTS.pop(3)
-                    stop_tp_screen()
-                    tp(e,biome)
+                    if "lore" in EVENTS: EVENTS.remove("lore")
+                    stop_tp_screen(); tp(e, biome); return
 
-
-                # Proximité entité
                 ent_px = ox + dw * entity_ratio
                 near   = abs(px - ent_px) < 170
 
-                # Interactions
                 if event == "npc" and near and keys_pressed["space"]:
-                    stop_tp_screen()
-                    keys_pressed["space"] = False
-                    shop(e, biome)
+                    stop_tp_screen(); keys_pressed["space"] = False; shop(e, biome); return
                 if event == "enemy" and near and keys_pressed["space"]:
-                    stop_tp_screen()
-                    keys_pressed["space"] = False
-                    combat(e, biome, entity_id)
-                    return
-
+                    stop_tp_screen(); keys_pressed["space"] = False; combat(e, biome, entity_id); return
                 if event == "empty" and near and keys_pressed["space"]:
                     if first_sip[0] and entity_id["gives"] == "Eau minérale":
                         inventory_manager.append_item(ITEMS[1], 3)
-                        first_sip[0]             = False
+                        first_sip[0] = False
                         entity_container.visible = False
                         page.update()
                     keys_pressed["space"] = False
-
                 if event == "lore" and near and keys_pressed["space"]:
-                    keys_pressed["space"] = False
-                    stop_tp_screen()
-                    declenche_scene(e, biome, scene_actu[0])
-                    return
+                    keys_pressed["space"] = False; stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
 
                 if moved:
                     new_sprite.left = sprite_page_x[0]
@@ -396,205 +512,122 @@ def _planet(page: ft.Page, navigate) -> list:
         page.run_task(tp_game_loop)
 
     # ─────────────────────────────────────────────────────────────────────────────────────
-
     def shop(e, biome):
         page.clean()
         page.on_resize = None
-
-        def on_back(e):
+        def on_back(ev):
             page.clean()
-            tp(e, biome)
-
+            tp(ev, biome)
         shop_ui = _build_shop_home(page, "wandering", biome, on_back=on_back)
+        page.add(ft.Container(content=ft.Column(controls=shop_ui, expand=True), expand=True, padding=0))
 
-        page.add(
-            ft.Container(
-                content=ft.Column(controls=shop_ui, expand=True),
-                expand=True,
-                padding=0,
-            )
-        )
-    
     def combat(e, biome, enemy):
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
-
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
-
         bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
-
-        # Froggy à 10% depuis la gauche, ennemi à 10% depuis la droite de l'image
         leaf_page_x  = offset_x + img_disp_w * 0.10
         enemy_page_x = offset_x + img_disp_w * 0.90 - SPRITE_W
-
-        """selected_leaf = open_leaf_selection_interface()""" # À FAIRE CHRIS
-
-        leafsprite = ft.Container(
-            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
-            bottom=ground_bot, left=leaf_page_x,
-        )
-        enemysprite = ft.Container(
-            content=ft.Image(src=enemy["visual"], width=SPRITE_W, height=180),
-            bottom=ground_bot, left=enemy_page_x,
-        )
-        menu = ft.Container(
-            # content = creer_combat_menu()
-            bottom=0, left=0,
-            width=page.width,
-            height=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
-            bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_BG_COLOR[0], PLANET_COMBAT_MENU_BG_COLOR[1]),
-        )
+        leafsprite = ft.Container(content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180), bottom=ground_bot, left=leaf_page_x)
+        enemysprite = ft.Container(content=ft.Image(src=enemy["visual"], width=SPRITE_W, height=180), bottom=ground_bot, left=enemy_page_x)
+        menu = ft.Container(bottom=0, left=0, width=page.width, height=page.height * PLANET_COMBAT_MENU_HEIGHT_RATIO,
+                            bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_BG_COLOR[0], PLANET_COMBAT_MENU_BG_COLOR[1]))
         """CHRIS A AJOUTER BOUTONS (atk, competence, boite_leaf) + BARRE PV ET INFOS LEAF"""
-
         preset = [bg, leafsprite, enemysprite, menu]
-
         def on_resize_combat(ev):
             s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
-            bg_img.width  = dw
-            bg_img.height = dh
-            bg.left = ox
-            bg.top  = oy
-            leafsprite.bottom  = g
-            leafsprite.left    = ox + dw * 0.10
-            enemysprite.bottom = g
-            enemysprite.left   = ox + dw * 0.90 - SPRITE_W
+            bg_img.width = dw; bg_img.height = dh; bg.left = ox; bg.top = oy
+            leafsprite.bottom = g;  leafsprite.left  = ox + dw * 0.10
+            enemysprite.bottom = g; enemysprite.left = ox + dw * 0.90 - SPRITE_W
             page.update()
-
         page.on_resize = on_resize_combat
         page.add(ft.Stack(preset, expand=True))
-
-    # ─────────────────────────────────────────────────────────────────────────────────────
 
     def atk(leaf, enemy):
         malus = f"-{leaf.atk}"
         dgts  = ft.Container(ft.Text(malus, size=20), visible=True)
-        leaf.left = page.width - 20
-        page.update()
-        page.add(dgts)
-        dgts.visible = False
-        leaf.left    = 20
-        page.update()
+        leaf.left = page.width - 20; page.update(); page.add(dgts)
+        dgts.visible = False; leaf.left = 20; page.update()
         enemy["hp"] -= leaf.atk
 
     def competence(leaf, enemy):
         if leaf.type == 1:
-            leaf.atk_boost = leaf.atk
-            atk(leaf, enemy)
-            leaf.atk_boost = 0
+            leaf.atk_boost = leaf.atk; atk(leaf, enemy); leaf.atk_boost = 0
         elif leaf.type == 3:
-            bouclier = ft.Container(
-                ft.Image(src="assets/imgs/icons/leaf_type_tank.png", width=100, height=100),
-                visible=True,
-            )
-            page.add(bouclier)
-            enemy["atk"] = max(1, enemy["atk"] // 2)
-            return 2
+            page.add(ft.Container(ft.Image(src="assets/imgs/icons/leaf_type_tank.png", width=100, height=100), visible=True))
+            enemy["atk"] = max(1, enemy["atk"] // 2); return 2
         return None
 
     def open_leaf_selection_interface():
         pass
-    """CHRISSS FAIS ICI""" # J'ai comprsi tkt -_-
+    """CHRISSS FAIS ICI"""
 
     # ─────────────────────────────────────────────────────────────────────────────────────
-
     def declenche_scene(e, biome, n):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
-        if scene_actu[0]>=len(LORE):
-            tp(e,biome)
-        else:
-            dialogue_active[0] = True
-            page.clean()
-
-            biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
-            locuteur   = LORE[n]["visual"]
-
-            scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
-
-            bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
-            bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
-
-            sprite = ft.Container(
-                content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
-                bottom=ground_bot,
-                left=offset_x + img_disp_w * 0.10,
-            )
-            npc_sprite = ft.Container(
-                content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
-                bottom=ground_bot,
-                left=offset_x + img_disp_w * 0.90 - SPRITE_W,
-            )
-
-            def on_resize_scene(ev):
-                s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
-                bg_img.width  = dw
-                bg_img.height = dh
-                bg.left = ox
-                bg.top  = oy
-                sprite.bottom     = g
-                sprite.left       = ox + dw * 0.10
-                npc_sprite.bottom = g
-                npc_sprite.left   = ox + dw * 0.90 - SPRITE_W
-                page.update()
-
-            page.on_resize = on_resize_scene
-
-            def on_end():
-                page.on_resize = None
-                scene_actu[0] += 1
-                if scene_actu[0] == 2:
-                    biomes_state["pp"]     = False
-                    biomes_state["foret"]  = True
-                    biomes_state["ff"]     = True
-                    biomes_state["f2"]     = True
-
-                if scene_actu[0] == 3:
-                    biomes_state["ff"]       = False
-                    biomes_state["montagne"] = True
-                    biomes_state["mm"]       = True
-                    biomes_state["f3"]       = True
-
-                if scene_actu[0] == 4:
-                    biomes_state["mm"]  = False
-                    biomes_state["lac"] = True
-                    biomes_state["ll"]  = True
-                    biomes_state["f4"]  = True
-                if not LORE[n]["combat"]:
-                    if LORE[n]["add"] != None:
-                        leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                    if scene_actu[0]==2 or scene_actu[0]==3 or scene_actu[0]==4:
-                        navigate("planet")
-                    else:
-                        tp(e, biome)
+        if scene_actu[0] >= len(LORE):
+            tp(e, biome); return
+        dialogue_active[0] = True
+        page.clean()
+        biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
+        locuteur   = LORE[n]["visual"]
+        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
+        bg_img     = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
+        bg         = ft.Container(content=bg_img, left=offset_x, top=offset_y)
+        sprite     = ft.Container(content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
+                                  bottom=ground_bot, left=offset_x + img_disp_w * 0.10)
+        npc_sprite = ft.Container(content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
+                                  bottom=ground_bot, left=offset_x + img_disp_w * 0.90 - SPRITE_W)
+        def on_resize_scene(ev):
+            s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
+            bg_img.width = dw; bg_img.height = dh; bg.left = ox; bg.top = oy
+            sprite.bottom = g;     sprite.left     = ox + dw * 0.10
+            npc_sprite.bottom = g; npc_sprite.left = ox + dw * 0.90 - SPRITE_W
+            page.update()
+        page.on_resize = on_resize_scene
+        def on_end():
+            page.on_resize = None
+            scene_actu[0] += 1
+            if scene_actu[0] == 2:
+                biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
+            if scene_actu[0] == 3:
+                biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
+            if scene_actu[0] == 4:
+                biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
+            if not LORE[n]["combat"]:
+                if LORE[n]["add"] is not None:
+                    leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
+                if scene_actu[0] in (2, 3, 4):
+                    navigate("planet")
                 else:
-                    enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
-                    combat(e, biome, enemy)
-
-            paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
-            preset  = [bg, npc_sprite, sprite, paroles]
-            page.add(ft.Stack(preset, expand=True))
+                    tp(e, biome)
+            else:
+                enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+                combat(e, biome, enemy)
+        paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
+        page.add(ft.Stack([bg, npc_sprite, sprite, paroles], expand=True))
 
     # ─────────────────────────────────────────────────────────────────────────────────────
-
-    planet = ft.Stack([
-        pp[0],
-        ff[0],
-        mm[0],
-        ll[0],
-        f1[0],
-        f2[0],
-        f3[0],
-        f4[0],
-        plaine[0],
-        foret[0],
-        montagne[0],
-        lac[0]
-    ], expand=True)
-
     def retourneur(e):
         page.on_resize = None
         page.clean()
         navigate("planet")
 
-    return planet
+    # Construit l'écran planète initial et branche le resize
+    initial_stack = build_planet_screen()
+
+    def on_planet_resize(ev):
+        new_stack = build_planet_screen()
+        if hasattr(page, "body_container"):
+            page.body_container.content = ft.Column(controls=[new_stack], expand=True)
+            page.update()
+        else:
+            page.controls.clear()
+            page.add(new_stack)
+            page.update()
+
+    page.on_resize = on_planet_resize
+
+    return initial_stack
