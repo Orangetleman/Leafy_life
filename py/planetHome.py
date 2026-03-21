@@ -567,7 +567,7 @@ def _planet(page: ft.Page, navigate) -> list:
     def declenche_scene(e, biome, n):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
-        if scene_actu[0] >= len(LORE):
+        """if scene_actu[0] >= len(LORE):
             tp(e, biome); return
         dialogue_active[0] = True
         
@@ -615,7 +615,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 combat(e, biome, enemy)
         
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
-        page.add(ft.Stack([bg, npc_sprite, sprite, paroles], expand=True))
+        page.add(ft.Stack([bg, npc_sprite, sprite, paroles], expand=True))"""
         if scene_actu[0]>=len(LORE):
             tp(e,biome)
         else:
