@@ -18,6 +18,21 @@ music_player.play()
 threading.Thread(target=pyglet.app.run, daemon=True).start()
 '''
 
+biomes_state = {
+    "pp":       True,
+    "ff":       False,
+    "mm":       False,
+    "ll":       False,
+    "f1":       True,
+    "f2":       False,
+    "f3":       False,
+    "f4":       False,
+    "plaine":   True,
+    "foret":    False,
+    "montagne": False,
+    "lac":      False,
+}
+
 scene_actu = [0]
 
 # ── Config biomes : (img_w_original, img_h_original, ground_ratio_depuis_le_bas) ─────────
@@ -60,10 +75,18 @@ def _planet(page: ft.Page, navigate) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-    plaine   = ft.Text("explore plaine",   size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    foret    = ft.Text("explore foret",    size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    montagne = ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
-    lac      = ft.Text("explore lac",      size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR)
+    plaine   = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore plaine",   size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30,visible= biomes_state["plaine"])]
+    foret    = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore foret",    size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30, visible=biomes_state["foret"])]
+    montagne = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore montagne", size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR), on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30, visible=biomes_state["montagne"])]
+    lac      = [ft.Container(content=ft.Row([ft.ElevatedButton(ft.Text("explore lac",      size=30, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),      on_click=lambda e, b="lake":     tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, left=30, visible=biomes_state["lac"])]
+    pp =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True, visible= biomes_state["pp"])]
+    ff =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_forest.png"), alignment=ft.Alignment.CENTER, expand=True, visible=biomes_state["ff"])]
+    mm =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_mountain.png"), alignment=ft.Alignment.CENTER, expand=True,visible=biomes_state["mm"])]
+    ll =    [ft.Container(ft.Image(src="assets/imgs/icons/biome_lake.png"), alignment=ft.Alignment.CENTER, expand=True,visible=biomes_state["ll"])]
+    f1 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f1"])]
+    f2 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil2.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f2"])]
+    f3 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil3.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f3"])]
+    f4 =    [ft.Container(ft.Image(src="assets/imgs/icons/fil4.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True,visible=biomes_state["f4"])]
 
     keys_pressed    = {"right": False, "left": False, "space": False}
     dialogue_active = [False]
@@ -520,10 +543,30 @@ def _planet(page: ft.Page, navigate) -> list:
             def on_end():
                 page.on_resize = None
                 scene_actu[0] += 1
+                if scene_actu[0] == 2:
+                    biomes_state["pp"]     = False
+                    biomes_state["foret"]  = True
+                    biomes_state["ff"]     = True
+                    biomes_state["f2"]     = True
+
+                if scene_actu[0] == 3:
+                    biomes_state["ff"]       = False
+                    biomes_state["montagne"] = True
+                    biomes_state["mm"]       = True
+                    biomes_state["f3"]       = True
+
+                if scene_actu[0] == 4:
+                    biomes_state["mm"]  = False
+                    biomes_state["lac"] = True
+                    biomes_state["ll"]  = True
+                    biomes_state["f4"]  = True
                 if not LORE[n]["combat"]:
                     if LORE[n]["add"] != None:
                         leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                    tp(e, biome)
+                    if scene_actu[0]==2 or scene_actu[0]==3 or scene_actu[0]==4:
+                        navigate("planet")
+                    else:
+                        tp(e, biome)
                 else:
                     enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
                     combat(e, biome, enemy)
@@ -535,12 +578,18 @@ def _planet(page: ft.Page, navigate) -> list:
     # ─────────────────────────────────────────────────────────────────────────────────────
 
     planet = ft.Stack([
-        ft.Container(ft.Image(src="assets/imgs/icons/biome_plain.png"), alignment=ft.Alignment.CENTER, expand=True),
-        ft.Container(ft.Image(src="assets/imgs/icons/fil.png"), alignment=ft.Alignment.BOTTOM_LEFT, expand=True),
-        ft.Container(content=ft.Row([ft.ElevatedButton(plaine,   on_click=lambda e, b="plain":    tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, left=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(foret,    on_click=lambda e, b="forest":   tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), bottom=30, right=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(montagne, on_click=lambda e, b="mountain": tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, right=30),
-        ft.Container(content=ft.Row([ft.ElevatedButton(lac,      on_click=lambda e, b="lake":     tp(e, b), bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR)]), top=30, left=30),
+        pp[0],
+        ff[0],
+        mm[0],
+        ll[0],
+        f1[0],
+        f2[0],
+        f3[0],
+        f4[0],
+        plaine[0],
+        foret[0],
+        montagne[0],
+        lac[0]
     ], expand=True)
 
     def retourneur(e):
