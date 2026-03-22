@@ -611,7 +611,7 @@ s2 = ["Que fais un crabe ici, loin de son habitat naturel?",
         "Un crabe sans eau ne survivra pas longtemps.",
         "Partez !",
         "Une mission, vous dites? Dans cet état? Prenez cette gourde d'eau au moins -", 
-        "ASSER!"
+        "ASSEZ!"
         ]
 
 

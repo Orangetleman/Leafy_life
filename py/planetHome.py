@@ -719,7 +719,7 @@ def _planet(page: ft.Page, navigate) -> list:
             leaf_type = leaf.type
 
             if leaf_type == 1:
-                # Attacker : +10% ATK de base + 5% par niveau (fonctionnel dès niveau 0)
+                # Attacker : +50% ATK de base + 5% par niveau (fonctionnel dès niveau 0)
                 player_turn[0] = False; set_buttons(False)
                 bonus = int(leaf.atk * (0.50 + leaf.level * 0.05))
                 dmg   = leaf.atk + leaf.atk_boost + bonus
