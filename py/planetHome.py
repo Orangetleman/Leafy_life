@@ -664,6 +664,10 @@ def _planet(page: ft.Page, navigate) -> list:
             page.update()
             await asyncio.sleep(0.2)
 
+        def leaf_is_viable(leaf):
+            # Retourne True si le leaf peut encore combattre.
+            return leaf is not None and leaf.hp > 0
+
         def apply_damage_to_player(dmg):
             remaining = dmg
             if shield_hp[0] > 0:
@@ -674,6 +678,14 @@ def _planet(page: ft.Page, navigate) -> list:
                     shield_visual.visible = False
             if remaining > 0 and current_leaf_ref[0]:
                 current_leaf_ref[0].stat_update("hp", -remaining)
+            # Si le leaf actif vient de mourir, on passe automatiquement au suivant.
+            # Le bouclier est réinitialisé car il était lié au leaf mort.
+            # check_end() détectera ensuite s'il n'en reste plus aucun.
+            if current_leaf_ref[0] and current_leaf_ref[0].hp <= 0:
+                next_leaf = next((l for l in leafmanager.owned if leaf_is_viable(l)), None)
+                current_leaf_ref[0]   = next_leaf
+                shield_hp[0]          = 0
+                shield_visual.visible = False
 
         def check_end():
             if enemy_hp[0] <= 0:
@@ -698,6 +710,16 @@ def _planet(page: ft.Page, navigate) -> list:
             result = check_end()
             if result == "lose":
                 await end_combat(False); return
+            # Si le leaf actif est mort mais qu'il en reste d'autres, forcer la
+            # sélection d'un nouveau leaf avant que le joueur puisse agir.
+            if not leaf_is_viable(current_leaf_ref[0]):
+                action_status.value = "Votre leaf est KO ! Choisissez-en un autre."
+                action_status.color = PLANET_COMBAT_STATUS_ENEMY_COLOR
+                page.update()
+                open_leaf_selection_interface(page, current_leaf_ref, lambda l: refresh_menu())
+                # Les boutons restent désactivés jusqu'à ce qu'un leaf soit choisi.
+                # refresh_menu() met à jour l'affichage mais n'active pas les boutons —
+                # le joueur doit fermer la sélection pour continuer.
             player_turn[0] = True
             action_status.value = "À votre tour"; action_status.color = PLANET_COMBAT_STATUS_PLAYER_COLOR
             set_buttons(True)
@@ -706,7 +728,8 @@ def _planet(page: ft.Page, navigate) -> list:
             if not player_turn[0] or combat_over[0]: return
             player_turn[0] = False; set_buttons(False)
             leaf = current_leaf_ref[0]
-            if leaf is None: return
+            # Sécurité : ne jamais attaquer avec un leaf mort ou absent
+            if not leaf_is_viable(leaf): player_turn[0] = True; set_buttons(True); return
             dmg = leaf.atk + leaf.atk_boost
             await animate_attack_player(dmg)
             enemy_hp[0] -= dmg
@@ -718,7 +741,8 @@ def _planet(page: ft.Page, navigate) -> list:
         async def do_competence(e):
             if not player_turn[0] or combat_over[0]: return
             leaf = current_leaf_ref[0]
-            if leaf is None: return
+            # Sécurité : ne jamais utiliser une compétence avec un leaf mort ou absent
+            if not leaf_is_viable(leaf): player_turn[0] = True; set_buttons(True); return
             leaf_type = leaf.type
 
             if leaf_type == 1:
