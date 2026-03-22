@@ -4,12 +4,70 @@ Leafy Life - Point d'entrée Flet.
 """
 
 import flet as ft
+import os
+import time
+import subprocess
 
 from datacenter import *
 from leafsHome import _build_leafs_home
 from planetHome import _planet
 from inventoryHome import _build_inventory_home
 from shopHome import _build_shop_home
+
+
+# la video
+def find_player(base_dir: str) -> tuple[str, list] | tuple[None, None]:
+    """
+    Cherche un lecteur vidéo disponible.
+    Retourne (exe, args_prefix) ou (None, None).
+    """
+    candidates = [
+        # mpv portable dans PROJET/tools/mpv/
+        (
+            os.path.join(base_dir, "tools", "mpv", "mpv.exe"),
+            ["--fs", "--no-terminal", "--really-quiet", "--no-border"],
+        ),
+        # VLC si installé en standard
+        (
+            r"C:\Program Files\VideoLAN\VLC\vlc.exe",
+            ["--fullscreen", "--play-and-exit", "--no-video-title-show", "--no-osd"],
+        ),
+        (
+            r"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe",
+            ["--fullscreen", "--play-and-exit", "--no-video-title-show", "--no-osd"],
+        ),
+    ]
+ 
+    for exe, args in candidates:
+        if os.path.isfile(exe):
+            print(f"✅ Lecteur trouvé : {exe}")
+            return exe, args
+ 
+    return None, None
+ 
+ 
+# ─────────────────────────────────────────────────────────────────────────────
+# Lecture vidéo — bloque jusqu'à la fin
+# ─────────────────────────────────────────────────────────────────────────────
+ 
+def play_intro_video(video_path: str, base_dir: str) -> None:
+    if not os.path.isfile(video_path):
+        print(f"⚠️  Vidéo introuvable : {video_path}")
+        return
+ 
+    exe, args = find_player(base_dir)
+ 
+    if exe is None:
+        print("⚠️  Aucun lecteur trouvé. Installe mpv dans PROJET/tools/mpv/")
+        print("    Téléchargement : https://mpv.io/installation/")
+        return
+ 
+    subprocess.run([exe] + args + [video_path])
+
+
+
+
+
 
 # ---- Données de test ----
 def _seed_test_data():
@@ -35,7 +93,7 @@ def _build_navbar(navigate) -> ft.Row:
     )
 
 
-def main(page: ft.Page, page_name: str = "leafs") -> None:
+def main(page: ft.Page, page_name: str = "planet") -> None:
     page.title      = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor    = "#1a1a1a"
@@ -67,7 +125,7 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
         elif name == "planet":
             body = _planet(page, show_screen)
         else:
-            body = _build_leafs_home(page)
+            body = _planet(page, show_screen)
 
         body_container = ft.Container(
             content=ft.Column(controls=body, expand=True),
@@ -94,5 +152,11 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
 
 
 if __name__ == "__main__":
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ 
+    VIDEO_PATH = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
+ 
+    play_intro_video(VIDEO_PATH, BASE_DIR)
+
     _seed_test_data()
     ft.run(main)
