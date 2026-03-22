@@ -13,7 +13,7 @@ ENEMIES = [
     {
         "id": 1, "name": "Crabe", "rarity": "common",
         "atk": 3, "hp": 10,
-        "biome": ["lac"], "lvl": 1,
+        "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/crab.png",
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
         "reward": {"currency": "O2", "amount": 8},
@@ -21,8 +21,8 @@ ENEMIES = [
     {
         "id": 1, "name": "Ours", "rarity": "common",
         "atk": 7, "hp": 30,
-        "biome": ["foret"], "lvl": 1,
-        "visual": "assets/imgs/npc/crab.png",
+        "biome": ["forest"], "lvl": 1,
+        "visual": "assets/imgs/npc/bear.png",
         "met": False, "prez": "Un ours.",
         "reward": {"currency": "CO2", "amount": 20},
     },
@@ -46,7 +46,8 @@ ENEMIES = [
 
 # ------------------------------------ Npcs palette --------------------------------------
 NPCS = [
-    { "id": 1, "name": "Heron", "biome": "plain", "visual": "assets/imgs/npc/heron.png"}
+    { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png"},
+    { "id": 1, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"}
 ]
 
 # ------------------------------------ Objects palette -----------------------------------
