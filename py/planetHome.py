@@ -415,7 +415,7 @@ def _planet(page: ft.Page, navigate) -> list:
             return ft.Container(content=ft.Image(src=src, width=w, height=h), visible=visible)
 
         if event == "enemy":
-            entity_id = random.choice(ENEMIES); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
+            entity_id = random.choice([ENEMIES[0],ENEMIES[1]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
         elif event == "npc":
             entity_id = random.choice(NPCS);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
         elif event == "empty":
