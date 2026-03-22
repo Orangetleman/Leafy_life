@@ -118,7 +118,7 @@ def build_trail_canvas(page_w, page_h, active_biome_keys, button_refs):
         py = planet_top  + ay * scale_y
 
         corner = {"plaine": "bottom_left", "foret": "bottom_right",
-                "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
+                  "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
 
         if corner == "bottom_left":
             bx = BUTTON_MARGIN_X + 100;           by = page_h - BUTTON_MARGIN_Y - BTN_H / 2
@@ -238,8 +238,8 @@ def _planet(page: ft.Page, navigate) -> list:
             hp_ratio = leaf.hp / leaf.STAT_MAX["hp"] if leaf.STAT_MAX["hp"] > 0 else 0
             hp_bar   = ft.ProgressBar(
                 value=hp_ratio,
-                color="#92b368" if hp_ratio > 0.3 else "#ef540c",
-                bgcolor="#4E4E4E", height=8, border_radius=4, expand=True,
+                color=PLANET_LEAF_SELECT_HP_BAR_OK_COLOR if hp_ratio > 0.3 else PLANET_LEAF_SELECT_HP_BAR_LOW_COLOR,
+                bgcolor=PLANET_LEAF_SELECT_HP_BAR_BG_COLOR, height=8, border_radius=4, expand=True,
             )
 
             def open_info(e, l=leaf):
@@ -247,9 +247,10 @@ def _planet(page: ft.Page, navigate) -> list:
                 open_leaf_modal(page, l)
 
             info_btn = ft.Container(
-                content=ft.Text("I", size=10, weight=ft.FontWeight.BOLD, color="#90caf9"),
+                content=ft.Text("I", size=10, weight=ft.FontWeight.BOLD, color=PLANET_LEAF_SELECT_INFO_BTN_COLOR),
                 width=20, height=20, border_radius=10,
-                bgcolor="#1565c0", border=ft.border.all(1, "#90caf9"),
+                bgcolor=PLANET_LEAF_SELECT_INFO_BTN_BG_COLOR,
+                border=ft.border.all(1, PLANET_LEAF_SELECT_INFO_BTN_COLOR),
                 alignment=ft.Alignment(0, 0), on_click=open_info, tooltip="Infos du leaf",
             )
 
@@ -270,18 +271,18 @@ def _planet(page: ft.Page, navigate) -> list:
                             border_radius=8, padding=3,
                         ),
                         ft.Column([
-                            ft.Text(leaf.name, size=14, weight=ft.FontWeight.BOLD, color="white"),
+                            ft.Text(leaf.name, size=14, weight=ft.FontWeight.BOLD, color=PLANET_LEAF_SELECT_TITLE_COLOR),
                             ft.Text(f"ATK: {leaf.atk + leaf.atk_boost}  |  {LEAFS_TYPE[leaf.type]['name']}",
-                                    size=11, color="#cccccc"),
+                                    size=11, color=PLANET_LEAF_SELECT_INFO_COLOR),
                             ft.Row([hp_bar,
-                                    ft.Text(f"{leaf.hp}/{leaf.STAT_MAX['hp']}", size=10, color="#cccccc")],
-                                spacing=6, vertical_alignment=ft.CrossAxisAlignment.CENTER),
+                                    ft.Text(f"{leaf.hp}/{leaf.STAT_MAX['hp']}", size=10, color=PLANET_LEAF_SELECT_INFO_COLOR)],
+                                    spacing=6, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                         ], expand=True, spacing=4),
                     ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                     ft.Container(content=info_btn, right=4, top=4),
                 ]),
                 padding=10, border_radius=8,
-                border=ft.border.all(2, "#27ae60" if is_current else "#555555"),
+                border=ft.border.all(2, PLANET_LEAF_SELECT_ROW_BORDER_ACTIVE_COLOR if is_current else PLANET_LEAF_SELECT_ROW_BORDER_COLOR),
                 bgcolor=ft.Colors.with_opacity(0.5 if is_current else (0.2 if is_disabled else 0.15), "black"),
                 opacity=0.4 if is_disabled else (0.7 if is_current else 1.0),
                 on_click=on_leaf_click if not is_disabled and not is_current else None,
@@ -304,7 +305,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
         overlay = ft.Container(
             visible=True, expand=True,
-            bgcolor=ft.Colors.with_opacity(0.5, "black"),
+            bgcolor=ft.Colors.with_opacity(PLANET_LEAF_SELECT_OVERLAY_BG_COLOR[0], PLANET_LEAF_SELECT_OVERLAY_BG_COLOR[1]),
             alignment=ft.Alignment(0, 0),
             content=ft.GestureDetector(
                 mouse_cursor=ft.MouseCursor.BASIC,
@@ -314,14 +315,14 @@ def _planet(page: ft.Page, navigate) -> list:
                     content=ft.Container(
                         content=ft.Column([
                             ft.Row([
-                                ft.Text("Choisir un Leaf", size=18, weight=ft.FontWeight.BOLD, color="white"),
-                                ft.TextButton("Fermer", on_click=close, style=ft.ButtonStyle(color="white")),
+                                ft.Text("Choisir un Leaf", size=18, weight=ft.FontWeight.BOLD, color=PLANET_LEAF_SELECT_TITLE_COLOR),
+                                ft.TextButton("Fermer", on_click=close, style=ft.ButtonStyle(color=PLANET_LEAF_SELECT_TITLE_COLOR)),
                             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-                            ft.Divider(color="#27ae60"),
+                            ft.Divider(color=PLANET_LEAF_SELECT_PANEL_BORDER_COLOR),
                             leaf_list,
                         ], spacing=10, expand=True),
-                        bgcolor=ft.Colors.with_opacity(0.85, "#0a2a0a"),
-                        border=ft.border.all(2, "#27ae60"),
+                        bgcolor=ft.Colors.with_opacity(PLANET_LEAF_SELECT_PANEL_BG_COLOR[0], PLANET_LEAF_SELECT_PANEL_BG_COLOR[1]),
+                        border=ft.border.all(2, PLANET_LEAF_SELECT_PANEL_BORDER_COLOR),
                         border_radius=12, padding=16, width=420, height=500,
                         on_click=lambda e: None,
                     )
@@ -358,7 +359,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 continue
             biome_str = {"plaine": "plain", "foret": "forest", "montagne": "mountain", "lac": "lake"}[bk]
             label     = {"plaine": "explore plaine", "foret": "explore foret",
-                         "montagne": "explore montagne", "lac": "explore lac"}[bk]
+                        "montagne": "explore montagne", "lac": "explore lac"}[bk]
             pos = compute_button_pos(bk, pw, ph)
             btn = ft.Container(
                 content=ft.ElevatedButton(
@@ -377,7 +378,8 @@ def _planet(page: ft.Page, navigate) -> list:
         page.on_resize = None
         page.clean()
         running[0]            = True
-        event                 = random.choice(EVENTS)
+        # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
+        event                 = choose_event()
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False
@@ -385,7 +387,7 @@ def _planet(page: ft.Page, navigate) -> list:
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
             compute_layout(page.width, page.height, biome)
         layout = {"offset_x": offset_x, "offset_y": offset_y,
-                  "ground_bot": ground_bot, "img_disp_w": img_disp_w}
+                "ground_bot": ground_bot, "img_disp_w": img_disp_w}
 
         bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
@@ -509,6 +511,7 @@ def _planet(page: ft.Page, navigate) -> list:
         # ── État ──────────────────────────────────────────────────────────────────────
         current_leaf_ref = [leafmanager.owned[0] if leafmanager.owned else None]
         enemy_hp         = [enemy["hp"]]
+        enemy_hp_max     = enemy["hp"]
         shield_hp        = [0]
         shield_max       = [0]
         player_turn      = [True]
@@ -543,27 +546,49 @@ def _planet(page: ft.Page, navigate) -> list:
             bottom=ground_bot, left=ex,
         )
 
+        # ── Barre de vie ennemi au-dessus du sprite ────────────────────────────────────
+        enemy_hp_bar_ingame  = ft.ProgressBar(
+            value=1.0,
+            color=PLANET_COMBAT_ENEMY_HP_BAR_INGAME_COLOR,
+            bgcolor=PLANET_COMBAT_ENEMY_HP_BAR_INGAME_BG_COLOR,
+            height=8, border_radius=4, width=SPRITE_W,
+        )
+        enemy_hp_label_ingame = ft.Text(
+            f"{enemy['name']}  {enemy_hp[0]}/{enemy_hp_max}",
+            size=10, color=PLANET_COMBAT_ENEMY_HP_LABEL_COLOR,
+            text_align=ft.TextAlign.CENTER,
+        )
+        enemy_hp_container_ingame = ft.Container(
+            content=ft.Column(
+                [enemy_hp_label_ingame, enemy_hp_bar_ingame],
+                spacing=2, horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
+            bottom=ground_bot + 195,   # juste au-dessus du sprite (hauteur 180 + marge)
+            left=ex,
+            width=SPRITE_W,
+        )
+
         damage_text = ft.Container(
-            content=ft.Text("", size=28, weight=ft.FontWeight.BOLD, color="#ff4444"),
+            content=ft.Text("", size=28, weight=ft.FontWeight.BOLD, color=PLANET_COMBAT_DAMAGE_TEXT_COLOR),
             visible=False, bottom=ground_bot + 200, left=ex,
         )
 
         heal_text = ft.Container(
-            content=ft.Text("", size=28, weight=ft.FontWeight.BOLD, color="#92b368"),
+            content=ft.Text("", size=28, weight=ft.FontWeight.BOLD, color=PLANET_COMBAT_HEAL_TEXT_COLOR),
             visible=False, bottom=ground_bot + 200, left=lx,
         )
 
         # ── Widgets du menu ────────────────────────────────────────────────────────────
         leaf_img_w    = ft.Image(src="", width=50, height=50, fit="contain")
-        leaf_name_t   = ft.Text("", size=13, weight=ft.FontWeight.BOLD, color="white")
-        leaf_hp_bar   = ft.ProgressBar(value=1.0, color="#92b368", bgcolor="#4E4E4E", height=8, border_radius=4, width=110)
-        leaf_hp_t     = ft.Text("", size=10, color="#cccccc")
-        leaf_atk_t    = ft.Text("", size=10, color="#cccccc")
-        leaf_type_t   = ft.Text("", size=10, color="#cccccc")
-        shield_hp_t   = ft.Text("", size=10, color="#90caf9", visible=False)
-        enemy_hp_bar  = ft.ProgressBar(value=1.0, color="#ef540c", bgcolor="#4E4E4E", height=8, border_radius=4, width=110)
-        enemy_hp_t    = ft.Text(f"{enemy_hp[0]}/{enemy['hp']}", size=10, color="#cccccc")
-        action_status = ft.Text("À votre tour", size=13, color="#27ae60", italic=True)
+        leaf_name_t   = ft.Text("", size=13, weight=ft.FontWeight.BOLD, color=PLANET_COMBAT_MENU_LEAF_NAME_COLOR)
+        leaf_hp_bar   = ft.ProgressBar(value=1.0, color=PLANET_COMBAT_MENU_LEAF_HP_BAR_COLOR, bgcolor=PLANET_COMBAT_MENU_LEAF_HP_BAR_BG_COLOR, height=8, border_radius=4, width=110)
+        leaf_hp_t     = ft.Text("", size=10, color=PLANET_COMBAT_MENU_LEAF_INFO_COLOR)
+        leaf_atk_t    = ft.Text("", size=10, color=PLANET_COMBAT_MENU_LEAF_INFO_COLOR)
+        leaf_type_t   = ft.Text("", size=10, color=PLANET_COMBAT_MENU_LEAF_INFO_COLOR)
+        shield_hp_t   = ft.Text("", size=10, color=PLANET_COMBAT_MENU_SHIELD_TEXT_COLOR, visible=False)
+        enemy_hp_bar  = ft.ProgressBar(value=1.0, color=PLANET_COMBAT_MENU_ENEMY_HP_BAR_COLOR, bgcolor=PLANET_COMBAT_MENU_ENEMY_HP_BAR_BG_COLOR, height=8, border_radius=4, width=110)
+        enemy_hp_t    = ft.Text(f"{enemy_hp[0]}/{enemy_hp_max}", size=10, color=PLANET_COMBAT_MENU_LEAF_INFO_COLOR)
+        action_status = ft.Text("À votre tour", size=13, color=PLANET_COMBAT_STATUS_PLAYER_COLOR, italic=True)
 
         def refresh_menu():
             leaf = current_leaf_ref[0]
@@ -573,7 +598,7 @@ def _planet(page: ft.Page, navigate) -> list:
             leaf_name_t.value    = leaf.name
             hp_r = leaf.hp / leaf.STAT_MAX["hp"] if leaf.STAT_MAX["hp"] > 0 else 0
             leaf_hp_bar.value    = hp_r
-            leaf_hp_bar.color    = "#92b368" if hp_r > 0.3 else "#ef540c"
+            leaf_hp_bar.color    = PLANET_COMBAT_MENU_LEAF_HP_BAR_COLOR if hp_r > 0.3 else PLANET_COMBAT_MENU_LEAF_HP_BAR_LOW_COLOR
             leaf_hp_t.value      = f"HP: {leaf.hp}/{leaf.STAT_MAX['hp']}"
             leaf_atk_t.value     = f"ATK: {leaf.atk + leaf.atk_boost}"
             leaf_type_t.value    = f"Type: {LEAFS_TYPE[leaf.type]['name']}"
@@ -583,10 +608,13 @@ def _planet(page: ft.Page, navigate) -> list:
                 shield_hp_t.value   = f"🛡 {shield_hp[0]}/{shield_max[0]}"
             else:
                 shield_hp_t.visible = False
-            # Ennemi
-            e_r = max(0, enemy_hp[0]) / enemy["hp"] if enemy["hp"] > 0 else 0
+            # Ennemi — menu latéral
+            e_r = max(0, enemy_hp[0]) / enemy_hp_max if enemy_hp_max > 0 else 0
             enemy_hp_bar.value = e_r
-            enemy_hp_t.value   = f"{max(0, enemy_hp[0])}/{enemy['hp']}"
+            enemy_hp_t.value   = f"{max(0, enemy_hp[0])}/{enemy_hp_max}"
+            # Ennemi — barre en jeu
+            enemy_hp_bar_ingame.value  = e_r
+            enemy_hp_label_ingame.value = f"{enemy['name']}  {max(0, enemy_hp[0])}/{enemy_hp_max}"
             # Sprite leaf
             leafsprite.content = ft.Image(src=leaf.img, width=SPRITE_W, height=180)
             page.update()
@@ -600,12 +628,11 @@ def _planet(page: ft.Page, navigate) -> list:
                 shield_visual.left = ex - SPRITE_W + 10 - 15
             page.update()
             await asyncio.sleep(0.25)
-
             damage_text.content.value = f"-{dmg}"
+            damage_text.left    = ex
             damage_text.visible = True
             page.update()
             await asyncio.sleep(0.5)
-
             leafsprite.left = orig
             if shield_hp[0] > 0:
                 shield_visual.left = orig - 15
@@ -616,17 +643,18 @@ def _planet(page: ft.Page, navigate) -> list:
         async def animate_attack_enemy(dmg):
             """Ennemi avance vers le leaf, dégâts, revient."""
             orig = enemysprite.left
+            old_enemy_hp_x = enemy_hp_container_ingame.left
             enemysprite.left = lx + SPRITE_W - 10
+            enemy_hp_container_ingame.left = lx + SPRITE_W - 10
             page.update()
             await asyncio.sleep(0.25)
-
             damage_text.content.value = f"-{dmg}"
             damage_text.left    = leafsprite.left
             damage_text.visible = True
             page.update()
             await asyncio.sleep(0.5)
-
-            enemysprite.left    = orig
+            enemysprite.left = orig
+            enemy_hp_container_ingame.left = old_enemy_hp_x
             damage_text.visible = False
             page.update()
             await asyncio.sleep(0.2)
@@ -655,20 +683,18 @@ def _planet(page: ft.Page, navigate) -> list:
             page.update()
 
         async def enemy_turn_async():
-            action_status.value = "Tour de l'ennemi..."; action_status.color = "#ef540c"
+            action_status.value = "Tour de l'ennemi..."; action_status.color = PLANET_COMBAT_STATUS_ENEMY_COLOR
             set_buttons(False)
             await asyncio.sleep(0.4)
             dmg = enemy["atk"]
             await animate_attack_enemy(dmg)
             apply_damage_to_player(dmg)
             refresh_menu()
-
             result = check_end()
             if result == "lose":
                 await end_combat(False); return
-
             player_turn[0] = True
-            action_status.value = "À votre tour"; action_status.color = "#27ae60"
+            action_status.value = "À votre tour"; action_status.color = PLANET_COMBAT_STATUS_PLAYER_COLOR
             set_buttons(True)
 
         async def do_attack(e):
@@ -690,9 +716,10 @@ def _planet(page: ft.Page, navigate) -> list:
             if leaf is None: return
             leaf_type = leaf.type
 
-            if leaf_type == 1:  # Attacker : bonus +5% par niveau
+            if leaf_type == 1:
+                # Attacker : +10% ATK de base + 5% par niveau (fonctionnel dès niveau 0)
                 player_turn[0] = False; set_buttons(False)
-                bonus = int(leaf.atk * leaf.level * 0.05)
+                bonus = int(leaf.atk * (0.10 + leaf.level * 0.05))
                 dmg   = leaf.atk + leaf.atk_boost + bonus
                 await animate_attack_player(dmg)
                 enemy_hp[0] -= dmg
@@ -701,9 +728,10 @@ def _planet(page: ft.Page, navigate) -> list:
                 if result == "win": await end_combat(True); return
                 await enemy_turn_async()
 
-            elif leaf_type == 2:  # Healer : soigne un leaf choisi
+            elif leaf_type == 2:
+                # Healer : soigne 10% des HP max cible + 5% par niveau (fonctionnel dès niveau 0)
                 def on_heal_selected(target_leaf):
-                    heal = max(1, int(target_leaf.STAT_MAX["hp"] * leaf.level * 0.05))
+                    heal = max(3, int(target_leaf.STAT_MAX["hp"] * (0.10 + leaf.level * 0.05)))
                     target_leaf.stat_update("hp", heal)
                     heal_text.content.value = f"+{heal}"
                     heal_text.left    = leafsprite.left
@@ -718,14 +746,15 @@ def _planet(page: ft.Page, navigate) -> list:
                     page.run_task(hide_and_continue)
                 open_leaf_selection_interface(page, [None], on_heal_selected, exclude_current=False)
 
-            elif leaf_type == 3:  # Tank : bouclier
+            elif leaf_type == 3:
+                # Tank : bouclier 20% HP max + 10% par niveau (fonctionnel dès niveau 0)
                 player_turn[0] = False; set_buttons(False)
-                shield_max[0]  = max(1, int(leaf.hp_max * leaf.level * 0.10))
+                shield_max[0]  = max(5, int(leaf.hp_max * (0.20 + leaf.level * 0.10)))
                 shield_hp[0]   = shield_max[0]
                 shield_visual.visible = True
                 shield_visual.left    = leafsprite.left - 15
                 refresh_menu()
-                action_status.value = f"Bouclier actif ! ({shield_hp[0]} HP)"; action_status.color = "#90caf9"
+                action_status.value = f"Bouclier actif ! ({shield_hp[0]} HP)"; action_status.color = PLANET_COMBAT_STATUS_SHIELD_COLOR
                 page.update()
                 await asyncio.sleep(0.5)
                 await enemy_turn_async()
@@ -737,15 +766,17 @@ def _planet(page: ft.Page, navigate) -> list:
                 reward = enemy.get("reward")
                 if reward:
                     inventory_manager.append_money(reward.get("currency", "O2"), reward.get("amount", 0))
-                action_status.value = "Victoire ! 🎉"; action_status.color = "#ffd700"
+                    action_status.value = f"Victoire ! 🎉  +{reward['amount']} {reward['currency']}"
+                else:
+                    action_status.value = "Victoire ! 🎉"
+                action_status.color = PLANET_COMBAT_STATUS_VICTORY_COLOR
                 page.update()
                 await asyncio.sleep(2)
-                # Reset atk boost
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
                 tp(None, biome)
             else:
-                action_status.value = "Défaite..."; action_status.color = "#ef540c"
+                action_status.value = "Défaite..."; action_status.color = PLANET_COMBAT_STATUS_ENEMY_COLOR
                 page.update()
                 await asyncio.sleep(2)
                 for l in leafmanager.owned:
@@ -756,26 +787,27 @@ def _planet(page: ft.Page, navigate) -> list:
         btn_atk = ft.ElevatedButton(
             "⚔️ Attaquer",
             on_click=lambda e: page.run_task(do_attack, e),
-            bgcolor="#c0392b", color="white", width=130,
+            bgcolor=PLANET_COMBAT_BTN_ATK_BG_COLOR, color=PLANET_COMBAT_BTN_TEXT_COLOR, width=130,
         )
         btn_comp = ft.ElevatedButton(
             "✨ Compétence",
             on_click=lambda e: page.run_task(do_competence, e),
-            bgcolor="#1565c0", color="white", width=130,
+            bgcolor=PLANET_COMBAT_BTN_COMP_BG_COLOR, color=PLANET_COMBAT_BTN_TEXT_COLOR, width=130,
         )
         btn_leaf = ft.ElevatedButton(
             "🌿 Changer",
             on_click=lambda e: open_leaf_selection_interface(page, current_leaf_ref, lambda l: refresh_menu()),
-            bgcolor="#27ae60", color="white", width=130,
+            bgcolor=PLANET_COMBAT_BTN_LEAF_BG_COLOR, color=PLANET_COMBAT_BTN_TEXT_COLOR, width=130,
         )
 
         # ── Menu 3 colonnes ────────────────────────────────────────────────────────────
         col_stats = ft.Column([
             ft.Container(content=leaf_img_w, width=55, height=55,
-                        bgcolor=ft.Colors.with_opacity(0.3, "black"), border_radius=8, padding=3),
+                        bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[0], PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[1]),
+                        border_radius=8, padding=3),
             leaf_name_t, leaf_hp_bar, leaf_hp_t, leaf_atk_t, leaf_type_t, shield_hp_t,
-            ft.Divider(color="#27ae60", height=8),
-            ft.Text("Ennemi", size=10, color="#aaaaaa"),
+            ft.Divider(color=PLANET_COMBAT_MENU_DIVIDER_COLOR, height=8),
+            ft.Text("Ennemi", size=10, color=PLANET_COMBAT_MENU_ENEMY_LABEL_COLOR),
             enemy_hp_bar, enemy_hp_t,
         ], spacing=3, expand=True)
 
@@ -792,9 +824,9 @@ def _planet(page: ft.Page, navigate) -> list:
         menu = ft.Container(
             content=ft.Row([
                 ft.Container(content=col_stats,   expand=True, padding=ft.padding.symmetric(horizontal=8)),
-                ft.VerticalDivider(color="#27ae60"),
+                ft.VerticalDivider(color=PLANET_COMBAT_MENU_DIVIDER_COLOR),
                 ft.Container(content=col_actions, expand=True, padding=ft.padding.symmetric(horizontal=8)),
-                ft.VerticalDivider(color="#27ae60"),
+                ft.VerticalDivider(color=PLANET_COMBAT_MENU_DIVIDER_COLOR),
                 ft.Container(content=col_leaf,    expand=True, padding=ft.padding.symmetric(horizontal=8)),
             ], expand=True),
             bottom=0, left=0,
@@ -803,7 +835,8 @@ def _planet(page: ft.Page, navigate) -> list:
             bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_BG_COLOR[0], PLANET_COMBAT_MENU_BG_COLOR[1]),
         )
 
-        preset = [bg, leafsprite, shield_visual, enemysprite, damage_text, heal_text, menu]
+        preset = [bg, leafsprite, shield_visual, enemysprite,
+                enemy_hp_container_ingame, damage_text, heal_text, menu]
 
         def on_resize_combat(ev):
             s, ox, oy, g, dw, dh = compute_layout(ev.width, ev.height, biome)
@@ -813,6 +846,8 @@ def _planet(page: ft.Page, navigate) -> list:
             enemysprite.bottom = g; enemysprite.left = nex
             shield_visual.bottom = g + 40
             shield_visual.left   = nlx - 15 if not shield_visual.visible else shield_visual.left
+            enemy_hp_container_ingame.bottom = g + 195
+            enemy_hp_container_ingame.left   = nex
             menu.width = ev.width; menu.height = ev.height * PLANET_COMBAT_MENU_HEIGHT_RATIO
             page.update()
 
@@ -820,20 +855,10 @@ def _planet(page: ft.Page, navigate) -> list:
         page.add(ft.Stack(preset, expand=True))
         refresh_menu()
 
-        # Ouvrir la sélection de leaf au démarrage du combat
+        # Sélection de leaf au démarrage du combat
         open_leaf_selection_interface(page, current_leaf_ref, lambda l: refresh_menu())
 
-    # ─────────────────────────────────────────────────────────────────────────────────────
-    def atk(leaf, enemy):
-        enemy["hp"] -= leaf.atk + leaf.atk_boost
-
-    def competence(leaf, enemy):
-        pass  # géré directement dans combat()
-
-    def open_leaf_selection_interface_placeholder():
-        pass
-    """CHRISSS FAIS ICI"""
-
+    # MARQUEUR FIN COMBAT — ne pas supprimer
     # ─────────────────────────────────────────────────────────────────────────────────────
     def declenche_scene(e, biome, n):
         if hasattr(page, "stop_current_screen"):

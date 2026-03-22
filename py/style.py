@@ -9,6 +9,7 @@ LEAF_SHEARCHBAR_INPUT_COLOR = "#FFFFFF"             # ✅
 LEAF_SHEARCHBAR_LABEL_COLOR = "#276E31"             # ✅
 LEAF_SHEARCHBAR_HINT_COLOR = "#276E31"              # ✅
 LEAF_SHEARCHBAR_BORDER_COLOR = "#131313"            # ✅
+LEAF_SHEARCHBAR_COLOR_FOCUSED = "#575757"           # ✅
 LEAF_SHEARCHBAR_BORDER_COLOR_FOCUSED = "#2b2b2b"    # ✅
     # ------------------- Style des boutons ---------------
 LEAF_BUTTON_BG_COLOR = "#8db15e"                    # ✅
@@ -25,7 +26,7 @@ LEAF_CARD_SHADOW_COLOR = (0.6, '#000000')           # ✅
 LEAF_CARD_BG_COLOR = "#1a1a1a"                      # ✅
 LEAF_CARD_BORDER_COLOR = "#555555"                  # ✅
 LEAF_CARD_TITLE_TEXT_COLOR = "#ffffff"              # ✅
-LEAF_CARD_INFO_TEXT_COLOR = "gray"                  # ✅
+LEAF_CARD_INFO_TEXT_COLOR = "gray"                    # ✅
 LEAF_CARD_BADGE_BG_COLOR = "#2a2a3e"                # ✅
 LEAF_CARD_BADGE_BG_HOVER_COLOR = "#40405c"          # ✅
 LEAF_CARD_BADGE_BORDER_COLOR = "#555555"            # ✅
@@ -37,12 +38,13 @@ LEAF_CARD_PROGRESS_BAR_NUTRIENTS_COLOR = "#f2c14e"          # ✅
 LEAF_CARD_PROGRESS_BAR_NUTRIENTS_ALERT_COLOR = "#ef540c"    # ✅
 LEAF_CARD_PROGRESS_BAR_HYDRATION_COLOR = "#4b86b4"          # ✅
 LEAF_CARD_PROGRESS_BAR_HYDRATION_ALERT_COLOR = "#ff0000"    # ✅
-LEAF_CARD_PROGRESS_BAR_ATK_COLOR = "purple"                 # ✅
+LEAF_CARD_PROGRESS_BAR_ATK_COLOR = "purple"                   # ✅
 LEAF_CARD_PROGRESS_BAR_LVL_COLOR = "#4b0fffc5"              # ✅
     # ------------------- Style des barres boost ----------
 LEAF_CARD_PROGRESS_BAR_BOOST_HP_COLOR = "#c8e6a0"           # ✅  vert clair (overlay hp boost)
 LEAF_CARD_PROGRESS_BAR_BOOST_NUTRIENTS_COLOR = "#f7e08a"    # ✅  jaune clair (overlay nutrients boost)
 LEAF_CARD_PROGRESS_BAR_BOOST_ATK_COLOR = "#e0a0e0"          # ✅  violet clair (overlay atk boost)
+LEAF_CARD_BOOST_SEPARATOR_COLOR = "#888888"                 # ✅  ligne séparatrice base/boost
     # ------------------- Style du bouton récolte ---------
 LEAF_CARD_HARVEST_BUTTON_BG_COLOR = "#2a5a3a"               # ✅
 LEAF_CARD_HARVEST_BUTTON_BG_HOVER_COLOR = "#3a7a4e"         # ✅
@@ -56,7 +58,7 @@ LEAF_CARD_HARVEST_BADGE_BG_COLOR = "#1a3a2a"                # ✅  fond du badge
 # —————————————————————————————————————————————————————————
     # ------------------- Style général -------------------
 SHOP_BG_COLOR = "#292929"                           # ✅
-SHOP_TITLE_COLOR = "white"                          # ✅
+SHOP_TITLE_COLOR = "white"                            # ✅
 SHOP_TITLE_COLOR_ITINERANT = "#B68B31C5"            # ✅
 SHOP_TITLE_BG_COLOR = "#7a3a7a"                     # ✅
 SHOP_TITLE_BORDER_COLOR = "#5a1a5a"                 # ✅
@@ -161,6 +163,48 @@ PLANET_BACK_BUTTON_BORDER_RADIUS = 100                  # ✅
 PLANET_DIALOGUE_BG_COLOR = (0.6, "green")               # ✅  (opacity, couleur)
 PLANET_DIALOGUE_TEXT_SIZE = 30                          # ✅
 PLANET_DIALOGUE_HEIGHT = 200                            # ✅
-    # ------------------- Style combat --------------------
+    # ------------------- Style combat — menu 3 colonnes -
 PLANET_COMBAT_MENU_BG_COLOR = (0.8, "green")            # ✅  (opacity, couleur)
 PLANET_COMBAT_MENU_HEIGHT_RATIO = 0.20                  # ✅  (ratio de page.height)
+PLANET_COMBAT_MENU_DIVIDER_COLOR = "#27ae60"          # ✅  séparateurs verticaux
+    # ── Stats leaf (colonne gauche) ───────────────────────
+PLANET_COMBAT_MENU_LEAF_NAME_COLOR = "white"            # ✅
+PLANET_COMBAT_MENU_LEAF_INFO_COLOR = "#cccccc"        # ✅  hp/atk/type textes
+PLANET_COMBAT_MENU_LEAF_HP_BAR_COLOR = "#92b368"      # ✅  barre hp > 30 %
+PLANET_COMBAT_MENU_LEAF_HP_BAR_LOW_COLOR = "#ef540c"  # ✅  barre hp ≤ 30 %
+PLANET_COMBAT_MENU_LEAF_HP_BAR_BG_COLOR = "#4E4E4E"   # ✅
+PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR = (0.3, "black")   # ✅  (opacity, couleur)
+PLANET_COMBAT_MENU_SHIELD_TEXT_COLOR = "#90caf9"      # ✅  bouclier tank
+PLANET_COMBAT_MENU_ENEMY_LABEL_COLOR = "#aaaaaa"      # ✅  titre "Ennemi"
+PLANET_COMBAT_MENU_ENEMY_HP_BAR_COLOR = "#ef540c"     # ✅
+PLANET_COMBAT_MENU_ENEMY_HP_BAR_BG_COLOR = "#4E4E4E"  # ✅
+    # ── Statut d'action (colonne milieu) ──────────────────
+PLANET_COMBAT_STATUS_PLAYER_COLOR = "#27ae60"         # ✅  "À votre tour"
+PLANET_COMBAT_STATUS_ENEMY_COLOR = "#ef540c"          # ✅  "Tour de l'ennemi"
+PLANET_COMBAT_STATUS_SHIELD_COLOR = "#90caf9"         # ✅  "Bouclier actif"
+PLANET_COMBAT_STATUS_VICTORY_COLOR = "#ffd700"        # ✅  "Victoire !"
+    # ── Boutons combat ────────────────────────────────────
+PLANET_COMBAT_BTN_ATK_BG_COLOR = "#c0392b"            # ✅  bouton Attaquer
+PLANET_COMBAT_BTN_COMP_BG_COLOR = "#1565c0"           # ✅  bouton Compétence
+PLANET_COMBAT_BTN_LEAF_BG_COLOR = "#27ae60"           # ✅  bouton Changer leaf
+PLANET_COMBAT_BTN_TEXT_COLOR = "white"                  # ✅
+    # ── Textes flottants en jeu ───────────────────────────
+PLANET_COMBAT_DAMAGE_TEXT_COLOR = "#ff4444"             # ✅  "-X" dégâts
+PLANET_COMBAT_HEAL_TEXT_COLOR = "#92b368"               # ✅  "+X" soin
+    # ── Barre de vie ennemi (in-game, au-dessus du sprite)
+PLANET_COMBAT_ENEMY_HP_BAR_INGAME_COLOR = "#ef540c"     # ✅
+PLANET_COMBAT_ENEMY_HP_BAR_INGAME_BG_COLOR = "#555555"  # ✅  plus sombre que le menu
+PLANET_COMBAT_ENEMY_HP_LABEL_COLOR = "white"              # ✅  "NomEnnemi  X/Y"
+    # ── Interface sélection de leaf ──────────────────────
+PLANET_LEAF_SELECT_OVERLAY_BG_COLOR = (0.5, "black")      # ✅  (opacity, couleur)
+PLANET_LEAF_SELECT_PANEL_BG_COLOR = (0.85, "#0a2a0a")   # ✅  (opacity, couleur)
+PLANET_LEAF_SELECT_PANEL_BORDER_COLOR = "#27ae60"       # ✅
+PLANET_LEAF_SELECT_TITLE_COLOR = "white"                  # ✅
+PLANET_LEAF_SELECT_ROW_BORDER_ACTIVE_COLOR = "#27ae60"  # ✅  leaf actuellement en combat
+PLANET_LEAF_SELECT_ROW_BORDER_COLOR = "#555555"         # ✅
+PLANET_LEAF_SELECT_HP_BAR_OK_COLOR = "#92b368"          # ✅  hp > 30 %
+PLANET_LEAF_SELECT_HP_BAR_LOW_COLOR = "#ef540c"         # ✅  hp ≤ 30 %
+PLANET_LEAF_SELECT_HP_BAR_BG_COLOR = "#4E4E4E"          # ✅
+PLANET_LEAF_SELECT_INFO_COLOR = "#cccccc"               # ✅  textes secondaires
+PLANET_LEAF_SELECT_INFO_BTN_COLOR = "#90caf9"           # ✅  bouton "I" texte + bordure
+PLANET_LEAF_SELECT_INFO_BTN_BG_COLOR = "#1565c0"        # ✅  bouton "I" fond
