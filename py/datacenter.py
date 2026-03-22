@@ -19,7 +19,7 @@ ENEMIES = [
         "reward": {"currency": "O2", "amount": 8},
     },
     {
-        "id": 1, "name": "Ours", "rarity": "common",
+        "id": 2, "name": "Ours", "rarity": "common",
         "atk": 7, "hp": 30,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
@@ -27,7 +27,7 @@ ENEMIES = [
         "reward": {"currency": "CO2", "amount": 20},
     },
     {
-        "id": 2, "name": "Snake", "rarity": "rare",
+        "id": 3, "name": "Snake", "rarity": "rare",
         "atk": 5, "hp": 20,
         "biome": ["plain"], "lvl": 3,
         "visual": "assets/imgs/npc/snake.png",
@@ -35,7 +35,42 @@ ENEMIES = [
         "reward": {"currency": "O2", "amount": 18},
     },
     {
-        "id": 1, "name": "Crabefaible", "rarity": "common",
+        "id": 4, "name": "rien", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["plain"], "lvl": 1,
+        "visual": "assets/imgs/items/rien.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 5, "name": "rien", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["forest"], "lvl": 1,
+        "visual": "assets/imgs/items/rien.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 6, "name": "rien", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["montain"], "lvl": 1,
+        "visual": "assets/imgs/items/rien.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 7, "name": "rien", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["lake"], "lvl": 1,
+        "visual": "assets/imgs/items/rien.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+
+
+    #LORE ENEMIES
+    {
+        "id": 8, "name": "Crabefaible", "rarity": "common",
         "atk": 3, "hp": 10,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/crabfaible.png",
@@ -47,13 +82,18 @@ ENEMIES = [
 # ------------------------------------ Npcs palette --------------------------------------
 NPCS = [
     { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png"},
-    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"}
+    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"},
+    { "id": 3, "name": "rien", "biome": "plain", "visual": "assets/imgs/items/rien.png"},
+    { "id": 4, "name": "rien", "biome": "forest", "visual": "assets/imgs/items/rien.png"},
+    { "id": 5, "name": "rien", "biome": "mountain", "visual": "assets/imgs/items/rien.png"},
+    { "id": 5, "name": "rien", "biome": "lake", "visual": "assets/imgs/items/rien.png"}
 ]
 
 # ------------------------------------ Objects palette -----------------------------------
 OBJECTS = [
     { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png",    "gives": "Eau minérale"},
-    { "id": 2, "name": "herbe",   "visual": "assets/imgs/items/grass.png", "gives": "Herbe"}
+    { "id": 2, "name": "herbe",   "visual": "assets/imgs/items/grass.png", "gives": "Herbe"},
+    { "id": 3, "name": "rien", "visual": "assets/imgs/items/rien.png", "gives": "rien"},
 ]
 
 # ------------------------------------ Events palette ------------------------------------

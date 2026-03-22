@@ -415,7 +415,7 @@ def _planet(page: ft.Page, navigate) -> list:
             return ft.Container(content=ft.Image(src=src, width=w, height=h), visible=visible)
 
         if event == "enemy":
-            entity_id = random.choice([b for b in ENEMIES[:3] if b["biome"] == [biome]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
+            entity_id = random.choice([b for b in ENEMIES[:7] if b["biome"] == [biome]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
         elif event == "npc":
             entity_id = random.choice([b for b in NPCS if b["biome"] == biome]);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
         elif event == "empty":
@@ -482,7 +482,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
                 if event == "npc"   and near and keys_pressed["space"]:
                     stop_tp_screen(); keys_pressed["space"] = False; shop(e, biome); return
-                if event == "enemy" and near and keys_pressed["space"]:
+                if event == "enemy" and entity_id["name"] != "rien" and near and keys_pressed["space"]:
                     stop_tp_screen(); keys_pressed["space"] = False; combat(e, biome, entity_id); return
                 if event == "empty" and near and keys_pressed["space"]:
                     if first_sip[0]:
