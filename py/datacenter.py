@@ -347,33 +347,21 @@ class LeafStat:
         print(f"{self.name} - {stat} : {current} -> {new_val}")
 
     # ── Scaling de niveau via ln(x+1)/sqrt(x+1) ────────────────────────────────────────────
-    # Décale le pic naturel vers la droite (x=e²-1 ≈ 6.39) et reste strictement positif
-    # sur tout l'intervalle [0, +∞), ce qui évite toute explosion aux hauts niveaux.
-    # Voir calculate_atk_from_level et calculate_hp_from_level pour les valeurs exactes.
     def calculate_atk_from_level(self):
         if self.level <= 0:
             return self.atk_base
-        # Toujours calculé depuis atk_base (valeur originale immuable du leaf),
-        # jamais depuis atk_max qui évolue lui aussi — sinon effet exponentiel garanti.
-        # ln(x+1)/sqrt(x+1) : monte vite sur les premiers niveaux, pic vers niveau 2-5,
-        # puis décroît très doucement sans jamais exploser — aucun terme linéaire.
-        #   niveau  1  → ATK ×1.59   niveau 20 → ATK ×1.80
-        #   niveau  2  → ATK ×1.76   niveau 50 → ATK ×1.66
-        #   niveau  5  → ATK ×1.88   niveau 100→ ATK ×1.55
-        factor = 1 + (math.log(self.level + 1) / math.sqrt(self.level + 1)) * 1.20
-        return max(self.atk_base, int(self.atk_base * factor))
+        total = self.atk_base
+        for lvl in range(1, self.level + 1):
+            total += self.atk_base * (math.log(lvl + 1) / math.sqrt(lvl + 1)) * 0.12
+        return int(total)
 
     def calculate_hp_from_level(self):
         if self.level <= 0:
             return self.hp_base
-        # Même principe : calculé depuis hp_base, pas hp_max.
-        # Coefficient plus élevé pour que les HP restent significatifs
-        # aux hauts niveaux, notamment pour les leafs tank.
-        #   niveau  1  → HP ×1.98   niveau 20 → HP ×2.33
-        #   niveau  2  → HP ×2.27   niveau 50 → HP ×2.10
-        #   niveau  5  → HP ×2.46   niveau 100→ HP ×1.92
-        factor = 1 + (math.log(self.level + 1) / math.sqrt(self.level + 1)) * 2.00
-        return max(self.hp_base, int(self.hp_base * factor))
+        total = self.hp_base
+        for lvl in range(1, self.level + 1):
+            total += self.hp_base * (math.log(lvl + 1) / math.sqrt(lvl + 1)) * 0.20
+        return int(total)
 
     # ── Application d'un item ─────────────────────────────────────────────────────────────
     def apply_item(self, item: dict):
