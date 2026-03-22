@@ -251,6 +251,10 @@ class LeafStat:
         self.xp        = leaf["xp"]
         self.hp_max    = leaf["hp"]
         self.atk_max   = leaf["atk"]
+        # Valeurs de base immuables — toujours utilisées comme référence pour le scaling.
+        # Ne jamais modifier atk_base/hp_base après __init__.
+        self.atk_base  = leaf["atk"]
+        self.hp_base   = leaf["hp"]
 
         # ── Boosts ───────────────────────────────────────────────────────────────────────
         self.atk_boost       = 0   # temporaire (reset après combat)
@@ -285,21 +289,34 @@ class LeafStat:
         setattr(self, stat, new_val)
         print(f"{self.name} - {stat} : {current} -> {new_val}")
 
-    # ── Scaling de niveau en racine carrée ───────────────────────────────────────────────
-    # Courbe douce qui s'aplatit avec les niveaux élevés :
-    #   niveau  1 → ATK ×1.08,  HP ×1.15
-    #   niveau  5 → ATK ×1.18,  HP ×1.34
-    #   niveau 10 → ATK ×1.25,  HP ×1.47
-    #   niveau 25 → ATK ×1.40,  HP ×1.75
-    #   niveau 50 → ATK ×1.57,  HP ×2.12
-    #   niveau 100→ ATK ×1.80,  HP ×2.50
+    # ── Scaling de niveau via ln(x+1)/sqrt(x+1) ────────────────────────────────────────────
+    # Décale le pic naturel vers la droite (x=e²-1 ≈ 6.39) et reste strictement positif
+    # sur tout l'intervalle [0, +∞), ce qui évite toute explosion aux hauts niveaux.
+    # Voir calculate_atk_from_level et calculate_hp_from_level pour les valeurs exactes.
     def calculate_atk_from_level(self):
-        factor = 1 + math.sqrt(self.level) * 0.08
-        return max(self.atk_max, int(self.atk_max * factor))
+        if self.level <= 0:
+            return self.atk_base
+        # Toujours calculé depuis atk_base (valeur originale immuable du leaf),
+        # jamais depuis atk_max qui évolue lui aussi — sinon effet exponentiel garanti.
+        # ln(x+1)/sqrt(x+1) : monte vite sur les premiers niveaux, pic vers niveau 2-5,
+        # puis décroît très doucement sans jamais exploser — aucun terme linéaire.
+        #   niveau  1  → ATK ×1.59   niveau 20 → ATK ×1.80
+        #   niveau  2  → ATK ×1.76   niveau 50 → ATK ×1.66
+        #   niveau  5  → ATK ×1.88   niveau 100→ ATK ×1.55
+        factor = 1 + (math.log(self.level + 1) / math.sqrt(self.level + 1)) * 1.20
+        return max(self.atk_base, int(self.atk_base * factor))
 
     def calculate_hp_from_level(self):
-        factor = 1 + math.sqrt(self.level) * 0.15
-        return max(self.hp_max, int(self.hp_max * factor))
+        if self.level <= 0:
+            return self.hp_base
+        # Même principe : calculé depuis hp_base, pas hp_max.
+        # Coefficient plus élevé pour que les HP restent significatifs
+        # aux hauts niveaux, notamment pour les leafs tank.
+        #   niveau  1  → HP ×1.98   niveau 20 → HP ×2.33
+        #   niveau  2  → HP ×2.27   niveau 50 → HP ×2.10
+        #   niveau  5  → HP ×2.46   niveau 100→ HP ×1.92
+        factor = 1 + (math.log(self.level + 1) / math.sqrt(self.level + 1)) * 2.00
+        return max(self.hp_base, int(self.hp_base * factor))
 
     # ── Application d'un item ─────────────────────────────────────────────────────────────
     def apply_item(self, item: dict):
@@ -499,6 +516,9 @@ def get_wandering_shop_items(biome):
     random.shuffle(non_special)
     discounted = [
         {**i,
+        # Priorité au prix soldé, sinon prix normal, sinon 0.
+        # Le `or` natif échoue si specialprice vaut None (item sans ce champ)
+        # car None or None retourne None au lieu de 0, ce qui casse buy_item.
         "price_O2":  i.get("specialprice_O2") or i.get("price_O2")  or 0,
         "price_CO2": i.get("specialprice_CO2") or i.get("price_CO2") or 0,
         "amount": 50}
