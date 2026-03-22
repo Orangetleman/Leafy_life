@@ -118,7 +118,7 @@ def build_trail_canvas(page_w, page_h, active_biome_keys, button_refs):
         py = planet_top  + ay * scale_y
 
         corner = {"plaine": "bottom_left", "foret": "bottom_right",
-                  "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
+                "montagne": "top_right",  "lac":   "top_left"}.get(bk, "bottom_left")
 
         if corner == "bottom_left":
             bx = BUTTON_MARGIN_X + 100;           by = page_h - BUTTON_MARGIN_Y - BTN_H / 2
@@ -228,7 +228,10 @@ def _planet(page: ft.Page, navigate) -> list:
     # ── Sélection de leaf ─────────────────────────────────────────────────────────────────
     def open_leaf_selection_interface(page, current_leaf_ref, on_selected, exclude_current=True):
         def close(e=None):
-            overlay.visible = False
+            # Retire l'overlay de page.overlay plutôt que de le cacher — évite l'accumulation
+            # d'overlays invisibles qui alourdit chaque page.update() avec le temps.
+            if overlay in page.overlay:
+                page.overlay.remove(overlay)
             page.update()
 
         def make_leaf_row(leaf):
@@ -761,6 +764,8 @@ def _planet(page: ft.Page, navigate) -> list:
 
         async def end_combat(victory):
             combat_over[0] = True
+            keys_pressed["left"] = False
+            keys_pressed["right"] = False
             set_buttons(False)
             if victory:
                 reward = enemy.get("reward")

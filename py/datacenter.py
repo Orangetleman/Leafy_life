@@ -499,8 +499,8 @@ def get_wandering_shop_items(biome):
     random.shuffle(non_special)
     discounted = [
         {**i,
-        "price_O2":  i.get("specialprice_O2") or i.get("price_O2"),
-        "price_CO2": i.get("specialprice_CO2") or i.get("price_CO2"),
+        "price_O2":  i.get("specialprice_O2") or i.get("price_O2")  or 0,
+        "price_CO2": i.get("specialprice_CO2") or i.get("price_CO2") or 0,
         "amount": 50}
         for i in non_special[:2]
     ]

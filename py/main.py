@@ -19,7 +19,6 @@ def _seed_test_data():
         leafmanager.add_leaf(LEAFS[key])
     for item in range(1, 14):
         inventory_manager.append_item(ITEMS[item], amount=100)
-    pass
 
 NAVBAR_HEIGHT = 60
 
@@ -47,7 +46,16 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
             del page.stop_current_screen
-        page.on_resize = None
+
+        # ── Nettoyage avant changement d'écran ────────────────────────────────────────
+        page.on_resize         = None
+        page.window.on_event   = None  # évite que le handler planet reste actif ailleurs
+
+        # Vide les callbacks du game_clock pour éviter l'accumulation de tick_refresh
+        # des modals leaf ouverts sans être explicitement fermés avant navigation.
+        # Chaque écran qui en a besoin (ex : modal leaf) les re-enregistre lui-même.
+        game_clock.callbacks.clear()
+
         page.clean()
 
         if name == "leafs":
@@ -67,17 +75,19 @@ def main(page: ft.Page, page_name: str = "leafs") -> None:
             padding=0,
         )
         page.body_container = body_container
-        page.navbar_height = NAVBAR_HEIGHT
+        page.navbar_height   = NAVBAR_HEIGHT
 
         page.add(
             ft.Container(content=_build_navbar(show_screen), padding=8, bgcolor="#131313"),
             body_container,
         )
 
-    # ── Démarrage du game clock ──────────────────────────────────────────────────────────
-    # Le callback page.update() rafraîchit l'UI après chaque tick
-    # (utile si le modal leaf est ouvert au moment du tick)
-    game_clock.add_callback(lambda: page.update())
+    # ── Démarrage du game clock ───────────────────────────────────────────────────────
+    # On N'ajoute PAS de callback page.update() global ici.
+    # Chaque écran gère ses propres mises à jour via control.update() ou
+    # des callbacks ciblés (ex : tick_refresh dans open_leaf_modal).
+    # Un page.update() global toutes les 30s forçait un re-rendu complet de la page
+    # et vidait le buffer Flet, ce qui causait des délais sur les effets hover.
     game_clock.start(page)
 
     show_screen(page_name)

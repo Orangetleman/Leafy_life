@@ -27,19 +27,19 @@ def base_item_for_stat(leaf, stat_attr):
 
     if stat_attr == "nutrients":
         if species == "plant":
-            return ITEMS[2]                          # Fertilisant
-        return ITEMS[3] if regime == "carnivore" else ITEMS[4]  # Viande / Herbe
+            return ITEMS[2]                                          # Fertilisant
+        return ITEMS[3] if regime == "carnivore" else ITEMS[4]      # Viande / Herbe
 
     elif stat_attr == "hydration":
-        return ITEMS[1]                              # Eau minérale
+        return ITEMS[1]                                              # Eau minérale
 
     elif stat_attr == "hp":
         if hp == 0:
-            return ITEMS[7]                          # Rayon de soleil (revive)
-        return ITEMS[5] if species == "plant" else ITEMS[6]     # Sève / Bandage
+            return ITEMS[7]                                          # Rayon de soleil (revive)
+        return ITEMS[5] if species == "plant" else ITEMS[6]         # Sève / Bandage
 
     elif stat_attr == "level":
-        return ITEMS[13]                             # Livre de la connaissance
+        return ITEMS[13]                                             # Livre de la connaissance
 
     return None
 
@@ -80,7 +80,7 @@ def create_stat_bar(value, base_max, boost_value, boost_max, color, boost_color)
                     bar_height=20,
                     border_radius=8,
                 ),
-                # Barre boost superposée
+                # Barre boost superposée (transparente si boost = 0)
                 ft.ProgressBar(
                     value=boost_ratio,
                     color=ft.Colors.with_opacity(0.6, boost_color) if boost_value > 0 else ft.Colors.with_opacity(0, "white"),
@@ -153,9 +153,9 @@ def create_badge_button(leaf, current_value, max_value, item, is_boost=False, on
     tooltip = (
         f"⚠️ {item_name} non disponible" if warning
         else ("Max boost atteint"        if at_max and is_boost
-            else ("Déjà au maximum"    if at_max
-                    else f"{'[BOOST] ' if is_boost else ''}Utiliser : {item['name']} "
-                        f"(+{item['effect']['amount']} {item['effect']['stat']})"))
+            else ("Déjà au maximum"      if at_max
+                else f"{'[BOOST] ' if is_boost else ''}Utiliser : {item['name']} "
+                    f"(+{item['effect']['amount']} {item['effect']['stat']})"))
     )
 
     return ft.Container(
@@ -272,10 +272,14 @@ def create_harvest_button(leaf, on_harvested=None):
 def open_leaf_modal(page: ft.Page, leaf):
 
     def close_modal(e):
-        overlay.visible = False
+        # Retire l'overlay de page.overlay — évite l'accumulation d'overlays invisibles
+        # qui alourdit chaque page.update() après plusieurs ouvertures de modals.
+        if overlay in page.overlay:
+            page.overlay.remove(overlay)
         if tick_refresh in game_clock.callbacks:
             game_clock.callbacks.remove(tick_refresh)
         page.update()
+
     def on_stat_used():
         modal_content.content = build_content()
         page.update()
@@ -300,7 +304,7 @@ def open_leaf_modal(page: ft.Page, leaf):
                     ], spacing=4),
                 ], spacing=12),
                 ft.Divider(color="#444"),
-                # ── Statistiques ────────────────────────────────
+                # ── Statistiques ─────────────────────────────────
                 ft.Text("Statistiques", weight=ft.FontWeight.BOLD, size=15, color=LEAF_CARD_TITLE_TEXT_COLOR),
                 create_progress_bar(leaf, "Points de Vie", on_used=on_stat_used),
                 create_progress_bar(leaf, "Nourriture",    on_used=on_stat_used),
@@ -352,6 +356,7 @@ def open_leaf_modal(page: ft.Page, leaf):
     )
 
     def tick_refresh():
+        """Rafraîchit le modal à chaque tick du game_clock (toutes les 30s)."""
         if overlay.visible:
             modal_content.content = build_content()
             page.update()
@@ -377,7 +382,12 @@ def _build_leafs_home(page: ft.Page) -> list:
         leaf_row.update()
 
     def on_leaf_hover(e, leaf_row):
+        # ── IMPORTANT : appeler leaf_row.update() pour que le changement de bgcolor
+        # soit envoyé immédiatement au frontend. Sans cela, le changement est bufferisé
+        # et n'apparaît que lors du prochain page.update() global — ce qui causait
+        # un délai pouvant aller jusqu'à 30 secondes sur l'effet hover. ──────────────
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_HOVER if e.data else LEAF_BUTTON_BG_COLOR
+        leaf_row.update()
 
     def populate_list(query=""):
         items = []
@@ -442,7 +452,7 @@ def _build_leafs_home(page: ft.Page) -> list:
         padding=4,
     )
 
-    leaf_column  = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=5, expand=True)
+    leaf_column    = ft.Column(scroll=ft.ScrollMode.AUTO, spacing=5, expand=True)
     list_container = ft.Container(leaf_column, expand=True, padding=ft.padding.symmetric(horizontal=10))
     populate_list()
 
