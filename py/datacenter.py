@@ -134,7 +134,7 @@ ITEMS = {
         "id": 5, "name": "Sève", "category": "soin",
         "effect": {"stat": "hp", "amount": 12},
         "price_CO2": 35, "specialprice_CO2": 18, "is_special": False,
-        "icon": "assets/imgs/items/mineral_water.png",
+        "icon": "assets/imgs/items/seve.png",
         "tags": ["seve", "soin", "regeneration"],
         "description": "Cette sève régénératrice restaure les tissus végétaux.",
         "species": ["plant"],
