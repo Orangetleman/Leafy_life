@@ -521,8 +521,7 @@ def _planet(page: ft.Page, navigate) -> list:
         combat_over      = [False]
 
         # ── Layout ────────────────────────────────────────────────────────────────────
-        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = \
-            compute_layout(page.width, page.height, biome)
+        scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
 
         bg_img = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg     = ft.Container(content=bg_img, left=offset_x, top=offset_y)
