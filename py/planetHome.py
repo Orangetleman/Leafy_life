@@ -480,7 +480,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 ent_px = ox + dw * entity_ratio
                 near   = abs(px - ent_px) < 170
 
-                if event == "npc"   and near and keys_pressed["space"]:
+                if event == "npc" and entity_id["name"] != "rien"  and near and keys_pressed["space"]:
                     stop_tp_screen(); keys_pressed["space"] = False; shop(e, biome); return
                 if event == "enemy" and entity_id["name"] != "rien" and near and keys_pressed["space"]:
                     stop_tp_screen(); keys_pressed["space"] = False; combat(e, biome, entity_id); return
