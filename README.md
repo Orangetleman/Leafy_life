@@ -19,6 +19,8 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 -> remplacement du visuel de la planète après avancement (Eva/Chris)                                        FAIT
 -> écriture de tous les dialogues (Eva)                                                                     EN COURS
 -> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              EN COURS
+-> Régler bug de débloquage de biome                                                                        EN COURS
+-> rééquilibrer l'économie en augmentant la production                                                      FAIT
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 

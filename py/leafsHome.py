@@ -219,7 +219,7 @@ def create_progress_bar(leaf, label, on_used=None):
 
 
 # ──────────────────────────────────────────────────────────────
-#  Bouton de récolte
+#  Bouton de récolte individuel (dans le modal leaf)
 # ──────────────────────────────────────────────────────────────
 def create_harvest_button(leaf, on_harvested=None):
     pending  = int(leaf.pending_currency)
@@ -269,7 +269,7 @@ def create_harvest_button(leaf, on_harvested=None):
 # ──────────────────────────────────────────────────────────────
 #  Modal leaf
 # ──────────────────────────────────────────────────────────────
-def open_leaf_modal(page: ft.Page, leaf):
+def open_leaf_modal(page: ft.Page, leaf, on_harvested_global=None):
 
     def close_modal(e):
         # Retire l'overlay de page.overlay — évite l'accumulation d'overlays invisibles
@@ -282,6 +282,8 @@ def open_leaf_modal(page: ft.Page, leaf):
 
     def on_stat_used():
         modal_content.content = build_content()
+        if on_harvested_global:
+            on_harvested_global()
         page.update()
 
     def build_content():
@@ -312,7 +314,7 @@ def open_leaf_modal(page: ft.Page, leaf):
                 create_progress_bar(leaf, "Attaque",       on_used=on_stat_used),
                 create_progress_bar(leaf, "Level",         on_used=on_stat_used),
                 ft.Divider(color="#444"),
-                # ── Bouton récolte ───────────────────────────────
+                # ── Bouton récolte individuel ─────────────────────
                 create_harvest_button(leaf, on_harvested=on_stat_used),
             ],
             scroll="auto",
@@ -376,7 +378,7 @@ def _build_leafs_home(page: ft.Page) -> list:
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_CLICKED
         leaf_row.update()
         await asyncio.sleep(0.05)
-        open_leaf_modal(page, leaf)
+        open_leaf_modal(page, leaf, on_harvested_global=refresh_harvest_btns)
         await asyncio.sleep(0.2)
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR
         leaf_row.update()
@@ -388,6 +390,74 @@ def _build_leafs_home(page: ft.Page) -> list:
         # un délai pouvant aller jusqu'à 30 secondes sur l'effet hover. ──────────────
         leaf_row.bgcolor = LEAF_BUTTON_BG_COLOR_HOVER if e.data else LEAF_BUTTON_BG_COLOR
         leaf_row.update()
+
+    # ── Helpers pour les boutons de récolte globale ───────────────────────────────────
+    def get_pending_total(specie: str) -> int:
+        return sum(int(l.pending_currency) for l in leafmanager.owned if l.species == specie)
+
+    # Textes de montant référencés pour mise à jour dynamique sans rebuild complet
+    o2_amount_text  = ft.Text("0", size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_HARVEST_BUTTON_TEXT_COLOR)
+    co2_amount_text = ft.Text("0", size=13, weight=ft.FontWeight.BOLD, color=LEAF_CARD_HARVEST_BUTTON_TEXT_COLOR)
+
+    def refresh_harvest_btns():
+        pending_o2  = get_pending_total("plant")
+        pending_co2 = get_pending_total("animal")
+
+        o2_amount_text.value  = str(pending_o2)
+        co2_amount_text.value = str(pending_co2)
+
+        harvest_O2_btn.opacity  = 1.0 if pending_o2  > 0 else 0.4
+        harvest_CO2_btn.opacity = 1.0 if pending_co2 > 0 else 0.4
+
+        harvest_O2_btn.bgcolor  = LEAF_CARD_HARVEST_BUTTON_BG_COLOR if pending_o2  > 0 else LEAF_CARD_HARVEST_BUTTON_BG_EMPTY_COLOR
+        harvest_CO2_btn.bgcolor = LEAF_CARD_HARVEST_BUTTON_BG_COLOR if pending_co2 > 0 else LEAF_CARD_HARVEST_BUTTON_BG_EMPTY_COLOR
+
+        harvest_O2_btn.on_click  = (lambda e: (leafmanager.harvest_all("plant"),  refresh_harvest_btns())) if pending_o2  > 0 else None
+        harvest_CO2_btn.on_click = (lambda e: (leafmanager.harvest_all("animal"), refresh_harvest_btns())) if pending_co2 > 0 else None
+
+        harvest_O2_btn.tooltip  = f"Récolter tout ({pending_o2} O2)"   if pending_o2  > 0 else "Rien à récolter"
+        harvest_CO2_btn.tooltip = f"Récolter tout ({pending_co2} CO2)" if pending_co2 > 0 else "Rien à récolter"
+
+        # Ne mettre à jour que si les contrôles sont déjà montés sur la page —
+        # evite le RuntimeError lors du premier appel dans populate_list() au chargement.
+        try:
+            harvest_O2_btn.update()
+            harvest_CO2_btn.update()
+        except RuntimeError:
+            pass
+
+    game_clock.add_callback(refresh_harvest_btns)
+
+    def make_harvest_btn(amount_text_widget: ft.Text, currency: str):
+        """Construit un bouton de récolte globale pour une espèce donnée."""
+        btn = ft.Container(
+            content=ft.Column([
+                ft.Text("🌾", size=22),
+                ft.Text(currency, size=11, weight=ft.FontWeight.BOLD,
+                        color=LEAF_CARD_HARVEST_BUTTON_TEXT_COLOR),
+                amount_text_widget,
+            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.CENTER, spacing=2),
+            width=140, height=90,
+            border_radius=10,
+            bgcolor=LEAF_CARD_HARVEST_BUTTON_BG_EMPTY_COLOR,
+            border=ft.border.all(1, LEAF_CARD_HARVEST_BUTTON_BORDER_COLOR),
+            alignment=ft.Alignment(0, 0),
+            opacity=0.4,
+            animate=ft.Animation(150, ft.AnimationCurve.EASE_IN_OUT),
+        )
+
+        def on_hover(e, b=btn, currency=currency):
+            # Ne réagit au hover que si le bouton est actif (opacity == 1)
+            if b.opacity == 1.0:
+                b.bgcolor = LEAF_CARD_HARVEST_BUTTON_BG_HOVER_COLOR if e.data else LEAF_CARD_HARVEST_BUTTON_BG_COLOR
+                b.update()
+
+        btn.on_hover = on_hover
+        return btn
+
+    harvest_O2_btn  = make_harvest_btn(o2_amount_text,  "O2")
+    harvest_CO2_btn = make_harvest_btn(co2_amount_text, "CO2")
 
     def populate_list(query=""):
         items = []
@@ -434,6 +504,7 @@ def _build_leafs_home(page: ft.Page) -> list:
             items.append(leaf_row)
 
         leaf_column.controls = items
+        refresh_harvest_btns()
         page.update()
 
     search = ft.Container(
@@ -446,7 +517,7 @@ def _build_leafs_home(page: ft.Page) -> list:
             bgcolor=LEAF_SHEARCHBAR_BG_COLOR,
             border_color=LEAF_SHEARCHBAR_BORDER_COLOR,
             focused_border_color=LEAF_SHEARCHBAR_BORDER_COLOR_FOCUSED,
-            width=300,
+            width=400,
         ),
         alignment=ft.Alignment.CENTER,
         padding=4,
@@ -459,12 +530,28 @@ def _build_leafs_home(page: ft.Page) -> list:
     return [ft.Container(
         content=ft.Column([
             ft.Container(
-                content=ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD,
-                                color=LEAF_TITLE_COLOR, text_align=ft.TextAlign.CENTER),
-                padding=5,
-                alignment=ft.Alignment.CENTER,
+                ft.Row(
+                    controls=[
+                        harvest_O2_btn,
+                        ft.Container(
+                            ft.Column([
+                                ft.Container(
+                                    content=ft.Text("Vos Leafs", size=22, weight=ft.FontWeight.BOLD,
+                                                    color=LEAF_TITLE_COLOR, text_align=ft.TextAlign.CENTER),
+                                    padding=5,
+                                    alignment=ft.Alignment.CENTER,
+                                ),
+                                search,
+                            ], spacing=10, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
+                            expand=True,
+                            alignment=ft.Alignment.CENTER,
+                        ),
+                        harvest_CO2_btn,
+                    ],
+                    alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                ),
+                padding=ft.padding.symmetric(horizontal=20),
             ),
-            search,
             ft.Divider(),
             list_container,
         ], expand=True),

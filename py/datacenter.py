@@ -435,7 +435,7 @@ class LeafStat:
         nut_base_ratio  = self.nutrients / 100.0
         nut_boost_ratio = self.nutrients_boost / self.NUTRIENTS_BOOST_MAX
         hyd_ratio       = self.hydration / 100.0
-        ratio = (nut_base_ratio + hyd_ratio) / 2.0 + (nut_boost_ratio * 0.5)
+        ratio = ((nut_base_ratio + hyd_ratio) / 2.0 + (nut_boost_ratio * 0.5))*2.5
         self.pending_currency += ratio
 
     # ── Récolte ───────────────────────────────────────────────────────────────────────────
@@ -460,6 +460,11 @@ class LeafManager:
             return
         self.owned.append(LeafStat(leaf))
         print(f"{leaf['name']} ajouté à votre collection !")
+    
+    def harvest_all(self, specie:str="plant"):
+        for leaf in self.owned:
+            if leaf.species == specie:
+                leaf.harvest()
 
 
 class InventoryManager:
