@@ -5,20 +5,20 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 -> bouton retour planète (Eva)                                                                              FAIT
 -> placement du sprite (et des ennemis/PNJ/objets si besoin) (Chris)                                        FAIT
 -> interaction PNJ/objets/ennemi avec la touche (Eva)                                                       FAIT
--> mode combat:
+-> mode combat:                                                                                             FAIT
   - interface (Eva)                                                                                         FAIT
-  - boutons (Eva)                                                                                           EN COURS
-  - stats (Chris)
-  - onglet leafs (Chris)
-  - affichage du leaf sélectionné (Eva)
-  - logique de combat (Eva)                                                                                 EN COURS
+  - boutons (Eva)                                                                                           FAIT
+  - stats (Chris)                                                                                           FAIT
+  - onglet leafs (Chris)                                                                                    FAIT
+  - affichage du leaf sélectionné (Eva)                                                                     FAIT
+  - logique de combat (Eva)                                                                                 EN COURS (le leaf ne ''meurt'' pas)
 -> wandering shop (Chris)                                                                                   FAIT
 -> "pages vides", compléter tp() + faire des objets récupérables (Eva)                                      FAIT
 -> pages lore (la mort)                                                                                     FAIT
 -> adaptation aux autres biomes (Eva)                                                                       FAIT
 -> remplacement du visuel de la planète après avancement (Eva/Chris)                                        FAIT
--> écriture de tous les dialogues (Eva)
--> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)
+-> écriture de tous les dialogues (Eva)                                                                     EN COURS
+-> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              EN COURS
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 

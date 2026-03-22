@@ -415,9 +415,9 @@ def _planet(page: ft.Page, navigate) -> list:
             return ft.Container(content=ft.Image(src=src, width=w, height=h), visible=visible)
 
         if event == "enemy":
-            entity_id = random.choice([ENEMIES[0],ENEMIES[1],ENEMIES[2]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
+            entity_id = random.choice([b for b in ENEMIES[:3] if b["biome"] == [biome]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
         elif event == "npc":
-            entity_id = random.choice(NPCS);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
+            entity_id = random.choice([b for b in NPCS if b["biome"] == biome]);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
         elif event == "empty":
             entity_id = random.choice(OBJECTS); entity_container = _make_entity(entity_id["visual"], EMPTY_W, EMPTY_H); entity_w = EMPTY_W
         else:
@@ -485,8 +485,11 @@ def _planet(page: ft.Page, navigate) -> list:
                 if event == "enemy" and near and keys_pressed["space"]:
                     stop_tp_screen(); keys_pressed["space"] = False; combat(e, biome, entity_id); return
                 if event == "empty" and near and keys_pressed["space"]:
-                    if first_sip[0] and entity_id["gives"] == "Eau minérale":
-                        inventory_manager.append_item(ITEMS[1], 3)
+                    if first_sip[0]:
+                        if entity_id["gives"] == "Eau minérale":
+                            inventory_manager.append_item(ITEMS[1], 3)
+                        elif entity_id["gives"] == "Herbe":
+                            inventory_manager.append_item(ITEMS[2], 4)
                         first_sip[0] = False; entity_container.visible = False; page.update()
                     keys_pressed["space"] = False
                 if event == "lore" and near and keys_pressed["space"]:

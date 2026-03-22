@@ -47,13 +47,13 @@ ENEMIES = [
 # ------------------------------------ Npcs palette --------------------------------------
 NPCS = [
     { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png"},
-    { "id": 1, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"}
+    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"}
 ]
 
 # ------------------------------------ Objects palette -----------------------------------
 OBJECTS = [
     { "id": 1, "name": "flaque", "visual": "assets/imgs/icons/flaque.png",    "gives": "Eau minérale"},
-    { "id": 2, "name": "rien",   "visual": "assets/imgs/icons/Undefined.png", "gives": "Eau minérale"}
+    { "id": 2, "name": "herbe",   "visual": "assets/imgs/items/grass.png", "gives": "Herbe"}
 ]
 
 # ------------------------------------ Events palette ------------------------------------
