@@ -805,15 +805,17 @@ def _planet(page: ft.Page, navigate) -> list:
         )
 
         # ── Menu 3 colonnes ────────────────────────────────────────────────────────────
-        col_stats = ft.Column([
-            ft.Container(content=leaf_img_w, width=55, height=55,
-                        bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[0], PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[1]),
-                        border_radius=8, padding=3),
-            leaf_name_t, leaf_hp_bar, leaf_hp_t, leaf_atk_t, leaf_type_t, shield_hp_t,
-            ft.Divider(color=PLANET_COMBAT_MENU_DIVIDER_COLOR, height=8),
-            ft.Text("Ennemi", size=10, color=PLANET_COMBAT_MENU_ENEMY_LABEL_COLOR),
-            enemy_hp_bar, enemy_hp_t,
-        ], spacing=3, expand=True)
+        col_stats = ft.Container(
+            ft.Column([
+                ft.Container(content=leaf_img_w, width=55, height=55,
+                            bgcolor=ft.Colors.with_opacity(PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[0], PLANET_COMBAT_MENU_LEAF_IMG_BG_COLOR[1]),
+                            border_radius=8, padding=3),
+                leaf_name_t, leaf_hp_bar, leaf_hp_t, leaf_atk_t, leaf_type_t, shield_hp_t,
+                ft.Divider(color=PLANET_COMBAT_MENU_DIVIDER_COLOR, height=8),
+                ft.Text("Ennemi", size=10, color=PLANET_COMBAT_MENU_ENEMY_LABEL_COLOR),
+                enemy_hp_bar, enemy_hp_t,
+            ], spacing=3, expand=True),
+            padding=10)
 
         col_actions = ft.Column([
             action_status, btn_atk, btn_comp,
