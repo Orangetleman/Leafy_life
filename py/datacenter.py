@@ -583,13 +583,20 @@ s1 = ["Tiens, un pissenlit...",
         "Je vais te protéger des locaux, et je souhaite voir le monde au delà de ma motte de terre!",
         "Eh bien, si t'insistes, je ne suis pas contre un peu de compagnie pour la route.",
         ]
-s2 = ["caca",
-        "feur",
+s2 = ["Que fais un crabe ici, loin de son habitat naturel?",
+        "Qui va là?","Bonjour, je ne suis qu'un simple voyageur, savez vous où -", 
+        "Pas un pas de plus! Revenez d'où vous venez, je n'ai pas d'affaires à faire avec ceux qui ralentissent ma mission.", 
+        "Vous ne semblais pas en très bonne santé.", 
+        "Cela ne vous regarde pas!",
+        "Un crabe sans eau ne survivra pas longtemps.",
+        "Partez !",
+        "Une mission, vous dites? Dans cet état? Prenez cette gourde d'eau au moins -", 
+        "ASSER!"
         ]
 
 
 LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1},
-        {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
+        {'dialogue':s2,'visual':"assets/imgs/npc/crab.png",'combat':True,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},

@@ -722,7 +722,7 @@ def _planet(page: ft.Page, navigate) -> list:
             if leaf_type == 1:
                 # Attacker : +10% ATK de base + 5% par niveau (fonctionnel dès niveau 0)
                 player_turn[0] = False; set_buttons(False)
-                bonus = int(leaf.atk * (0.10 + leaf.level * 0.05))
+                bonus = int(leaf.atk * (0.50 + leaf.level * 0.05))
                 dmg   = leaf.atk + leaf.atk_boost + bonus
                 await animate_attack_player(dmg)
                 enemy_hp[0] -= dmg
@@ -894,11 +894,11 @@ def _planet(page: ft.Page, navigate) -> list:
         def on_end():
             page.on_resize = None
             scene_actu[0] += 1
-            if scene_actu[0] == 2:
-                biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
-            if scene_actu[0] == 3:
-                biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
             if scene_actu[0] == 4:
+                biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
+            if scene_actu[0] == 9:
+                biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
+            if scene_actu[0] == 14:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
