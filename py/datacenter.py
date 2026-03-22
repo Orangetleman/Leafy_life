@@ -13,10 +13,18 @@ ENEMIES = [
     {
         "id": 1, "name": "Crabe", "rarity": "common",
         "atk": 3, "hp": 10,
-        "biome": ["plain"], "lvl": 1,
+        "biome": ["lac"], "lvl": 1,
         "visual": "assets/imgs/npc/crab.png",
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
         "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 1, "name": "Ours", "rarity": "common",
+        "atk": 7, "hp": 30,
+        "biome": ["foret"], "lvl": 1,
+        "visual": "assets/imgs/npc/crab.png",
+        "met": False, "prez": "Un ours.",
+        "reward": {"currency": "CO2", "amount": 20},
     },
     {
         "id": 2, "name": "Snake", "rarity": "rare",
