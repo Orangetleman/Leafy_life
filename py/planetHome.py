@@ -902,6 +902,10 @@ def _planet(page: ft.Page, navigate) -> list:
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
         locuteur   = LORE[n]["visual"]
+        if not LORE[n]["combat"]:
+            entity = next(b for b in LEAFS.values() if b["img"] == locuteur)
+        else:
+            entity = next(b for b in ENEMIES if b["visual"] == locuteur)
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
         bg_img     = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg         = ft.Container(content=bg_img, left=offset_x, top=offset_y)
@@ -921,7 +925,24 @@ def _planet(page: ft.Page, navigate) -> list:
 
         def on_end():
             page.on_resize = None
+            boite = explique(entity)
+            if boite is not None:
+                page.overlay.append(boite)
+                page.update()
+                def toi(key):
+                    if key == pynput_keyboard.Key.space:
+                        listener.stop()
+                        page.overlay.remove(boite)
+                        page.update()
+                        suite()
+                listener = pynput_keyboard.Listener(on_press=toi)
+                listener.start()
+            else:
+                suite()
+
+        def suite():
             scene_actu[0] += 1
+            page.on_resize = None
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:
@@ -938,22 +959,28 @@ def _planet(page: ft.Page, navigate) -> list:
             else:
                 enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
                 combat(e, biome, enemy)
+        
 
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
-        page.add(ft.Stack([bg, npc_sprite, sprite, paroles], expand=True))
+        preset  = [bg, npc_sprite, sprite, paroles]
+        page.add(ft.Stack(preset, expand=True))
 
     def explique(entity):
-        if entity.get("met") == False:
+        if entity["met"] == False:
             boite = ft.Container(
-                content=ft.Text(entity.get("prez", ""), size=20, color="white"),
-                bgcolor="black", alignment=ft.Alignment.CENTER_LEFT,
-                height=page.height, width=page.width * 0.5,
-                padding=20, border=ft.border.all(3, "green"),
+                content=ft.Text(entity["prez"], size=20, color="white"),
+                bgcolor='black',
+                alignment=ft.Alignment.CENTER_LEFT,
+                height=page.height,   
+                width=page.width * 0.5,      
+                padding=20,
+                border=ft.border.all(3, "green"),
                 border_radius=ft.border_radius.all(20),
             )
             entity["met"] = True
             return boite
-        return None
+        else:
+            return None
 
     # ─────────────────────────────────────────────────────────────────────────────────────
     def retourneur(e):
