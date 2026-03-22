@@ -11,7 +11,7 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
   - stats (Chris)                                                                                           FAIT
   - onglet leafs (Chris)                                                                                    FAIT
   - affichage du leaf sélectionné (Eva)                                                                     FAIT
-  - logique de combat (Eva)                                                                                 EN COURS (le leaf ne ''meurt'' pas)
+  - logique de combat (Eva)                                                                                 FAIT
 -> wandering shop (Chris)                                                                                   FAIT
 -> "pages vides", compléter tp() + faire des objets récupérables (Eva)                                      FAIT
 -> pages lore (la mort)                                                                                     FAIT
@@ -22,12 +22,12 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 
--> ajout des cinématiques (Chris) 
+-> ajout des cinématiques (Chris)                                                                           A FAIRE
 -> ajout de la musique (Eva)                                                                                EN COURS
--> ajouts mineurs (on verra a la fin) :
-  tutoriel
+-> ajouts mineurs (on verra a la fin) :                                                                     EN COURS
+  tutoriel                                                                                                  A FAIRE
   rapport                                                                                                   EN COURS
-  reiquilibrage                                                                                                 
+  reiquilibrage                                                                                             EN COURS  
 
 Problématique : Comment éduquer en divertissant ?
 
