@@ -26,6 +26,14 @@ ENEMIES = [
         "met": False, "prez": "Un serpent agile. Difficile à esquiver.",
         "reward": {"currency": "O2", "amount": 18},
     },
+    {
+        "id": 1, "name": "Crabefaible", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["plain"], "lvl": 1,
+        "visual": "assets/imgs/npc/crabfaible.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
@@ -616,7 +624,7 @@ s2 = ["Que fais un crabe ici, loin de son habitat naturel?",
 
 
 LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1},
-        {'dialogue':s2,'visual':"assets/imgs/npc/crab.png",'combat':True,"add":None},
+        {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
