@@ -152,7 +152,6 @@ def _planet(page: ft.Page, navigate) -> list:
     running         = [True]
     focused         = [True]
 
-    # --- LA SEULE MODIFICATION : On utilise run_thread pour pynput ---
     def start_keyboard_listener():
         def on_press(key):
             if not running[0]: return False
