@@ -5,9 +5,9 @@ import flet.canvas as cv
 
 def _tuto(page: ft.Page):
     page.clean()
-    tab = ["assets/imgs/biomes/arriere_plain.png","assets/imgs/biomes/arriere_forest.png","assets/imgs/biomes/arriere_lake.png"]
+    tab = ["assets/imgs/biomes/arriere_mountain.png","assets/imgs/biomes/arriere_forest.png","assets/imgs/biomes/arriere_lake.png"]
     i = [0]
-    img = ft.Image(src="assets/imgs/biomes/arriere_plain.png", border_radius=100)
+    img = ft.Image(src=tab[i[0]], border_radius=100)
     imgcont = ft.Container(img,alignment=ft.Alignment.CENTER, expand=True,padding=100)
 
     def apres():

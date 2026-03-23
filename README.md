@@ -27,7 +27,7 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 -> ajout des cinématiques (Chris)                                                                           EN COURS
 -> ajout de la musique (Eva)                                                                                EN COURS
 -> ajouts mineurs (on verra a la fin) :                                                                     EN COURS
-  tutoriel                                                                                                  EN COURS
+  tutoriel                                                                                                  FAIT
   rapport                                                                                                   EN COURS 
 
 Problématique : Comment éduquer en divertissant ?
