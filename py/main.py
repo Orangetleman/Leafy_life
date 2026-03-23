@@ -11,6 +11,7 @@ import subprocess
 from datacenter import *
 from leafsHome import _build_leafs_home
 from planetHome import _planet
+from planetHome import scene_actu
 from inventoryHome import _build_inventory_home
 from shopHome import _build_shop_home
 from tuto import _tuto
@@ -96,6 +97,7 @@ def _build_navbar(navigate) -> ft.Row:
 
 
 def main(page: ft.Page, page_name: str = "tuto") -> None:
+    page.window.maximized = True
     page.title      = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor    = "#1a1a1a"
@@ -163,4 +165,5 @@ if __name__ == "__main__":
     _seed_test_data()
     ft.run(main)
 
-    play_intro_video(VIDEO_PATH, BASE_DIR)
+    if scene_actu[0] >= len(LORE)-1:
+        play_intro_video(VIDEO_PATH, BASE_DIR)
