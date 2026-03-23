@@ -1012,6 +1012,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     # ─────────────────────────────────────────────────────────────────────────────────────
     def retourneur(e):
+        music.play("assets/musics/Projet 3.wav", loop=True)
         page.on_resize = None; page.clean(); navigate("planet")
 
     initial_stack = build_planet_screen()
