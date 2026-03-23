@@ -821,6 +821,13 @@ def _planet(page: ft.Page, navigate) -> list:
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
                 music.stop()
+                biome_musics = {
+                    "plain":   "assets/musics/combat.wav",
+                    "forest":    "assets/musics/forest.wav",
+                    "montain": None,
+                    "lake":      None,
+                }
+                music.play(biome_musics[biome], loop=True)
                 tp(None, biome)
             else:
                 action_status.value = "Défaite..."; action_status.color = PLANET_COMBAT_STATUS_ENEMY_COLOR
@@ -828,6 +835,8 @@ def _planet(page: ft.Page, navigate) -> list:
                 await asyncio.sleep(2)
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
+                music.stop()
+                music.play("assets/musics/Projet 3.wav", loop=True)
                 navigate("planet")
 
         # ── Boutons ────────────────────────────────────────────────────────────────────
