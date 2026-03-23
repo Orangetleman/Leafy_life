@@ -24,12 +24,11 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 
--> ajout des cinématiques (Chris)                                                                           A FAIRE
+-> ajout des cinématiques (Chris)                                                                           EN COURS
 -> ajout de la musique (Eva)                                                                                EN COURS
 -> ajouts mineurs (on verra a la fin) :                                                                     EN COURS
-  tutoriel                                                                                                  A FAIRE
-  rapport                                                                                                   EN COURS
-  reiquilibrage                                                                                             EN COURS  
+  tutoriel                                                                                                  EN COURS
+  rapport                                                                                                   EN COURS 
 
 Problématique : Comment éduquer en divertissant ?
 
