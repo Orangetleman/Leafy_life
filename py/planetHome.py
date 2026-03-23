@@ -8,16 +8,6 @@ import asyncio
 import threading
 import random
 
-# Charge la musique
-
-import pyglet
-"""music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
-music_player = pyglet.media.Player()
-music_player.queue(music)
-music_player.loop = True
-music_player.play()
-threading.Thread(target=pyglet.app.run, daemon=True).start()"""
-
 
 biomes_state = {
     "pp":       True,
@@ -383,7 +373,7 @@ def _planet(page: ft.Page, navigate) -> list:
             def make_handler(b, k):
                 def handler(e):
                     if biome_musics[k]:
-                        music.play(biome_musics[k])
+                        music.play(biome_musics[k], loop=True)
                     tp(e, b)
                 return handler
 
@@ -536,6 +526,7 @@ def _planet(page: ft.Page, navigate) -> list:
     # ── Combat ────────────────────────────────────────────────────────────────────────────
     def combat(e, biome, enemy):
         page.clean()
+        music.play("assets/musics/frogmusic.wav", loop=True)
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
 
         # ── État ──────────────────────────────────────────────────────────────────────
@@ -829,6 +820,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 await asyncio.sleep(2)
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
+                music.stop()
                 tp(None, biome)
             else:
                 action_status.value = "Défaite..."; action_status.color = PLANET_COMBAT_STATUS_ENEMY_COLOR
