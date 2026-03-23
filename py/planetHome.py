@@ -152,25 +152,33 @@ def _planet(page: ft.Page, navigate) -> list:
     running         = [True]
     focused         = [True]
 
-    def on_press(key):
-        if not focused[0] or dialogue_active[0]:
-            return
-        try:
-            if key.char in ("d", "D"):   keys_pressed["right"] = True
-            elif key.char in ("q", "Q"): keys_pressed["left"]  = True
-        except AttributeError:
-            if   key == pynput_keyboard.Key.right:  keys_pressed["right"] = True
-            elif key == pynput_keyboard.Key.left:   keys_pressed["left"]  = True
-            elif key == pynput_keyboard.Key.space:  keys_pressed["space"] = True
+    # --- LA SEULE MODIFICATION : On utilise run_thread pour pynput ---
+    def start_keyboard_listener():
+        def on_press(key):
+            if not running[0]: return False
+            try:
+                k = key.char.lower()
+                if k in ('d'): keys_pressed["right"]     = True
+                if k in ('q', 'a'): keys_pressed["left"] = True
+            except AttributeError:
+                if key == pynput_keyboard.Key.right: keys_pressed["right"] = True
+                if key == pynput_keyboard.Key.left:  keys_pressed["left"]  = True
+                if key == pynput_keyboard.Key.space: keys_pressed["space"] = True
 
-    def on_release(key):
-        try:
-            if key.char in ("d", "D"):   keys_pressed["right"] = False
-            elif key.char in ("q", "Q"): keys_pressed["left"]  = False
-        except AttributeError:
-            if   key == pynput_keyboard.Key.right:  keys_pressed["right"] = False
-            elif key == pynput_keyboard.Key.left:   keys_pressed["left"]  = False
-            elif key == pynput_keyboard.Key.space:  keys_pressed["space"] = False
+        def on_release(key):
+            if not running[0]: return False
+            try:
+                k = key.char.lower()
+                if k in ('d'): keys_pressed["right"]     = False
+                if k in ('q', 'a'): keys_pressed["left"] = False
+            except AttributeError:
+                if key == pynput_keyboard.Key.right: keys_pressed["right"] = False
+                if key == pynput_keyboard.Key.left:  keys_pressed["left"]  = False
+                if key == pynput_keyboard.Key.space: keys_pressed["space"] = False
+
+        with pynput_keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+            listener.join()
+
 
     def on_window_event(e):
         if e.type == ft.WindowEventType.FOCUS:
@@ -203,7 +211,8 @@ def _planet(page: ft.Page, navigate) -> list:
                     page.run_thread(page.update)
                     def finish():
                         listener.stop()
-                        if on_end: on_end()
+                        if on_end:
+                            page.run_thread(on_end)
                     threading.Thread(target=finish, daemon=True).start()
 
         msg = scene[i_scene[0]]
@@ -448,11 +457,10 @@ def _planet(page: ft.Page, navigate) -> list:
 
         page.on_resize = lambda ev: (update_layout(ev.width, ev.height), page.update())
 
-        new_listener = pynput_keyboard.Listener(on_press=on_press, on_release=on_release)
-        new_listener.start()
+        page.run_thread(start_keyboard_listener)
 
         def stop_tp_screen(ev=None):
-            running[0] = False; page.on_resize = None; new_listener.stop()
+            running[0] = False; page.on_resize = None
 
         page.stop_current_screen = stop_tp_screen
         page.window.on_event     = on_window_event
@@ -480,26 +488,28 @@ def _planet(page: ft.Page, navigate) -> list:
                 ent_px = ox + dw * entity_ratio
                 near   = abs(px - ent_px) < 170
 
-                if event == "npc" and entity_id["name"] != "rien"  and near and keys_pressed["space"]:
-                    stop_tp_screen(); keys_pressed["space"] = False; shop(e, biome); return
-                if event == "enemy" and entity_id["name"] != "rien" and near and keys_pressed["space"]:
-                    stop_tp_screen(); keys_pressed["space"] = False; combat(e, biome, entity_id); return
-                if event == "empty" and near and keys_pressed["space"]:
-                    if first_sip[0]:
-                        if entity_id["gives"] == "Eau minérale":
-                            inventory_manager.append_item(ITEMS[1], 3)
-                        elif entity_id["gives"] == "Herbe":
-                            inventory_manager.append_item(ITEMS[2], 4)
-                        first_sip[0] = False; entity_container.visible = False; page.update()
+                if keys_pressed["space"]:
                     keys_pressed["space"] = False
-                if event == "lore" and near and keys_pressed["space"]:
-                    keys_pressed["space"] = False; stop_tp_screen()
-                    declenche_scene(e, biome, scene_actu[0]); return
+                    if event == "npc" and entity_id["name"] != "rien"  and near:
+                        stop_tp_screen(); shop(e, biome); return
+                    if event == "enemy" and entity_id["name"] != "rien" and near:
+                        running[0] = False; stop_tp_screen(); combat(e, biome, entity_id); return
+                    if event == "empty" and near:
+                        if first_sip[0]:
+                            if entity_id["gives"] == "Eau minérale":
+                                inventory_manager.append_item(ITEMS[1], 3)
+                            elif entity_id["gives"] == "Herbe":
+                                inventory_manager.append_item(ITEMS[2], 4)
+                            first_sip[0] = False; entity_container.visible = False; page.update()
+                    if event == "lore" and near:
+                        stop_tp_screen()
+                        declenche_scene(e, biome, scene_actu[0]); return
 
                 if moved: new_sprite.left = sprite_page_x[0]; page.update()
                 await asyncio.sleep(0.025)
 
         page.add(ft.Stack(preset, expand=True))
+        page.update()
         page.run_task(tp_game_loop)
 
     # ─────────────────────────────────────────────────────────────────────────────────────
@@ -953,13 +963,17 @@ def _planet(page: ft.Page, navigate) -> list:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
                 if scene_actu[0] in (2, 3, 4):
+                    print(f"Navigation vers la page planet, scene_actu[0]: {scene_actu[0]}")
                     navigate("planet")
                 else:
                     tp(e, biome)
             else:
                 enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
                 combat(e, biome, enemy)
-        
+                on_planet_resize()
+                print(f"Navigation vers un combat, scene_actu[0]: {scene_actu[0]}")
+            page.overlay.clear()
+            page.update()
 
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
         preset  = [bg, npc_sprite, sprite, paroles]
@@ -980,7 +994,7 @@ def _planet(page: ft.Page, navigate) -> list:
             entity["met"] = True
             return boite
         else:
-            return None
+            return
 
     # ─────────────────────────────────────────────────────────────────────────────────────
     def retourneur(e):
@@ -988,7 +1002,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     initial_stack = build_planet_screen()
 
-    def on_planet_resize(ev):
+    def on_planet_resize(ev=None):
         new_stack = build_planet_screen()
         if hasattr(page, "body_container"):
             page.body_container.content = ft.Column(controls=[new_stack], expand=True)

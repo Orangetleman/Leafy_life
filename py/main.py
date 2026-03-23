@@ -38,31 +38,31 @@ def find_player(base_dir: str) -> tuple[str, list] | tuple[None, None]:
             ["--fullscreen", "--play-and-exit", "--no-video-title-show", "--no-osd"],
         ),
     ]
- 
+
     for exe, args in candidates:
         if os.path.isfile(exe):
             print(f"✅ Lecteur trouvé : {exe}")
             return exe, args
- 
+
     return None, None
- 
- 
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Lecture vidéo — bloque jusqu'à la fin
 # ─────────────────────────────────────────────────────────────────────────────
- 
+
 def play_intro_video(video_path: str, base_dir: str) -> None:
     if not os.path.isfile(video_path):
         print(f" !  Vidéo introuvable : {video_path}")
         return
- 
+
     exe, args = find_player(base_dir)
- 
+
     if exe is None:
         print(" !  Aucun lecteur trouvé. Installe mpv dans PROJET/tools/mpv/")
         print("    Téléchargement : https://mpv.io/installation/")
         return
- 
+
     subprocess.run([exe] + args + [video_path])
 
 
@@ -155,9 +155,9 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
 
 if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
- 
+
     VIDEO_PATH = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
- 
+
     play_intro_video(VIDEO_PATH, BASE_DIR)
 
     _seed_test_data()
