@@ -160,3 +160,5 @@ if __name__ == "__main__":
 
     _seed_test_data()
     ft.run(main)
+
+    play_intro_video(VIDEO_PATH, BASE_DIR)
