@@ -13,6 +13,7 @@ from leafsHome import _build_leafs_home
 from planetHome import _planet
 from inventoryHome import _build_inventory_home
 from shopHome import _build_shop_home
+from tuto import _tuto
 
 
 # la video
@@ -87,13 +88,14 @@ def _build_navbar(navigate) -> ft.Row:
             ft.Button("Shop",      on_click=lambda e: navigate("shop")),
             ft.Button("Inventory", on_click=lambda e: navigate("inventory")),
             ft.Button("Planet",    on_click=lambda e: navigate("planet")),
+            ft.Button("Tuto",    on_click=lambda e: navigate("tuto")),
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         spacing=12,
     )
 
 
-def main(page: ft.Page, page_name: str = "planet") -> None:
+def main(page: ft.Page, page_name: str = "tuto") -> None:
     page.title      = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor    = "#1a1a1a"
@@ -125,7 +127,7 @@ def main(page: ft.Page, page_name: str = "planet") -> None:
         elif name == "planet":
             body = _planet(page, show_screen)
         else:
-            body = _planet(page, show_screen)
+            body = _tuto(page)
 
         body_container = ft.Container(
             content=ft.Column(controls=body, expand=True),
