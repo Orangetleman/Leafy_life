@@ -52,13 +52,13 @@ def find_player(base_dir: str) -> tuple[str, list] | tuple[None, None]:
  
 def play_intro_video(video_path: str, base_dir: str) -> None:
     if not os.path.isfile(video_path):
-        print(f"⚠️  Vidéo introuvable : {video_path}")
+        print(f" !  Vidéo introuvable : {video_path}")
         return
  
     exe, args = find_player(base_dir)
  
     if exe is None:
-        print("⚠️  Aucun lecteur trouvé. Installe mpv dans PROJET/tools/mpv/")
+        print(" !  Aucun lecteur trouvé. Installe mpv dans PROJET/tools/mpv/")
         print("    Téléchargement : https://mpv.io/installation/")
         return
  
