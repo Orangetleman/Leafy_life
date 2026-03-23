@@ -9,15 +9,15 @@ import threading
 import random
 
 # Charge la musique
-'''
+
 import pyglet
-music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
+"""music = pyglet.media.load("assets/musics/frogmusic.wav", streaming=False)
 music_player = pyglet.media.Player()
 music_player.queue(music)
 music_player.loop = True
 music_player.play()
-threading.Thread(target=pyglet.app.run, daemon=True).start()
-'''
+threading.Thread(target=pyglet.app.run, daemon=True).start()"""
+
 
 biomes_state = {
     "pp":       True,
@@ -347,7 +347,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     # ── Écran planète ─────────────────────────────────────────────────────────────────────
     def build_planet_screen():
-        pw = page.width  or 800
+        pw = page.width or 800
         ph = (page.height or 600) - getattr(page, "navbar_height", 60)
 
         planet_disp_w, planet_disp_h, planet_left, planet_top = compute_planet_layout(pw, ph)
@@ -365,6 +365,13 @@ def _planet(page: ft.Page, navigate) -> list:
         active_biome_keys = [bk for bk in ["plaine", "foret", "montagne", "lac"] if biomes_state[bk]]
         trail_canvas_obj  = build_trail_canvas(pw, ph, active_biome_keys, {})
 
+        biome_musics = {
+            "plaine":   "assets/musics/combat.wav",
+            "foret":    "assets/musics/forest.wav",
+            "montagne": None,
+            "lac":      None,
+        }
+
         btn_containers = []
         for bk in ["plaine", "foret", "montagne", "lac"]:
             if not biomes_state[bk]:
@@ -373,10 +380,18 @@ def _planet(page: ft.Page, navigate) -> list:
             label     = {"plaine": "explore plaine", "foret": "explore foret",
                         "montagne": "explore montagne", "lac": "explore lac"}[bk]
             pos = compute_button_pos(bk, pw, ph)
+
+            def make_handler(b, k):
+                def handler(e):
+                    if biome_musics[k]:
+                        music.play(biome_musics[k])
+                    tp(e, b)
+                return handler
+
             btn = ft.Container(
                 content=ft.ElevatedButton(
                     ft.Text(label, size=20, color=PLANET_EXPLORE_BUTTON_TEXT_COLOR),
-                    on_click=lambda e, b=biome_str: tp(e, b),
+                    on_click=make_handler(biome_str, bk),   
                     bgcolor=PLANET_EXPLORE_BUTTON_BG_COLOR,
                 ),
                 height=BTN_H, **pos,
@@ -499,7 +514,7 @@ def _planet(page: ft.Page, navigate) -> list:
                             if entity_id["gives"] == "Eau minérale":
                                 inventory_manager.append_item(ITEMS[1], 3)
                             elif entity_id["gives"] == "Herbe":
-                                inventory_manager.append_item(ITEMS[2], 4)
+                                inventory_manager.append_item(ITEMS[4], 2)
                             first_sip[0] = False; entity_container.visible = False; page.update()
                     if event == "lore" and near:
                         stop_tp_screen()

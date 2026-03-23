@@ -104,6 +104,13 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
     page.padding    = 0
     page.spacing    = 0
 
+    def on_window_event(e):
+        if e.data == "close":
+            music.stop()
+            page.window.destroy()
+
+    page.window.on_event = on_window_event 
+
     def show_screen(name: str):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
@@ -159,11 +166,14 @@ if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     VIDEO_PATH = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
-
+    music.play("assets/musics/frogmusic.wav")
     play_intro_video(VIDEO_PATH, BASE_DIR)
 
     _seed_test_data()
+    music.play("assets/musics/Projet 3.wav", loop=True)
     ft.run(main)
 
     if scene_actu[0] >= len(LORE)-1:
+        music.play("assets/musics/frogmusic.wav", loop=True)
         play_intro_video(VIDEO_PATH, BASE_DIR)
+        music.stop()

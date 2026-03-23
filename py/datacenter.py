@@ -636,6 +636,33 @@ class GameClock:
 game_clock = GameClock()
 
 
+import pyglet
+import threading
+
+class MusicManager:
+    def __init__(self):
+        self._player = pyglet.media.Player()
+        self._player.loop = True
+        # Thread pyglet tourne en arrière-plan en permanence
+        threading.Thread(target=pyglet.app.run, daemon=True).start()
+
+    def play(self, path: str, loop: bool = True):
+        """Charge et joue une musique, arrête l'ancienne."""
+        self._player.pause()
+        # Vider la queue
+        self._player = pyglet.media.Player()
+        self._player.loop = loop
+        self._player.volume = 0.1
+        source = pyglet.media.load(path, streaming=False)
+        self._player.queue(source)
+        self._player.play()
+
+    def stop(self):
+        self._player.pause()
+
+music = MusicManager()
+
+
 # ── Dialogues ────────────────────────────────────────────────────────────────────────────
 victoire = ["bravo! vous avez vaicu l'ennemi!"]
 
@@ -671,3 +698,225 @@ LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
         ]
+
+"""PROLOGUE — La Mare de Vaseille
+Scène 1 · ONCLE BROM
+[Il émerge de la vase. S'assoit à côté de Froggy sans le regarder.]
+BROM — Les œufs... ils vont bien ?
+BROM — Lyse me parlait d'un lac. Loin au nord. Elle disait que c'était le seul endroit où des œufs pouvaient vraiment éclore en sécurité.
+BROM — Je sais pas où c'est exactement. Commence par les herbes hautes, vers le nord.
+BROM — [Il se lève lentement.] Le reste, tu trouveras.
+
+ACTE I — La Plaine des Herbes Hautes
+
+Scène 1 · MOUTON
+[Un mouton broute tranquillement. Il lève la tête en entendant Froggy.]
+MOUTON — Oh. Une grenouille. On voit pas souvent ça par ici.
+MOUTON — T'as l'air de chercher quelque chose.
+MOUTON — [Il regarde vers le nord.] La forêt, c'est par là. Les herbes deviennent plus sombres, tu peux pas rater.
+MOUTON — Moi j'y vais jamais. Trop de racines sous les pattes.
+[Il reprend son broutage.]
+
+Scène 2 · PISSENLIT + LE CRABE (Combat)
+[Un pissenlit pousse seul dans un creux humide. Un crabe des champs le grignote.]
+CRABE — [Il lève une pince vers Froggy.] Circulez. Ce pissenlit est à moi.
+[Froggy ne bouge pas.]
+CRABE — J'ai dit circulez !
+[SÉQUENCE DE COMBAT — Froggy esquive les pinces 3 fois et repousse le crabe hors du creux.]
+CRABE — [Il recule, mauvais.] Bon. T'as gagné. Pour cette fois.
+[Froggy ramasse le pissenlit. Texte de collecte :]
+
+🌼 Pissenlit obtenu. (Voir dialogues de collecte)
+
+CRABE — [S'éloigne en grommelant.] La forêt est par là-haut. Et le crabe qui connaît le passage dans les rochers, c'est Grumb. T'as intérêt à être poli avec lui, lui.
+
+Scène 3 · CRIQUET
+[Un criquet est coincé sous une touffe d'herbe aplatie par le vent.]
+CRIQUET — [Il stridule doucement.] Hé. Hé ! Là-dessous !
+CRIQUET — Je suis bloqué depuis ce matin. Tu peux soulever ça ?
+[Froggy soulève la touffe. Le criquet s'étire.]
+CRIQUET — Ah. Merci.
+CRIQUET — [Il regarde Froggy partir.] Tu vas à la forêt ?
+CRIQUET — Moi j'essaie d'y aller depuis trois jours mais j'arrive pas à traverser le terrain sec au milieu. Je me dessèche.
+CRIQUET — [Timidement.] Je peux venir avec toi ?
+[CHOIX — Froggy fait signe que oui.]
+CRIQUET — Super. Je saute, tu portes les œufs, on s'en sort.
+[Le criquet rejoint l'équipe temporaire. Il suit Froggy jusqu'à la lisière de la forêt.]
+
+Scène 4 · LE CRIQUET · À la lisière de la forêt
+[Froggy arrive devant les premiers arbres. Le criquet s'arrête, ébloui.]
+CRIQUET — C'est... grand. Je savais pas que c'était aussi grand.
+CRIQUET — [Il regarde Froggy.] Merci de m'avoir amené jusqu'ici.
+CRIQUET — En échange... les libellules. J'en vois passer souvent, elles viennent de là-bas — du nord. Et leurs ailes sont mouillées. Pas de l'eau d'ici.
+CRIQUET — S'il y a une grande eau quelque part, c'est dans cette direction.
+[Il disparaît dans les herbes.]
+
+Scène 5 · TRÈFLE (Collectible)
+[Un trèfle à quatre feuilles dépasse d'une touffe. Froggy s'arrête.]
+[Animation : Froggy le regarde longuement. Il le prend doucement.]
+
+🍀 Trèfle obtenu. (Voir dialogues de collecte)
+
+
+ACTE II — Le Bois de l'Ombre Verte
+
+Scène 1 · ABEILLE
+[Elle atterrit juste devant Froggy. Directe.]
+ABEILLE — Toi. Tu peux m'aider.
+ABEILLE — Des fleurs isolées au secteur est — trop loin pour mes sœurs. Toi tu peux y aller.
+ABEILLE — En échange, j'ai du miel. Scellé à la cire.
+[CHOIX — Froggy accepte.]
+ABEILLE — Huit fleurs. Elles sentent la vanille. Tu peux pas rater.
+[Après la quête :]
+ABEILLE — Bien. Voilà le miel.
+ABEILLE — [Elle repart.] Tu sauras quoi en faire quand il le faudra.
+
+Scène 2 · LOUP
+[Un loup est assis sur le chemin. Il regarde Froggy arriver sans bouger.]
+LOUP — [Long silence.]
+LOUP — T'as pas peur.
+LOUP — [Il regarde les œufs.]
+LOUP — Je mange pas les grenouilles. Ni les œufs.
+LOUP — [Il se lève, s'écarte du chemin.] La montagne est au nord. Après la forêt. Il y a un vieux bouc qui connaît le passage — il s'appelle Grumb.
+LOUP — Dis-lui que t'as traversé ma forêt sans fuir. Ça l'impressionnera peut-être.
+[Il disparaît entre les arbres.]
+
+Scène 3 · SAPIN
+[Un jeune sapin pousse au milieu des feuillus. Incongruité totale.]
+SAPIN — [Voix douce, un peu perdu.] T'es aussi perdu que moi ?
+SAPIN — Moi je devrais être dans la montagne. Un oiseau a dû lâcher ma graine trop tôt.
+SAPIN — [Il regarde vers le nord.] La montagne... c'est par là. Après les derniers chênes, l'air change. Il devient froid et sec. Tu le sentiras avant de le voir.
+SAPIN — [Doucement.] J'espère que t'y arriveras, toi.
+
+Scène 4 · FRAISIER (Collectible)
+[Un fraisier sauvage pousse au pied d'un tronc. Une fraise rouge, parfaite.]
+[Animation : Froggy s'accroupit. Regarde la fraise. La prend. Regarde les œufs.]
+
+🍓 Fraisier obtenu. (Voir dialogues de collecte)
+
+
+Scène 5 · LA NUIT DE PLUIE (Scène automatique — pas de PNJ)
+[Il n'y a pas de personnage ici. Froggy est seul sous un grand champignon. La pluie tombe fort.]
+[Animation automatique : Froggy enveloppe les œufs dans la feuille imperméable. Il les regarde. Les œufs tressaillent légèrement.]
+[Il n'y a rien à faire. Juste attendre. Écouter la pluie.]
+[Au matin, un oiseau chante quelque part dans les branches. Froggy reprend la route.]
+
+ACTE III — Les Crêtes de Pierre Mousse
+
+Scène 1 · CHÈVRE (= Grumb dans la Bible, remplacé par la chèvre de la liste)
+[Elle est postée sur un rocher. Elle mâche quelque chose d'inconnu.]
+CHÈVRE — [Elle lève la tête.] Un passage dans la montagne. C'est ça que tu veux.
+CHÈVRE — [Elle voit le pot de miel.] ... C'est du vrai miel ça ?
+[CHOIX — Froggy lui tend le pot.]
+CHÈVRE — [Elle le prend, satisfaite.] Le passage est à deux heures d'ici. Tu suis la mousse rouge sur les rochers jusqu'à l'entaille dans la paroi.
+CHÈVRE — Et écoute bien : traverse avant que le soleil passe derrière les crêtes. Le gel arrive vite ici. La nuit sur les rochers mouillés... c'est pas une bonne façon de finir un voyage.
+
+Scène 2 · AIGLE
+[Elle tourne au-dessus de Froggy depuis un moment. Elle se pose.]
+AIGLE — T'es une grenouille. Et tu montes dans la montagne.
+AIGLE — [Elle regarde les œufs.] Et t'en portes.
+AIGLE — Je survole le lac chaque matin. C'est bleu et calme. Des nénuphars partout. Des grenouilles dessus au coucher du soleil.
+AIGLE — [Elle le regarde un moment.] Tu veux voir ? Juste voir.
+[CHOIX — Froggy s'accroche à son dos.]
+[SÉQUENCE DE VOL — 45 secondes. Aucun dialogue. Juste la vue. La musique.]
+[Froggy voit le lac pour la première fois. La lumière est exactement celle que Lyse décrivait.]
+[Varka le repose. Repart sans un mot supplémentaire.]
+
+Scène 3 · ARBUSTE (Collectible)
+[Un arbuste de montagne, tout tordu par le vent. Une branche flexible, idéale.]
+
+🌿 Arbuste obtenu. (Voir dialogues de collecte)
+
+
+Scène 4 · POISSON (aperçu dans un ruisseau de montagne)
+[Un petit ruisseau descend des crêtes. Un poisson minuscule remonte le courant.]
+POISSON — [Il s'arrête, regarde Froggy depuis l'eau.] T'es bien loin de chez toi, grenouille.
+POISSON — Moi je remonte depuis le lac. Chaque année.
+POISSON — [Il reprend son chemin dans le courant.] L'eau que tu sens là... c'est son eau. Suis-la en descendant. Elle t'y amène direct.
+[Il disparaît sous les pierres.]
+
+Scène 5 · ROSEAUX (collectible, bord d'un ruisseau de montagne)
+[Des tiges de roseaux poussent au bord du ruisseau.]
+
+🌾 Roseaux obtenus. (Voir dialogues de collecte)
+
+
+ACTE IV — Le Lac des Eaux Tranquilles
+
+Scène 1 · NÉNUPHAR (collectible, premier contact)
+[Froggy arrive au bord du lac. Un nénuphar flotte près de la rive.]
+[Animation : Froggy s'arrête. Regarde l'eau. L'eau est exactement comme Lyse la décrivait.]
+[Il tend la patte. Le nénuphar se rapproche.]
+
+🪷 Nénuphar obtenu. (Voir dialogues de collecte)
+
+
+Scène 2 · NAIA (gardienne du lac)
+[Elle émerge des roseaux. Vieille grenouille. Elle regarde Froggy sans surprise.]
+NAIA — Je t'attendais. Enfin... toi ou quelqu'un comme toi.
+NAIA — Ce lac attire ceux qui ont quelque chose de précieux à protéger.
+NAIA — [Elle regarde les œufs.] Viens. Il y a un endroit. À l'abri des roseaux. L'eau y est douce le matin. Les hérons n'y vont pas.
+[Elle guide Froggy jusqu'à l'endroit.]
+NAIA — [Après le dépôt des œufs.] Ils vont éclore. Je le sais à la façon dont ils bougent.
+NAIA — [Elle repart dans les roseaux.] Tu as bien fait de venir.
+
+Scène 3 · POISSON (lac — deuxième rencontre)
+[Le même petit poisson du ruisseau de montagne. Il nage près de Froggy.]
+POISSON — Ah. T'es arrivé.
+POISSON — [Il tourne en cercle autour des œufs.]
+POISSON — Ce coin-là, je le connais bien. L'eau y est stable. Profonde. Bonne température toute l'année.
+POISSON — [Il repart dans les profondeurs.] Bonne chance, grenouille de montagne.
+
+Scène 4 · ROSEAUX (scène automatique — vent dans les roseaux)
+[Pas de personnage. Juste le vent dans les roseaux au coucher du soleil.]
+[Animation automatique : Froggy reste dans l'eau à côté des œufs. Les œufs pulsent doucement. La phosphorescence verte commence.]
+[Le ciel devient noir. Les étoiles apparaissent. Froggy ne bouge pas.]
+[FIN DU JEU.]
+
+
+DIALOGUES DE COLLECTE — Toutes les feuilles et plantes
+Ces textes s'affichent dans une petite boîte en bas de l'écran quand Froggy ramasse un élément. Courts. Doux. Pas de speaker — juste le texte.
+
+🌼 PISSENLIT
+
+Un pissenlit. Lyse en mettait parfois dans ses cheveux. Elle disait que les plantes qui poussent n'importe où sont les plus courageuses.
+
+
+🍀 TRÈFLE
+
+Un trèfle à quatre feuilles. Froggy n'a jamais cru à la chance. Mais il le prend quand même.
+
+
+🌿 ARBUSTE (branche souple)
+
+Une branche d'arbuste de montagne. Solide malgré sa taille. Elle a résisté à tous les vents.
+
+
+🌾 ROSEAUX (tige)
+
+Une tige de roseau. Creuse et légère. Les roseaux bordent les grands lacs. On approche.
+
+
+🪷 NÉNUPHAR
+
+Un nénuphar du Lac des Eaux Tranquilles. Froggy le tient un moment avant de le poser sur l'eau. Lyse aurait aimé ça.
+
+
+🌲 SAPIN (branche)
+
+Une branche de sapin tombée. Elle sent la résine et le froid. L'odeur de la montagne.
+
+
+🍓 FRAISIER (feuille)
+
+Une feuille de fraisier sauvage. Douce sur les œufs. Elle garde un peu d'humidité.
+
+
+🌸 FLEUR DE PIERRE (rare — montagne)
+
+Une fleur qui pousse dans une fissure de roche, sans terre autour, sans eau visible. Juste une fleur, là, dans le rien.
+
+
+🍄 CHAMPIGNON LUMINEUX (forêt, la nuit)
+
+Il brille d'un bleu pâle dans l'obscurité. La forêt a ses propres étoiles."""
