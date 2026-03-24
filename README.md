@@ -65,8 +65,22 @@ Si vous préférez le faire à la main :
 
 ## 🕹️ Commandes et Utilisation
 - **Navigation :** Utilisez la barre de menu pour basculer entre la Planète, l'Inventaire et le Shop.
-- **Interactions :** Utilisez la touche **[Espace]** pour interagir avec les PNJ et les objets sur la carte.
+- **Interactions :** Utilisez la touche **[Espace]** pour interagir avec les PNJ et les objets sur la carte. Utiliser les touches **[d,flèche_droite]** pour aller à droite et **[a,q,flèche_gauche]** pour aller à gauche.
 - **Objectif :** Collectez des ressources (O2/CO2), gérez vos "Leafs" et progressez dans l'histoire en affrontant des ennemis ou en commerçant dans le shop itinérant.
+
+## 🛠️ Diagnostic et Résolutions (Bugs connus)
+Bien que le projet soit opérationnel, deux comportements mineurs liés à l'interface Flet et à la gestion du rafraîchissement graphique sur certaines configurations peuvent survenir. Voici comment les résoudre :
+
+### 🪳 Problème n°1 : Latence d'actualisation des dialogues (Lore)
+Lors des séquences de narration, il peut arriver que l'interface visuelle ne se mette pas à jour immédiatement. Ce phénomène est dû à l'encapsulation profonde de certaines fonctions asynchrones qui peut parfois retarder le rafraîchissement de la page.
+
+**✅ Solution :** Il suffit de provoquer un événement de redimensionnement manuel pour forcer Flet à recalculer le rendu. Pour cela, déplacez légèrement la fenêtre, changez sa taille ou passez en mode plein écran.
+
+### 🪳 Problème n°2 : Blocage de l'affichage après la vidéo d'introduction
+Sur certaines machines, la transition entre le lecteur vidéo et le lancement du moteur de jeu peut laisser l'écran noir ou figé sur un début de chargement.
+
+**✅ Solution :** Ce bug est lié à l'initialisation du mode plein écran automatique. Pour débloquer l'affichage, activez manuellement le mode plein écran via le bouton standard situé en haut à droite de la fenêtre de l'application.
+
 
 ## 📂 Organisation du code
 Le projet est structuré de manière modulaire pour faciliter la lecture et la maintenance :
