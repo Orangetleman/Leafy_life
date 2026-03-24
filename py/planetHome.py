@@ -395,7 +395,7 @@ def _planet(page: ft.Page, navigate) -> list:
         page.clean()
         running[0]            = True
         # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
-        event                 = choose_event()
+        event                 = "lore"
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False
@@ -977,9 +977,10 @@ def _planet(page: ft.Page, navigate) -> list:
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (2, 3, 4):
+                if scene_actu[0] in (4,9,14):
                     print(f"Navigation vers la page planet, scene_actu[0]: {scene_actu[0]}")
                     navigate("planet")
+                    music.play("assets/musics/Projet 3.wav", loop=True)
                 else:
                     tp(e, biome)
             else:

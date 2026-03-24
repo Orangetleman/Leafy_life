@@ -42,7 +42,7 @@ def find_player(base_dir: str) -> tuple[str, list] | tuple[None, None]:
 
     for exe, args in candidates:
         if os.path.isfile(exe):
-            print(f"✅ Lecteur trouvé : {exe}")
+            print(f" Lecteur trouvé : {exe}")
             return exe, args
 
     return None, None
