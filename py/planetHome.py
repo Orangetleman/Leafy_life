@@ -395,7 +395,7 @@ def _planet(page: ft.Page, navigate) -> list:
         page.clean()
         running[0]            = True
         # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
-        event                 = "lore"
+        event                 = choose_event()
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False
@@ -428,9 +428,9 @@ def _planet(page: ft.Page, navigate) -> list:
             return ft.Container(content=ft.Image(src=src, width=w, height=h), visible=visible)
 
         if event == "enemy":
-            entity_id = random.choice([b for b in ENEMIES[:7] if b["biome"] == [biome]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
+            entity_id = random.choice([b for b in ENEMIES[:10] if b["biome"] == [biome]]); entity_container = _make_entity(entity_id["visual"], ENEMY_W, ENEMY_H); entity_w = ENEMY_W
         elif event == "npc":
-            entity_id = random.choice([b for b in NPCS if b["biome"] == biome]);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
+            entity_id = random.choice([b for b in NPCS[:7] if b["biome"] == biome]);   entity_container = _make_entity(entity_id["visual"], NPC_W, NPC_H);     entity_w = NPC_W
         elif event == "empty":
             entity_id = random.choice(OBJECTS); entity_container = _make_entity(entity_id["visual"], EMPTY_W, EMPTY_H); entity_w = EMPTY_W
         else:
