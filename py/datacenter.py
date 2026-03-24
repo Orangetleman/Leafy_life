@@ -21,15 +21,15 @@ ENEMIES = [
     {
         "id": 2, "name": "Ours", "rarity": "common",
         "atk": 7, "hp": 30,
-        "biome": ["forest"], "lvl": 1,
+        "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
         "met": False, "prez": "Un ours.",
         "reward": {"currency": "CO2", "amount": 20},
     },
     {
-        "id": 3, "name": "Snake", "rarity": "rare",
+        "id": 3, "name": "Serpent", "rarity": "rare",
         "atk": 5, "hp": 20,
-        "biome": ["plain"], "lvl": 3,
+        "biome": ["mountain"], "lvl": 3,
         "visual": "assets/imgs/npc/snake.png",
         "met": False, "prez": "Un serpent agile. Difficile à esquiver.",
         "reward": {"currency": "O2", "amount": 18},
@@ -66,11 +66,51 @@ ENEMIES = [
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
         "reward": {"currency": "O2", "amount": 8},
     },
+    {
+        "id": 8, "name": "Champignon", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["forest"], "lvl": 1,
+        "visual": "assets/imgs/npc/mushroom.png",
+        "met": False, "prez": "un champi",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 9, "name": "Mante religieuse", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["plain"], "lvl": 1,
+        "visual": "assets/imgs/npc/mantis.png",
+        "met": False, "prez": "un insecte",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 10, "name": "Guepe", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["plain"], "lvl": 1,
+        "visual": "assets/imgs/npc/wasp.png",
+        "met": False, "prez": "un guepe",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 11, "name": "Ronces", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["forest"], "lvl": 1,
+        "visual": "assets/imgs/npc/thorns.png",
+        "met": False, "prez": "un plante qui gratte",
+        "reward": {"currency": "O2", "amount": 8},
+    },
 
 
     #LORE ENEMIES
     {
-        "id": 8, "name": "Crabefaible", "rarity": "common",
+        "id": 12, "name": "Crabefaible", "rarity": "common",
+        "atk": 3, "hp": 10,
+        "biome": ["plain"], "lvl": 1,
+        "visual": "assets/imgs/npc/crabfaible.png",
+        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "reward": {"currency": "O2", "amount": 8},
+    },
+    {
+        "id": 12, "name": "Crabefaible", "rarity": "common",
         "atk": 3, "hp": 10,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/crabfaible.png",
@@ -81,12 +121,17 @@ ENEMIES = [
 
 # ------------------------------------ Npcs palette --------------------------------------
 NPCS = [
-    { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png"},
-    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png"},
+    { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 7, "name": "chamois", "biome": "mountain", "visual": "assets/imgs/items/chamois.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 9, "name": "spider", "biome": "forest", "visual": "assets/imgs/items/spider.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+
     { "id": 3, "name": "rien", "biome": "plain", "visual": "assets/imgs/items/rien.png"},
     { "id": 4, "name": "rien", "biome": "forest", "visual": "assets/imgs/items/rien.png"},
     { "id": 5, "name": "rien", "biome": "mountain", "visual": "assets/imgs/items/rien.png"},
-    { "id": 5, "name": "rien", "biome": "lake", "visual": "assets/imgs/items/rien.png"}
+    { "id": 6, "name": "rien", "biome": "lake", "visual": "assets/imgs/items/rien.png"},
+    
+    { "id": 8, "name": "criquet", "biome": "plain", "visual": "assets/imgs/items/criquet.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
 ]
 
 # ------------------------------------ Objects palette -----------------------------------
@@ -249,15 +294,15 @@ TYPES = [
 # ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
     2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0, "met": False, "prez":"hehe" },
-    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0, "met": False, "prez":"hehe" },
-    5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0, "met": False, "prez":"hehe" },
-    8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0, "met": False, "prez":"hehe" },
-    9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0, "met": False, "prez":"hehe" },
-    12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0, "met": False, "prez":"hehe" },
-    13: { "id": 13, "name": "trefle",    "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "plant", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",       "xp": 0, "met": False, "prez":"hehe" },
+    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0, "met": False, "prez":"L’abeille européennee (Apis mellifera) est connu pour sa capacité à produire du miel. Organisée en colonie dans une ruche, la reine est la seule à pouvoir pondre des œufs. Les abeilles se défendent en utilisant un dard, et peuvent mourir à la suite de ça. Elles se nourrissent de fleurs, et sont chassées par les guêpes et frelons ainsi que de nombreux oiseaux insectivores et certains batraciens. Les abeilles sont capables de communiquer entre elles par des mouvements pour indiquer l’emplacement de fleurs par exemple." },
+    5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0, "met": False, "prez":"Le loup gris (Canis Lupus) fait parti de la famille des canidés, et est un carnivore. Il se nourrit de grands herbivores comme les cerfs, de rongeurs, d’oiseaux et parfois de carcasses. Le loup est un superprédateur et est en haut de la chaîne alimentaire et n’a donc aucun prédateur naturel. Il a une morsure puissante, peut courir et nager, et a une ouïe très développée. C’est un animal territorial et social vivant en meute." },
+    8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0, "met": False, "prez":"Le poisson rouge ou carassin doré (Carassius auratus) est un poisson d’eau douce vivant en banc. Il est omnivore à tendance insectivore et détritivore, et est la proie des poissons-pêcheurs, des serpents aquatiques ainsi que de certains batraciens. Les femelles fécondées pondent des œufs pour se reproduire." },
+    9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0, "met": False, "prez":"La chèvre domestique (Capra hircus) est un mammifère herbivore ruminant de la famille des bovidés. Elle se nourrit essentiellement de mauvaise-herbe, et a pour prédateurs les renards, les chiens errants ainsi que les loups. Pour se défendre, elles peuvent utiliser leurs cornes, ou bien leur agilité pour grimper dans les arbres hors de la portée de leurs prédateurs." },
+    12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0, "met": False, "prez":" L’aigle royal (Aquila chrysaetos) est un rapace de la famille des accipitridae. Il utilise sa grande vitesse, son agilité et ses puissantes serres pour attraper ses proies, telles que des lapins, des marmottes, des écureuils et même des renards ainsi que des chèvres. Il pond des œufs et protège son vaste territoire. Considéré comme un superprédateur, seul le grand corbeau s’attaque à ses petits." },
+    13: { "id": 13, "name": "trefle",    "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "plant", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",       "xp": 0, "met": False, "prez":" Le trèfle rampant (Trifolium repens) est souvent considéré comme de la mauvaise-herbe, et sert de nourriture pour les ovins, bovins et certains cervidés. C’est une plante vivace dont les tiges peuvent atteindre 40 cm. Le trèfle produit des fleurs et des fruits et se développe très rapidement. Il peut être utilisé dans la médecine et n’est dangereux ni pour les humains ni pour les animaux domestiques." },
     1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0, "met": False, "prez":"hehe" },
-    4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0, "met": False, "prez":"hehe" },
-    6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0, "met": False, "prez":"hehe" },
+    4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0, "met": False, "prez":" Le sapin commun (Abies alba) est une espèce de conifère de la famille des pinacées, et est originaire d’Europe. Il produit des cônes appelés pomme de pin dans le but que les animaux puissent les disperser, semant ainsi leurs graines pour se dupliquer. Il peut être la cible de coléoptères, qui creusent des galeries dans son tronc, entrainant la mort de l’arbre." },
+    6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0, "met": False, "prez":" Le framboisier (Rubus idaeus) est une plante à fleur de la famille des rosacées. C’est une plante dressée produisant des fruits, les framboises, qui sont consommées par de nombreux insectes, tels que par exemple les papillons, les chenilles et les pucerons. Cela lui permet de disperser ses graines et donc de se multiplier." },
     7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0, "met": False, "prez":"hehe" },
     10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0, "met": False, "prez":"hehe" },
     11: { "id": 11, "name": "nénuphare", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0, "met": False, "prez":"hehe" },
