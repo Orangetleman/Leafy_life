@@ -355,10 +355,10 @@ def _planet(page: ft.Page, navigate) -> list:
         trail_canvas_obj  = build_trail_canvas(pw, ph, active_biome_keys, {})
 
         biome_musics = {
-            "plaine":   "assets/musics/combat.wav",
+            "plaine":   "assets/musics/plain.wav",
             "foret":    "assets/musics/forest.wav",
-            "montagne": None,
-            "lac":      None,
+            "montagne": "assets/musics/mountain.wav",
+            "lac":      "assets/musics/lake.wav",
         }
 
         btn_containers = []
@@ -526,7 +526,7 @@ def _planet(page: ft.Page, navigate) -> list:
     # ── Combat ────────────────────────────────────────────────────────────────────────────
     def combat(e, biome, enemy):
         page.clean()
-        music.play("assets/musics/frogmusic.wav", loop=True)
+        music.play("assets/musics/combat.wav", loop=True)
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
 
         # ── État ──────────────────────────────────────────────────────────────────────
@@ -822,10 +822,10 @@ def _planet(page: ft.Page, navigate) -> list:
                     l.reset_combat_boosts()
                 music.stop()
                 biome_musics = {
-                    "plain":   "assets/musics/combat.wav",
+                    "plain":   "assets/musics/plain.wav",
                     "forest":    "assets/musics/forest.wav",
-                    "montain": None,
-                    "lake":      None,
+                    "montain": "assets/musics/mountain.wav",
+                    "lake":      "assets/musics/lake.wav",
                 }
                 music.play(biome_musics[biome], loop=True)
                 tp(None, biome)
@@ -836,7 +836,7 @@ def _planet(page: ft.Page, navigate) -> list:
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
                 music.stop()
-                music.play("assets/musics/Projet 3.wav", loop=True)
+                music.play("assets/musics/lobby.wav", loop=True)
                 navigate("planet")
 
         # ── Boutons ────────────────────────────────────────────────────────────────────
@@ -977,10 +977,10 @@ def _planet(page: ft.Page, navigate) -> list:
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (4,9,14):
+                if scene_actu[0] in (5,10,15):
                     print(f"Navigation vers la page planet, scene_actu[0]: {scene_actu[0]}")
+                    music.play("assets/musics/lobby.wav", loop=True)
                     navigate("planet")
-                    music.play("assets/musics/Projet 3.wav", loop=True)
                 else:
                     tp(e, biome)
             else:
@@ -998,7 +998,7 @@ def _planet(page: ft.Page, navigate) -> list:
     def explique(entity):
         if entity["met"] == False:
             boite = ft.Container(
-                content=ft.Text(entity["prez"], size=20, color="white"),
+                content=ft.Text(entity["prez"], size=50, color="white"),
                 bgcolor='black',
                 alignment=ft.Alignment.CENTER_LEFT,
                 height=page.height,   
@@ -1014,7 +1014,7 @@ def _planet(page: ft.Page, navigate) -> list:
 
     # ─────────────────────────────────────────────────────────────────────────────────────
     def retourneur(e):
-        music.play("assets/musics/Projet 3.wav", loop=True)
+        music.play("assets/musics/lobby.wav", loop=True)
         page.on_resize = None; page.clean(); navigate("planet")
 
     initial_stack = build_planet_screen()
