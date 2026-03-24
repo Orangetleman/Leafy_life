@@ -411,8 +411,9 @@ def _planet(page: ft.Page, navigate) -> list:
         sprite_ratio  = [0.5]
         sprite_page_x = [offset_x + img_disp_w * sprite_ratio[0]]
 
+        new_sprite_img = ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180)
         new_sprite = ft.Container(
-            content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
+            content=new_sprite_img,
             animate_position=ft.Animation(50, ft.AnimationCurve.LINEAR),
         )
         new_sprite.bottom = ground_bot
@@ -475,8 +476,8 @@ def _planet(page: ft.Page, navigate) -> list:
             while running[0]:
                 moved = False
                 if not dialogue_active[0]:
-                    if keys_pressed["right"]: sprite_page_x[0] += SPRITE_SPEED; moved = True
-                    if keys_pressed["left"]:  sprite_page_x[0] -= SPRITE_SPEED; moved = True
+                    if keys_pressed["right"]: sprite_page_x[0] += SPRITE_SPEED; moved = True; new_sprite_img.src = "assets/imgs/leafs/Froggyd.png"
+                    if keys_pressed["left"]:  sprite_page_x[0] -= SPRITE_SPEED; moved = True; new_sprite_img.src = "assets/imgs/leafs/Froggy.png"
 
                 ox = layout["offset_x"]; dw = layout["img_disp_w"]; px = sprite_page_x[0]
                 if dw > 0: sprite_ratio[0] = (px - ox) / dw
