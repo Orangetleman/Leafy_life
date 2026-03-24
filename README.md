@@ -17,18 +17,18 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 -> pages lore (la mort)                                                                                     FAIT
 -> adaptation aux autres biomes (Eva)                                                                       FAIT
 -> remplacement du visuel de la planète après avancement (Eva/Chris)                                        FAIT
--> écriture de tous les dialogues (Eva)                                                                     EN COURS
--> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              EN COURS
+-> écriture de tous les dialogues (Eva)                                                                     FAIT
+-> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              FAIT ?
 -> Régler bug de débloquage de biome (Chris)                                                                ~ FAIT
 -> rééquilibrer l'économie en augmentant la production (Chris)                                              FAIT
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 
--> ajout des cinématiques (Chris) -> COMMENT CA "CHRIS"                                                     EN COURS
--> ajout de la musique (Eva)                                                                                EN COURS
+-> ajout des cinématiques                                                                                   jsp
+-> ajout de la musique (Eva)                                                                                BIENTÔT FINIT ?
 -> ajouts mineurs (on verra a la fin) :                                                                     EN COURS
   tutoriel                                                                                                  FAIT
-  rapport                                                                                                   EN COURS (avancé) 
+  rapport                                                                                                   BIENTÔT FINIT ?
 
 Problématique : Comment éduquer en divertissant ?
 
