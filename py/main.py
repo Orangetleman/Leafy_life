@@ -98,6 +98,7 @@ def _build_navbar(navigate) -> ft.Row:
 
 def main(page: ft.Page, page_name: str = "tuto") -> None:
     page.window.maximized = True
+    page.window.focused   = True
     page.title      = "Leafy Life"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor    = "#1a1a1a"
@@ -161,6 +162,7 @@ if __name__ == "__main__":
     VIDEO_PATH = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
     music.play("assets/musics/frogmusic.wav")
     play_intro_video(VIDEO_PATH, BASE_DIR)
+    time.sleep(0.8)
 
     _seed_test_data()
     music.play("assets/musics/lobby.wav", loop=True)
@@ -170,4 +172,5 @@ if __name__ == "__main__":
     if scene_actu[0] >= len(LORE):
         music.play("assets/musics/frogmusic.wav", loop=True)
         play_intro_video(VIDEO_PATH, BASE_DIR)
+        time.sleep(0.8)
         music.stop()

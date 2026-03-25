@@ -17,18 +17,18 @@ Leafy life is a game that improves your knowledge about the biodiversity and its
 -> pages lore (la mort)                                                                                     FAIT
 -> adaptation aux autres biomes (Eva)                                                                       FAIT
 -> remplacement du visuel de la planète après avancement (Eva/Chris)                                        FAIT
--> écriture de tous les dialogues (Eva)                                                                     EN COURS
--> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              EN COURS
+-> écriture de tous les dialogues (Eva)                                                                     FAIT
+-> ajout des boîtes de descriptions de toutes les rencontres/objets pour éducation (Eva/Chris)              FAIT ?
 -> Régler bug de débloquage de biome (Chris)                                                                ~ FAIT
 -> rééquilibrer l'économie en augmentant la production (Chris)                                              FAIT
 
 -> file "css" pour tout ce qui est couleurs (Chris)                                                         FAIT
 
--> ajout des cinématiques (Chris) -> COMMENT CA "CHRIS"                                                     EN COURS
--> ajout de la musique (Eva)                                                                                EN COURS
+-> ajout des cinématiques                                                                                   jsp
+-> ajout de la musique (Eva)                                                                                BIENTÔT FINIT ?
 -> ajouts mineurs (on verra a la fin) :                                                                     EN COURS
   tutoriel                                                                                                  FAIT
-  rapport                                                                                                   EN COURS (avancé) 
+  rapport                                                                                                   BIENTÔT FINIT ?
 
 Problématique : Comment éduquer en divertissant ?
 
@@ -65,8 +65,23 @@ Si vous préférez le faire à la main :
 
 ## 🕹️ Commandes et Utilisation
 - **Navigation :** Utilisez la barre de menu pour basculer entre la Planète, l'Inventaire et le Shop.
-- **Interactions :** Utilisez la touche **[Espace]** pour interagir avec les PNJ et les objets sur la carte.
+- **Interactions :** Utilisez la touche **[Espace]** pour interagir avec les PNJ et les objets sur la carte. Utiliser les touches **[d,flèche_droite]** pour aller à droite et **[a,q,flèche_gauche]** pour aller à gauche.
 - **Objectif :** Collectez des ressources (O2/CO2), gérez vos "Leafs" et progressez dans l'histoire en affrontant des ennemis ou en commerçant dans le shop itinérant.
+- **Système SEED :** La fonction _seed_test_data() permet d'obtenir des ressources illimitées normalement innaccessible à un vrai joueurs. La fonction permet de mettre de jeu en mode "développeur".
+
+## 🛠️ Diagnostic et Résolutions (Bugs connus)
+Bien que le projet soit opérationnel, deux comportements mineurs liés à l'interface Flet et à la gestion du rafraîchissement graphique sur certaines configurations peuvent survenir. Voici comment les résoudre :
+
+### 🪳 Problème n°1 : Latence d'actualisation des dialogues (Lore)
+Lors des séquences de narration, il peut arriver que l'interface visuelle ne se mette pas à jour immédiatement. Ce phénomène est dû à l'encapsulation profonde de certaines fonctions asynchrones qui peut parfois retarder le rafraîchissement de la page.
+
+**✅ Solution :** Il suffit de provoquer un événement de redimensionnement manuel pour forcer Flet à recalculer le rendu. Pour cela, déplacez légèrement la fenêtre, changez sa taille ou passez en mode plein écran.
+
+### 🪳 Problème n°2 : Blocage de l'affichage après la vidéo d'introduction
+Sur certaines machines, la transition entre le lecteur vidéo et le lancement du moteur de jeu peut laisser l'écran noir ou figé sur un début de chargement.
+
+**✅ Solution :** Ce bug est lié à l'initialisation du mode plein écran automatique. Pour débloquer l'affichage, activez manuellement le mode plein écran via le bouton standard situé en haut à droite de la fenêtre de l'application.
+
 
 ## 📂 Organisation du code
 Le projet est structuré de manière modulaire pour faciliter la lecture et la maintenance :
