@@ -772,13 +772,13 @@ s7 = ["Nous y sommes.",
       "Bonne chance pour la suite !",
       "(Moi aussi je ne t'oublierai jamais, ami.)"]
 
-LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1,"entity":"leaf"},
-        {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None,"entity":"nmi"},
-        {'dialogue':s3,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
-        {'dialogue':s4,'visual':"assets/imgs/leafs/Leaf_sheep.png",'combat':False,"add":2,"entity":"leaf"},
-        {'dialogue':s5,'visual':"assets/imgs/leafs/Leaf_bee.png",'combat':False,"add":3,"entity":"leaf"},
-        {'dialogue':s6,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":13,"entity":"leaf"},
-        {'dialogue':s7,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
+LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat':False, "add":1,    "entity":"leaf", "biome":"plain"},
+        {'dialogue':s2, 'visual':"assets/imgs/npc/crabfaible.png",       'combat':True,  "add":None, "entity":"nmi",  "biome":"plain"},
+        {'dialogue':s3, 'visual':"assets/imgs/npc/criquet.png",          'combat':False, "add":None, "entity":"npc",  "biome":"plain"},
+        {'dialogue':s4, 'visual':"assets/imgs/leafs/Leaf_sheep.png",     'combat':False, "add":2,    "entity":"leaf", "biome":"plain"},
+        {'dialogue':s5, 'visual':"assets/imgs/leafs/Leaf_bee.png",       'combat':False, "add":3,    "entity":"leaf", "biome":"plain"},
+        {'dialogue':s6, 'visual':"assets/imgs/leafs/Leaf_clover.png",    'combat':False, "add":13,   "entity":"leaf", "biome":"plain"},
+        {'dialogue':s7, 'visual':"assets/imgs/npc/criquet.png",          'combat':False, "add":None, "entity":"npc",  "biome":"plain"},
         ]
 
 

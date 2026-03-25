@@ -484,11 +484,14 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
 
                 if px <= ox:                    stop_tp_screen(); tp(e, biome); return
                 if px + SPRITE_W >= ox + dw:    stop_tp_screen(); tp(e, biome); return
-                if scene_actu[0] == 0:
+                
+                if scene_actu[0] == 0 and biome == LORE[0]["biome"]:
                     stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
-                if event == "lore" and scene_actu[0] >= len(LORE):
-                    if "lore" in EVENTS: EVENTS.remove("lore")
-                    stop_tp_screen(); tp(e, biome); return
+
+                if event == "lore" and near:
+                    if LORE[scene_actu[0]].get("biome", "plain") == biome:
+                        stop_tp_screen()
+                        declenche_scene(e, biome, scene_actu[0]); return
                 
 
 
