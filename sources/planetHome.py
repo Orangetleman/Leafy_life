@@ -133,7 +133,7 @@ def build_trail_canvas(page_w, page_h, active_biome_keys, button_refs):
 
 
 # ─────────────────────────────────────────────────────────────────────────────────────────
-def _planet(page: ft.Page, navigate) -> list:
+def _planet(page: ft.Page, navigate, on_close=None) -> list:
     page.title = "Planet"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
@@ -972,6 +972,7 @@ def _planet(page: ft.Page, navigate) -> list:
             scene_actu[0] += 1
             page.on_resize = None
 
+            if scene_actu[0] == len(LORE): on_close()
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:

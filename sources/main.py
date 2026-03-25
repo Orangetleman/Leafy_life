@@ -105,6 +105,9 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
     page.padding    = 0
     page.spacing    = 0
 
+    def _on_close():
+        page.window.close()
+
     def show_screen(name: str):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
@@ -128,7 +131,7 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
         elif name == "inventory":
             body = _build_inventory_home(page)
         elif name == "planet":
-            body = _planet(page, show_screen)
+            body = _planet(page, show_screen, on_close=_on_close)
         else:
             body = _tuto(page)
 
