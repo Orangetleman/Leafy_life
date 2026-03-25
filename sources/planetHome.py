@@ -549,7 +549,7 @@ def _planet(page: ft.Page, navigate) -> list:
         ex = offset_x + img_disp_w * 0.90 - SPRITE_W
 
         leafsprite = ft.Container(
-            content=ft.Image(src=current_leaf_ref[0].img if current_leaf_ref[0] else "assets/imgs/leafs/Froggy.png",
+            content=ft.Image(src=current_leaf_ref[0].img if current_leaf_ref[0] else "assets/imgs/leafs/Froggyd.png",
                             width=SPRITE_W, height=180),
             bottom=ground_bot, left=lx,
             animate_position=ft.Animation(200, ft.AnimationCurve.EASE_IN_OUT),
@@ -937,7 +937,7 @@ def _planet(page: ft.Page, navigate) -> list:
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
         bg_img     = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
         bg         = ft.Container(content=bg_img, left=offset_x, top=offset_y)
-        sprite     = ft.Container(content=ft.Image(src="assets/imgs/leafs/Froggy.png", width=SPRITE_W, height=180),
+        sprite     = ft.Container(content=ft.Image(src="assets/imgs/leafs/Froggyd.png", width=SPRITE_W, height=180),
                                   bottom=ground_bot, left=offset_x + img_disp_w * 0.10)
         npc_sprite = ft.Container(content=ft.Image(src=locuteur, width=SPRITE_W, height=180),
                                   bottom=ground_bot, left=offset_x + img_disp_w * 0.90 - SPRITE_W)
