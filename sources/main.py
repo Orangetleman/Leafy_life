@@ -26,7 +26,7 @@ def find_player(base_dir: str) -> tuple[str, list] | tuple[None, None]:
     candidates = [
         # mpv portable dans PROJET/tools/mpv/
         (
-            os.path.join(base_dir, "source", "tools", "mpv", "mpv.exe"),
+            os.path.join(base_dir, "sources", "tools", "mpv", "mpv.exe"),
             ["--fs", "--no-terminal", "--really-quiet", "--no-border"],
         ),
         # VLC si installé en standard
