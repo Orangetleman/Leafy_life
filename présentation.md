@@ -11,7 +11,7 @@ Le cœur du projet est porté par un duo de meilleurs amis de la classe de NSI, 
 
 - De ALMEIDA Christophe (Développeur) : Pilier technique. Il a programmé le main.py, LeafsHome.py, ShopHome.py, InventoryHome.py, Datacenter.py, Style.py, et a réalisé une grande partie de la première version en JavaScript. Il a une expertise particulière sur la structuration des données (dictionnaires, tableaux) et l'organisation du code.
 
-- PERLES Eva (Développeuse & Chef de projet) : Management, communication et rédaction des fichiers techniques. En programmation, elle a co-développé PlanetHome.py et le Datacenter.py. Elle s'est spécialisée sur l'utilisation des modules, l'implémentation des assets (images, sons), le scénario et la logique métier du jeu.
+- PERLES Eva (Développeuse et Chef de projet) : Management, communication et rédaction des fichiers techniques. En programmation, elle a co-développé PlanetHome.py et le Datacenter.py. Elle s'est spécialisée sur l'utilisation des modules, l'implémentation des assets (images, sons), le scénario et la logique métier du jeu.
 
 - Contributeurs précieux : Louis Vandevoorde (Musique), Augustin Louis (Scénario et Graphisme), Emka (Graphisme).
 
