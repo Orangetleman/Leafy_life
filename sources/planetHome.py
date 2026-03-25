@@ -486,6 +486,9 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 if px + SPRITE_W >= ox + dw:    stop_tp_screen(); tp(e, biome); return
                 if scene_actu[0] == 0:
                     stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
+                if event == "lore" and scene_actu[0] >= len(LORE):
+                    if "lore" in EVENTS: EVENTS.remove("lore")
+                    stop_tp_screen(); tp(e, biome); return
                 
 
 
@@ -973,18 +976,18 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
 
 
             if scene_actu[0] == len(LORE): await on_close()
-            if scene_actu[0] == 4:
+            if scene_actu[0] == 7:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
-            if scene_actu[0] == 9:
+            if scene_actu[0] == 10:
                 biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
-            if scene_actu[0] == 14:
+            if scene_actu[0] == 15:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
 
 
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (5, 10, 15):
+                if scene_actu[0] in (7, 10, 15):
                     music.play("assets/musics/lobby.wav", loop=True)
                     page.overlay.clear()
                     navigate("planet")

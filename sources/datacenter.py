@@ -770,7 +770,7 @@ s7 = ["Nous y sommes.",
       "Oui, merci d'avoir voyagé avec moi jusqu'ici, je ne t'oublierai jamais, promis!",
       "Alors, c'est ici qu'on se dit au-revoir, Criquet... Tu vas me manquer...",
       "Bonne chance pour la suite !",
-      "(Un ami qui )"]
+      "(Moi aussi je ne t'oublierai jamais, ami.)"]
 
 LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1,"entity":"leaf"},
         {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None,"entity":"nmi"},
@@ -780,6 +780,7 @@ LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':
         {'dialogue':s6,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":13,"entity":"leaf"},
         {'dialogue':s7,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
         ]
+
 
 
 
