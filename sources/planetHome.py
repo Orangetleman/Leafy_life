@@ -492,8 +492,6 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                     if LORE[scene_actu[0]].get("biome", "plain") == biome:
                         stop_tp_screen()
                         declenche_scene(e, biome, scene_actu[0]); return
-                
-
 
                 ent_px = ox + dw * entity_ratio
                 near   = abs(px - ent_px) < 170
