@@ -67,6 +67,7 @@ Si vous préférez le faire à la main :
 - **Navigation :** Utilisez la barre de menu pour basculer entre la Planète, l'Inventaire et le Shop.
 - **Interactions :** Utilisez la touche **[Espace]** pour interagir avec les PNJ et les objets sur la carte. Utiliser les touches **[d,flèche_droite]** pour aller à droite et **[a,q,flèche_gauche]** pour aller à gauche.
 - **Objectif :** Collectez des ressources (O2/CO2), gérez vos "Leafs" et progressez dans l'histoire en affrontant des ennemis ou en commerçant dans le shop itinérant.
+- **Système SEED :** La fonction _seed_test_data() permet d'obtenir des ressources illimitées normalement innaccessible à un vrai joueurs. La fonction permet de mettre de jeu en mode "développeur".
 
 ## 🛠️ Diagnostic et Résolutions (Bugs connus)
 Bien que le projet soit opérationnel, deux comportements mineurs liés à l'interface Flet et à la gestion du rafraîchissement graphique sur certaines configurations peuvent survenir. Voici comment les résoudre :

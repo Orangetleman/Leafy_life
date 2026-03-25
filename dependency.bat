@@ -26,6 +26,7 @@ echo Installation des dependances...
 python -m pip install --user flet --quiet --no-warn-script-location
 python -m pip install --user pyglet --quiet --no-warn-script-location
 python -m pip install --user pynput --quiet --no-warn-script-location
+python -m pip install --user pygame --quiet --no-warn-script-location
 
 echo.
 echo ============================================

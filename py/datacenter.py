@@ -681,29 +681,19 @@ class GameClock:
 game_clock = GameClock()
 
 
-import pyglet
-import threading
+from pygame import mixer
 
 class MusicManager:
     def __init__(self):
-        self._player = pyglet.media.Player()
-        self._player.loop = True
-        # Thread pyglet tourne en arrière-plan en permanence
-        threading.Thread(target=pyglet.app.run, daemon=True).start()
+        mixer.init()
 
     def play(self, path: str, loop: bool = True):
-        """Charge et joue une musique, arrête l'ancienne."""
-        self._player.pause()
-        # Vider la queue
-        self._player = pyglet.media.Player()
-        self._player.loop = loop
-        self._player.volume = 0.1
-        source = pyglet.media.load(path, streaming=False)
-        self._player.queue(source)
-        self._player.play()
+        mixer.music.load(path)
+        mixer.music.set_volume(0.1)
+        mixer.music.play(-1 if loop else 0)
 
     def stop(self):
-        self._player.pause()
+        mixer.music.stop()
 
 music = MusicManager()
 
