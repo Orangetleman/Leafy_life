@@ -970,13 +970,11 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         def suite():
             scene_actu[0] += 1
             page.on_resize = None
-<<<<<<< Updated upstream
+
 
             if scene_actu[0] == len(LORE): on_close()
-=======
-            if scene_actu[0] >= len(LORE)-1:
-                page.window.close() #a regler avec un on close
->>>>>>> Stashed changes
+
+
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:
