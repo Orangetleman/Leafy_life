@@ -735,14 +735,31 @@ s3 = ["[Un criquet est coincé sous une touffe d'herbe aplatie par le vent.]",
         "Tu vas à la forêt ?",
         "Oui.",
         "Moi j'essaie d'y aller depuis trois jours mais j'arrive pas à traverser le terrain sec au milieu. Je me dessèche...Je peux venir avec toi ?",
-        "Oui.",
+        "[aquiese]",
         "Merci beaucoup! Je te guiderais jusqu'aux bois, promis !",
         ]
-
+s4 = ["(Un nuage dans l'herbe...)",
+        "Oh. Une grenouille. On voit pas souvent ça par ici.",
+        "(C'est la première fois que je vois un mouton...)",
+        "T'as l'air de chercher quelque chose.",
+        "La forêt.",
+        "[regarde vers le nord] La forêt? C'est par là. Les herbes deviennent plus sombres, tu peux pas rater.",
+        "[suis le regard]",
+        "Moi j'y vais jamais. Trop de racines sous les pattes. Mais bon, Charlie m'a répété pleins de fois que si je voulais que les femelles me regardent un jour, il fallait que je me salisse les sabots."]
+s5 = ["(quel est ce bourdonnement ?)",
+      "Halte ! Que faites vous si près de la reine?",
+      "Je ne fais que passer",
+      "Comment etes vous arrivés si près? Mes frères ont dû vous arrêter avant.",
+      "Non, vous êtes la première abeille que je vois.",
+      "Etrange. Si vous ne voulez vraiment aucun mal, il n'y a pas d'inconvénient à ce que je vous surveille quelques temps, n'est-ce pas?",
+      "(Le pissenlit sera content, je suppose)"]
+s6 = [""]
 
 LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1,"entity":"leaf"},
         {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None,"entity":"nmi"},
         {'dialogue':s3,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
+        {'dialogue':s4,'visual':"assets/imgs/leafs/Leaf_sheep.png",'combat':False,"add":2,"entity":"leaf"},
+        {'dialogue':s5,'visual':"assets/imgs/leafs/Leaf_bee.png",'combat':False,"add":3,"entity":"leaf"},
         ]
 
 """PROLOGUE — La Mare de Vaseille
@@ -755,39 +772,6 @@ BROM — [Il se lève lentement.] Le reste, tu trouveras.
 
 ACTE I — La Plaine des Herbes Hautes
 
-Scène 1 · MOUTON
-[Un mouton broute tranquillement. Il lève la tête en entendant Froggy.]
-MOUTON — Oh. Une grenouille. On voit pas souvent ça par ici.
-MOUTON — T'as l'air de chercher quelque chose.
-MOUTON — [Il regarde vers le nord.] La forêt, c'est par là. Les herbes deviennent plus sombres, tu peux pas rater.
-MOUTON — Moi j'y vais jamais. Trop de racines sous les pattes.
-[Il reprend son broutage.]
-
-Scène 2 · PISSENLIT + LE CRABE (Combat)
-[Un pissenlit pousse seul dans un creux humide. Un crabe des champs le grignote.]
-CRABE — [Il lève une pince vers Froggy.] Circulez. Ce pissenlit est à moi.
-[Froggy ne bouge pas.]
-CRABE — J'ai dit circulez !
-[SÉQUENCE DE COMBAT — Froggy esquive les pinces 3 fois et repousse le crabe hors du creux.]
-CRABE — [Il recule, mauvais.] Bon. T'as gagné. Pour cette fois.
-[Froggy ramasse le pissenlit. Texte de collecte :]
-
-🌼 Pissenlit obtenu. (Voir dialogues de collecte)
-
-CRABE — [S'éloigne en grommelant.] La forêt est par là-haut. Et le crabe qui connaît le passage dans les rochers, c'est Grumb. T'as intérêt à être poli avec lui, lui.
-
-Scène 3 · CRIQUET
-[Un criquet est coincé sous une touffe d'herbe aplatie par le vent.]
-CRIQUET — [Il stridule doucement.] Hé. Hé ! Là-dessous !
-CRIQUET — Je suis bloqué depuis ce matin. Tu peux soulever ça ?
-[Froggy soulève la touffe. Le criquet s'étire.]
-CRIQUET — Ah. Merci.
-CRIQUET — [Il regarde Froggy partir.] Tu vas à la forêt ?
-CRIQUET — Moi j'essaie d'y aller depuis trois jours mais j'arrive pas à traverser le terrain sec au milieu. Je me dessèche.
-CRIQUET — [Timidement.] Je peux venir avec toi ?
-[CHOIX — Froggy fait signe que oui.]
-CRIQUET — Super. Je saute, tu portes les œufs, on s'en sort.
-[Le criquet rejoint l'équipe temporaire. Il suit Froggy jusqu'à la lisière de la forêt.]
 
 Scène 4 · LE CRIQUET · À la lisière de la forêt
 [Froggy arrive devant les premiers arbres. Le criquet s'arrête, ébloui.]
