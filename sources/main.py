@@ -60,7 +60,7 @@ def play_intro_video(video_path: str, base_dir: str) -> None:
     exe, args = find_player(base_dir)
 
     if exe is None:
-        print(" !  Aucun lecteur trouvé. Installe mpv dans PROJET/tools/mpv/")
+        print(" !  Aucun lecteur trouvé. Installe mpv dans PROJET/sources/tools/mpv/")
         print("    Téléchargement : https://mpv.io/installation/")
         return
 
