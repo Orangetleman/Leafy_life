@@ -961,20 +961,18 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                         listener.stop()
                         page.overlay.remove(boite)
                         page.update()
-                        page.run_thread(suite)
+                        page.run_task(suite)
                 listener = pynput_keyboard.Listener(on_press=toi)
                 listener.start()
             else:
                 suite()
 
-        def suite():
+        async def suite():
             scene_actu[0] += 1
             page.on_resize = None
 
 
-            if scene_actu[0] == len(LORE): on_close()
-
-
+            if scene_actu[0] == len(LORE): await on_close()
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:
