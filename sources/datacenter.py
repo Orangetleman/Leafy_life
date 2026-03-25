@@ -770,6 +770,10 @@ LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':
         {'dialogue':s5,'visual':"assets/imgs/leafs/Leaf_bee.png",'combat':False,"add":3,"entity":"leaf"},
         ]
 
+
+
+
+
 """PROLOGUE — La Mare de Vaseille
 Scène 1 · ONCLE BROM
 [Il émerge de la vase. S'assoit à côté de Froggy sans le regarder.]
@@ -798,16 +802,6 @@ Scène 5 · TRÈFLE (Collectible)
 
 ACTE II — Le Bois de l'Ombre Verte
 
-Scène 1 · ABEILLE
-[Elle atterrit juste devant Froggy. Directe.]
-ABEILLE — Toi. Tu peux m'aider.
-ABEILLE — Des fleurs isolées au secteur est — trop loin pour mes sœurs. Toi tu peux y aller.
-ABEILLE — En échange, j'ai du miel. Scellé à la cire.
-[CHOIX — Froggy accepte.]
-ABEILLE — Huit fleurs. Elles sentent la vanille. Tu peux pas rater.
-[Après la quête :]
-ABEILLE — Bien. Voilà le miel.
-ABEILLE — [Elle repart.] Tu sauras quoi en faire quand il le faudra.
 
 Scène 2 · LOUP
 [Un loup est assis sur le chemin. Il regarde Froggy arriver sans bouger.]
