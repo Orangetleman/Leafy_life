@@ -105,8 +105,8 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
     page.padding    = 0
     page.spacing    = 0
 
-    def _on_close():
-        page.window.close()
+    async def _on_close():
+        await page.window.close()
 
     def show_screen(name: str):
         if hasattr(page, "stop_current_screen"):
