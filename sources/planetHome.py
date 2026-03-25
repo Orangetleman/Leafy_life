@@ -488,15 +488,14 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 if scene_actu[0] == 0 and biome == LORE[0]["biome"]:
                     stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
 
+
+                ent_px = ox + dw * entity_ratio
+                near   = abs(px - ent_px) < 170
+
                 if event == "lore" and near:
                     if LORE[scene_actu[0]].get("biome", "plain") == biome:
                         stop_tp_screen()
                         declenche_scene(e, biome, scene_actu[0]); return
-                
-
-
-                ent_px = ox + dw * entity_ratio
-                near   = abs(px - ent_px) < 170
 
                 if keys_pressed["space"]:
                     keys_pressed["space"] = False
@@ -981,16 +980,16 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
             if scene_actu[0] == len(LORE): await on_close()
             if scene_actu[0] == 7:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
-            if scene_actu[0] == 10:
+            if scene_actu[0] == 12:
                 biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
-            if scene_actu[0] == 15:
+            if scene_actu[0] == 14:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
 
 
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (7, 10, 15):
+                if scene_actu[0] in (7, 12, 14):
                     music.play("assets/musics/lobby.wav", loop=True)
                     page.overlay.clear()
                     navigate("planet")

@@ -15,7 +15,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/crab.png",
-        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "met": False, "prez": "Le crabe chinois (Eriocheir sinensis) est un crabe fouisseur de la famille des varunidae. Il se nourrit essentiellement d’algues et de petits crustacés. Il est la proie de mammifères, d’oiseaux, et de poissons. Il possède deux pinces pour se défendre.",
         "reward": {"currency": "O2", "amount": 8},
     },
     {
@@ -23,7 +23,7 @@ ENEMIES = [
         "atk": 15, "hp": 100,
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
-        "met": False, "prez": "Un ours.",
+        "met": False, "prez": " L’ours brun (Ursus arctos) est un mammifère omnivore de la famille des ursidés. Il utilise l’intimidation pour se défendre, et possède de grandes griffes. Il se nourrit de tout, des poissons jusqu’aux élans, mais surtout des végétaux. Etant un superprédateur, seuls certains grands carnivores osent l’attaquer.",
         "reward": {"currency": "CO2", "amount": 50},
     },
     {
@@ -31,7 +31,7 @@ ENEMIES = [
         "atk": 5, "hp": 20,
         "biome": ["mountain"], "lvl": 3,
         "visual": "assets/imgs/npc/snake.png",
-        "met": False, "prez": "Un serpent agile. Difficile à esquiver.",
+        "met": False, "prez": "La vipère aspic (Vipera aspis) est un serpent de la famille des viperidae, endémique d’Europe. Elle utilise du venin pour se défendre. Elle est la proie de certains oiseaux, de sangliers, de blaireaux, de renards et de mustélidés. Elle chasse des micromammifères et plus rarement des lézards et petits oiseaux.",
         "reward": {"currency": "O2", "amount": 18},
     },
     {
@@ -71,7 +71,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/mushroom.png",
-        "met": False, "prez": "un champi",
+        "met": False, "prez": " L’amanite tue-mouche (Amanita muscaria) est un champignon mortel et psychotrope. Il produit des toxines violentes pour se protéger de ses prédateurs, généralement des cervidés.",
         "reward": {"currency": "O2", "amount": 8},
     },
     {
@@ -79,7 +79,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/mantis.png",
-        "met": False, "prez": "un insecte",
+        "met": False, "prez": "La mante religieuse (Mantis religiosa) est un insecte de la famille des mantidae originaire du bassin méditerranéen. Si son intimidation ne fonctionne pas, elle peut mordre pour se défendre des oiseaux et reptiles. Elle se nourrit de petits insectes vivants, en mouvement, qu’elle chasse.",
         "reward": {"currency": "O2", "amount": 8},
     },
     {
@@ -87,7 +87,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/wasp.png",
-        "met": False, "prez": "un guepe",
+        "met": False, "prez": "La guêpe commune (Vespula vulgaris) est un insecte de la famille des vespinae originaire d’Eurasie. Elle dispose d’un dard pour se défendre contre les oiseaux, les chauves-souris, les amphibiens et insectes carnivores. Elle se nourrit de substances sucrées, et attaque les abeilles pour leur territoire.",
         "reward": {"currency": "O2", "amount": 8},
     },
     {
@@ -95,7 +95,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/thorns.png",
-        "met": False, "prez": "un plante qui gratte",
+        "met": False, "prez": "La ronce commune (Rubus fruticosus) est une plante à fleur de la famille des rosacées. Elle possède des aiguillons pour se protéger des chèvres et cervidés, et produit des fruits appelés mûres pour se multiplier très rapidement. Elle est considérée comme de la mauvaise-herbe.",
         "reward": {"currency": "O2", "amount": 8},
     },
 
@@ -121,18 +121,18 @@ ENEMIES = [
         "id": 14, "name": "OursGrand", "rarity": "common",
         "atk": 20, "hp": 500,
         "biome": ["mountain"], "lvl": 1,
-        "visual": "assets/imgs/npc/bear.png",
-        "met": False, "prez": "Un ours.",
+        "visual": "assets/imgs/npc/bigbear.png",
+        "met": True, "prez": "Un ours.",
         "reward": {"currency": "CO2", "amount": 50},
     },
 ]
 
 # ------------------------------------ Npcs palette --------------------------------------
 NPCS = [
-    { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
-    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png","met": False, "prez": "Le héron cendré (Ardea cinerea) est un oiseau échassier de la famille des ardeidae. Il vit en colonie et sa taille est son meilleur atout. Il se nourrit essentiellement de poissons mais peu s’adapter au besoin. Il n’a pas de vrai prédateur, bien qu’il soit la victime de certains grands rapaces."},
+    { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png","met": False, "prez": " Le chat domestiqué (Felis catus) est un mammifère ccarnivore de l’ordre des félins. Il possède une excellente vision nocturne, des griffes et des dents pointues. Il se nourrit de viande, venant d’oiseaux, de petits rongeurs et de poissons. Ses prédateurs sont les rapaces, et les grands mustélidés tels que les blaireaux."},
     { "id": 7, "name": "chamois", "biome": "mountain", "visual": "assets/imgs/npc/chamois.png","met": False, "prez": "Le chamois (Rupicapra rupicapra) est un bovidé vivant dans les zones rocheuses, forêts et pâturages de montagne. Ils possèdent de petites cornes noires leur permettant de se défendre ainsi qu’une très bonne vision pour repérer ses prédateurs. Il est la proie des loups, lynx, ours, aigles royaux et parfois des grands corbeaux et se nourri exclusivement d’herbes et de graines."},
-    { "id": 9, "name": "spider", "biome": "forest", "visual": "assets/imgs/items/npc.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 9, "name": "spider", "biome": "forest", "visual": "assets/imgs/items/npc.png","met": False, "prez": "La saltique chevronné (Salticus scenicus) ou araignée sauteuse, est un insecte de la famille des salticidae. Pour attaquer ses proies, généralement de petits insectes vivants, elle approche discrètement et leur saute dessus pour les immobiliser avec son venin. Elle est chassée par les oiseaux et d’autres insectes."},
 
     { "id": 3, "name": "rien", "biome": "plain", "visual": "assets/imgs/items/rien.png"},
     { "id": 4, "name": "rien", "biome": "forest", "visual": "assets/imgs/items/rien.png"},
@@ -301,14 +301,14 @@ TYPES = [
 
 # ------------------------------------ Leafs palette ------------------------------------
 LEAFS = {
-    2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0, "met": False, "prez":"hehe" },
-    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0, "met": False, "prez":"L’abeille européennee (Apis mellifera) est connu pour sa capacité à produire du miel. Organisée en colonie dans une ruche, la reine est la seule à pouvoir pondre des œufs. Les abeilles se défendent en utilisant un dard, et peuvent mourir à la suite de ça. Elles se nourrissent de fleurs, et sont chassées par les guêpes et frelons ainsi que de nombreux oiseaux insectivores et certains batraciens. Les abeilles sont capables de communiquer entre elles par des mouvements pour indiquer l’emplacement de fleurs par exemple." },
+    2:  { "id": 2,  "name": "mouton",    "type": 2, "rarity": "default", "atk": 2, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_sheep.png",      "xp": 0, "met": False, "prez":"Le mouton (Ovis aries) est un mammifère herbivore ruminant des caprinés bovidés. Chassé par les canidés et notamment le loup gris, il vit en troupeau et préfère la fuite bien qu’il puisse charger pour se défendre. Son régime alimentaire est essentiellement composé d’herbe et de graines." },
+    3:  { "id": 3,  "name": "abeille",   "type": 2, "rarity": "default", "atk": 3, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_bee.png",        "xp": 0, "met": False, "prez":"L’abeille européennee (Apis mellifera) est connu pour sa capacité à produire du miel. Organisée en colonie dans une ruche, la reine est la seule à pouvoir pondre des œufs. Les abeilles se défendent en utilisant un dard. Elles se nourrissent de fleurs, et sont chassées par les guêpes et frelons ainsi que de nombreux oiseaux insectivores et certains batraciens. Les abeilles communiquent entre elles par des mouvements !" },
     5:  { "id": 5,  "name": "loup",      "type": 1, "rarity": "default", "atk": 6, "hp": 20,  "species": "animal", "regime": "carnivore", "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_wolf.png",       "xp": 0, "met": False, "prez":"Le loup gris (Canis Lupus) fait parti de la famille des canidés, et est un carnivore. Il se nourrit de grands herbivores comme les cerfs, de rongeurs, d’oiseaux et parfois de carcasses. Le loup est un superprédateur et est en haut de la chaîne alimentaire et n’a donc aucun prédateur naturel. Il a une morsure puissante, peut courir et nager, et a une ouïe très développée. C’est un animal territorial et social vivant en meute." },
     8:  { "id": 8,  "name": "poisson",   "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "animal", "regime": "herbivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_fish.png",       "xp": 0, "met": False, "prez":"Le poisson rouge ou carassin doré (Carassius auratus) est un poisson d’eau douce vivant en banc. Il est omnivore à tendance insectivore et détritivore, et est la proie des poissons-pêcheurs, des serpents aquatiques ainsi que de certains batraciens. Les femelles fécondées pondent des œufs pour se reproduire." },
     9:  { "id": 9,  "name": "chèvre",    "type": 3, "rarity": "default", "atk": 2, "hp": 100, "species": "animal", "regime": "herbivore", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_goat.png",       "xp": 0, "met": False, "prez":"La chèvre domestique (Capra hircus) est un mammifère herbivore ruminant de la famille des bovidés. Elle se nourrit essentiellement de mauvaise-herbe, et a pour prédateurs les renards, les chiens errants ainsi que les loups. Pour se défendre, elles peuvent utiliser leurs cornes, ou bien leur agilité pour grimper dans les arbres hors de la portée de leurs prédateurs." },
     12: { "id": 12, "name": "aigle",     "type": 1, "rarity": "default", "atk": 4, "hp": 60,  "species": "animal", "regime": "carnivore", "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_eagle.png",      "xp": 0, "met": False, "prez":" L’aigle royal (Aquila chrysaetos) est un rapace de la famille des accipitridae. Il utilise sa grande vitesse, son agilité et ses puissantes serres pour attraper ses proies, telles que des lapins, des marmottes, des écureuils et même des renards ainsi que des chèvres. Il pond des œufs et protège son vaste territoire. Considéré comme un superprédateur, seul le grand corbeau s’attaque à ses petits." },
     13: { "id": 13, "name": "trefle",    "type": 3, "rarity": "default", "atk": 7, "hp": 120, "species": "plant", "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_clover.png",       "xp": 0, "met": False, "prez":" Le trèfle rampant (Trifolium repens) est souvent considéré comme de la mauvaise-herbe, et sert de nourriture pour les ovins, bovins et certains cervidés. C’est une plante vivace dont les tiges peuvent atteindre 40 cm. Le trèfle produit des fleurs et des fruits et se développe très rapidement. Il peut être utilisé dans la médecine et n’est dangereux ni pour les humains ni pour les animaux domestiques." },
-    1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0, "met": False, "prez":"hehe" },
+    1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0, "met": False, "prez":"Le pissenlit commun (Taraxacum rubicuncum) est une plante à fleur de la famille des asteraceae. Il se multiplie très rapidement et est considéré comme de la mauvaise herbe. Il sert de nourriture aux insectes pollinisateurs comme les abeilles, et aux mammifères herbivores ainsi qu’à certains oiseaux granivores." },
     4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0, "met": False, "prez":" Le sapin commun (Abies alba) est une espèce de conifère de la famille des pinacées, et est originaire d’Europe. Il produit des cônes appelés pomme de pin dans le but que les animaux puissent les disperser, semant ainsi leurs graines pour se dupliquer. Il peut être la cible de coléoptères, qui creusent des galeries dans son tronc, entrainant la mort de l’arbre." },
     6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0, "met": False, "prez":" Le framboisier (Rubus idaeus) est une plante à fleur de la famille des rosacées. C’est une plante dressée produisant des fruits, les framboises, qui sont consommées par de nombreux insectes, tels que par exemple les papillons, les chenilles et les pucerons. Cela lui permet de disperser ses graines et donc de se multiplier." },
     7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0, "met": False, "prez":" La massette à feuilles étroites (Typha angustifolia) plus connue sous le nom de roseau est une plante herbacée de la famille des typhaceae. Il se développe généralement proche de l’eau, et produit jusqu’à 300 000 graines par macettes, lui permettant ainsi de se multiplier très rapidement. Il n’a pas de réel prédateur, bien que certains insectes l’attaque et que les humains se servent de lui dans l’industrie du textile." },
@@ -753,14 +753,16 @@ s4 = ["(Un nuage dans l'herbe...)",
         "La forêt.",
         "[regarde vers le nord] La forêt? C'est par là. Les herbes deviennent plus sombres, tu peux pas rater.",
         "[suis le regard]",
-        "Moi j'y vais jamais. Trop de racines sous les pattes. Mais bon, Charlie m'a répété pleins de fois que si je voulais que les femelles me regardent un jour, il fallait que je me salisse les sabots."]
+        "Moi j'y vais jamais. Trop de racines sous les pattes. Mais bon, Charlie m'a répété pleins de fois que si je voulais que les femelles me regardent un jour, il fallait que je me salisse les sabots."
+        ]
 s5 = ["(quel est ce bourdonnement ?)",
       "Halte ! Que faites vous si près de la reine?",
       "Je ne fais que passer",
       "Comment etes vous arrivés si près? Mes frères ont dû vous arrêter avant.",
       "Non, vous êtes la première abeille que je vois.",
       "Etrange. Si vous ne voulez vraiment aucun mal, il n'y a pas d'inconvénient à ce que je vous surveille quelques temps, n'est-ce pas?",
-      "(Le pissenlit sera content, je suppose)"]
+      "(Le pissenlit sera content, je suppose)"
+      ]
 s6 = ["(Un trèfle à quatres feuilles... Il parait que ça porte chance. J'en aurai surement besoin.)"]
 s7 = ["Nous y sommes.",
       "C'est... grand. Je savais pas que c'était aussi grand.",
@@ -770,7 +772,49 @@ s7 = ["Nous y sommes.",
       "Oui, merci d'avoir voyagé avec moi jusqu'ici, je ne t'oublierai jamais, promis!",
       "Alors, c'est ici qu'on se dit au-revoir, Criquet... Tu vas me manquer...",
       "Bonne chance pour la suite !",
-      "(Moi aussi je ne t'oublierai jamais, ami.)"]
+      "(Moi aussi je ne t'oublierai jamais, ami.)"
+      ]
+s8 = ["(La forêt, enfin... mais je ne vois pas de point d'eau. Il y a t'il quelqu'un à qui demander?)",
+      "Besoin d'aide?",
+      "(C'est vraiment calme ici, comparé à la plaine)",
+      "Bonjouuuuur !!!",
+      "(Hmm, je trouverai peut-être quelqu'un si je m'avance un peu...)",
+      "EH OH NE ME MARCHEZ PAS DESSUS !!",
+      "[sursaute]",
+      "Vous pourriez faire attention où vous marchez au moins ?",
+      "Escusez moi.",
+      "Ce n'est pas grave. Je suis Saltique, la manageuse en chef de toute la communication web de la forêt.",
+      "(La mana- quoi?) Je suis Froggy, enchanté.",
+      "Mince, on m'appelle. Je dois filer.",
+      "(Je crois que je commence à comprendre.)",
+      "N'hésite pas à venir me voir si tu as besoin de quoi que ce soit. Moi et mes soeurs feront tout notre possible pour que tu passes un merveilleux séjour dans le Bois de l'Ombre Verte!",
+      "Attendez, je voulais vous demand...er. Elle est partie. En bondissant. Très bien, ce bois promet d'être intéressant."
+      ]
+s9 = ["(Une fraise parfaitement mûre. Le rouge éclatant fait le charme des forêts.)"]
+s10 = ["[Mouton tremble]",
+       "[ignore]",
+       "Bonjour, toi.",
+       "Tu n'as pas peur de moi?",
+       "Pourquoi un louveteau s'attaquerait à une grenouille?",
+       "Je ne sais pas, ma meute dit que tous les animeaux de cette forêt nous craignent, et que c'est pour cela qu'on n'en vois pas beaucoup sur notre territoire",
+       "Ca doit être pour ça que je ne croise personne...",
+       "Je dois retourner vers ma meute, mais ne t'inquetes pas, je leur dirait que tu es un ami qui ne fait que passer!"
+       ]
+s11 = ["(Plus je m'avance, plus les arbres sont immenses...)","[vent soufle]","[saute sur une branche et admire le paysage]","Je peux t'emmener regarder la canopée, si tu le souhaite."]
+s12 = ["(Ce n'est pas le louveteau de tout à l'heure? Il a l'air triste...)",
+       "La grenouille ! Ca me fait plaisir de te voir à nouveau.",
+       "Quelque chose ne va pas?",
+       "[sanglote] Mon frère a ramené une immense proie qu'il a chassé avec son groupe d'amis, et mes parents et l'alpha ne parlent que de lui depuis...",
+       "Tu te sens délaissé?",
+       "Oui...",
+       "J'ai rencontré quelques ennemis redoutables pendant mon voyage. Si on en térasse un ensemble, tu pourras le ramener à ta meute et tu sera couvert de bien plus de gloire que ton frère et sa proie.",
+       "Oui ! Tu as raison ! Vous aussi, vous êtes mon proupe d'amis après tout!"
+       ]
+s13 = ["[peine à avancer dans les broussailles]",
+       "[s'accroche à son menteau]",
+       "[continue d'avancer, arrachant une des branches]"]
+s14 = ["Vas y petit loup, c'est ta chance de briller !",
+       "QUI OSE ENTRER SUR MON TERRITOIRE?"]
 
 LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat':False, "add":1,    "entity":"leaf", "biome":"plain"},
         {'dialogue':s2, 'visual':"assets/imgs/npc/crabfaible.png",       'combat':True,  "add":None, "entity":"nmi",  "biome":"plain"},
@@ -779,6 +823,19 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
         {'dialogue':s5, 'visual':"assets/imgs/leafs/Leaf_bee.png",       'combat':False, "add":3,    "entity":"leaf", "biome":"plain"},
         {'dialogue':s6, 'visual':"assets/imgs/leafs/Leaf_clover.png",    'combat':False, "add":13,   "entity":"leaf", "biome":"plain"},
         {'dialogue':s7, 'visual':"assets/imgs/npc/criquet.png",          'combat':False, "add":None, "entity":"npc",  "biome":"plain"},
+
+        # foret
+
+        {'dialogue':s8, 'visual':"assets/imgs/npc/spider.png",          'combat':False, "add":None, "entity":"npc",  "biome":"forest"},
+        {'dialogue':s9, 'visual':"assets/imgs/leafs/Leaf_strawberry.png",    'combat':False, "add":6,   "entity":"leaf", "biome":"forest"},
+        {'dialogue':s10, 'visual':"assets/imgs/leafs/Leaf_wolf.png",    'combat':False, "add":None,   "entity":"leaf", "biome":"forest"},
+        {'dialogue':s11, 'visual':"assets/imgs/leafs/Leaf_pine.png",    'combat':False, "add":4,   "entity":"leaf", "biome":"forest"},
+        {'dialogue':s12, 'visual':"assets/imgs/leafs/Leaf_wolf.png",    'combat':False, "add":5,   "entity":"leaf", "biome":"forest"},
+
+        # montagne
+
+        {'dialogue':s13, 'visual':"assets/imgs/leafs/Leaf_bush.png",    'combat':False, "add":10,   "entity":"leaf", "biome":"mountain"},
+        {'dialogue':s14, 'visual':"assets/imgs/npc/bigbear.png",       'combat':True,  "add":None, "entity":"nmi", "biome":"mountain"},
         ]
 
 
@@ -794,54 +851,9 @@ BROM — Lyse me parlait d'un lac. Loin au nord. Elle disait que c'était le seu
 BROM — Je sais pas où c'est exactement. Commence par les herbes hautes, vers le nord.
 BROM — [Il se lève lentement.] Le reste, tu trouveras.
 
-ACTE I — La Plaine des Herbes Hautes
-
-
-Scène 4 · LE CRIQUET · À la lisière de la forêt
-[Froggy arrive devant les premiers arbres. Le criquet s'arrête, ébloui.]
-CRIQUET — C'est... grand. Je savais pas que c'était aussi grand.
-CRIQUET — [Il regarde Froggy.] Merci de m'avoir amené jusqu'ici.
-CRIQUET — En échange... les libellules. J'en vois passer souvent, elles viennent de là-bas — du nord. Et leurs ailes sont mouillées. Pas de l'eau d'ici.
-CRIQUET — S'il y a une grande eau quelque part, c'est dans cette direction.
-[Il disparaît dans les herbes.]
-
-Scène 5 · TRÈFLE (Collectible)
 
 
 
-
-ACTE II — Le Bois de l'Ombre Verte
-
-
-Scène 2 · LOUP
-[Un loup est assis sur le chemin. Il regarde Froggy arriver sans bouger.]
-LOUP — [Long silence.]
-LOUP — T'as pas peur.
-LOUP — [Il regarde les œufs.]
-LOUP — Je mange pas les grenouilles. Ni les œufs.
-LOUP — [Il se lève, s'écarte du chemin.] La montagne est au nord. Après la forêt. Il y a un vieux bouc qui connaît le passage — il s'appelle Grumb.
-LOUP — Dis-lui que t'as traversé ma forêt sans fuir. Ça l'impressionnera peut-être.
-[Il disparaît entre les arbres.]
-
-Scène 3 · SAPIN
-[Un jeune sapin pousse au milieu des feuillus. Incongruité totale.]
-SAPIN — [Voix douce, un peu perdu.] T'es aussi perdu que moi ?
-SAPIN — Moi je devrais être dans la montagne. Un oiseau a dû lâcher ma graine trop tôt.
-SAPIN — [Il regarde vers le nord.] La montagne... c'est par là. Après les derniers chênes, l'air change. Il devient froid et sec. Tu le sentiras avant de le voir.
-SAPIN — [Doucement.] J'espère que t'y arriveras, toi.
-
-Scène 4 · FRAISIER (Collectible)
-[Un fraisier sauvage pousse au pied d'un tronc. Une fraise rouge, parfaite.]
-[Animation : Froggy s'accroupit. Regarde la fraise. La prend. Regarde les œufs.]
-
-🍓 Fraisier obtenu. (Voir dialogues de collecte)
-
-
-Scène 5 · LA NUIT DE PLUIE (Scène automatique — pas de PNJ)
-[Il n'y a pas de personnage ici. Froggy est seul sous un grand champignon. La pluie tombe fort.]
-[Animation automatique : Froggy enveloppe les œufs dans la feuille imperméable. Il les regarde. Les œufs tressaillent légèrement.]
-[Il n'y a rien à faire. Juste attendre. Écouter la pluie.]
-[Au matin, un oiseau chante quelque part dans les branches. Froggy reprend la route.]
 
 ACTE III — Les Crêtes de Pierre Mousse
 
