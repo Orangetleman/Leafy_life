@@ -32,6 +32,6 @@ echo.
 echo ============================================
 echo    Lancement de Leafy Life !
 echo ============================================
-python sources/py/main.py
+python sources/main.py
 
 pause
