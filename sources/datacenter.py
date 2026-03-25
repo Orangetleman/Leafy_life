@@ -697,7 +697,7 @@ class MusicManager:
 
     def play(self, path: str, loop: bool = True):
         mixer.music.load(path)
-        mixer.music.set_volume(0.1)
+        mixer.music.set_volume(0.5)
         mixer.music.play(-1 if loop else 0)
 
     def stop(self):
