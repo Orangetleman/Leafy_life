@@ -761,13 +761,24 @@ s5 = ["(quel est ce bourdonnement ?)",
       "Non, vous êtes la première abeille que je vois.",
       "Etrange. Si vous ne voulez vraiment aucun mal, il n'y a pas d'inconvénient à ce que je vous surveille quelques temps, n'est-ce pas?",
       "(Le pissenlit sera content, je suppose)"]
-s6 = [""]
+s6 = ["(Un trèfle à quatres feuilles... Il parait que ça porte chance. J'en aurai surement besoin.)"]
+s7 = ["Nous y sommes.",
+      "C'est... grand. Je savais pas que c'était aussi grand.",
+      "Ca te fais peur?",
+      "...je vais rester là un petit instant, avance sans moi",
+      "Tu es sûr?",
+      "Oui, merci d'avoir voyagé avec moi jusqu'ici, je ne t'oublierai jamais, promis!",
+      "Alors, c'est ici qu'on se dit au-revoir, Criquet... Tu vas me manquer...",
+      "Bonne chance pour la suite !",
+      "(Un ami qui )"]
 
 LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1,"entity":"leaf"},
         {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None,"entity":"nmi"},
         {'dialogue':s3,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
         {'dialogue':s4,'visual':"assets/imgs/leafs/Leaf_sheep.png",'combat':False,"add":2,"entity":"leaf"},
         {'dialogue':s5,'visual':"assets/imgs/leafs/Leaf_bee.png",'combat':False,"add":3,"entity":"leaf"},
+        {'dialogue':s6,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":13,"entity":"leaf"},
+        {'dialogue':s7,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
         ]
 
 
@@ -794,10 +805,8 @@ CRIQUET — S'il y a une grande eau quelque part, c'est dans cette direction.
 [Il disparaît dans les herbes.]
 
 Scène 5 · TRÈFLE (Collectible)
-[Un trèfle à quatre feuilles dépasse d'une touffe. Froggy s'arrête.]
-[Animation : Froggy le regarde longuement. Il le prend doucement.]
 
-🍀 Trèfle obtenu. (Voir dialogues de collecte)
+
 
 
 ACTE II — Le Bois de l'Ombre Verte
