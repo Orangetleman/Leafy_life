@@ -20,11 +20,11 @@ ENEMIES = [
     },
     {
         "id": 2, "name": "Ours", "rarity": "common",
-        "atk": 7, "hp": 30,
+        "atk": 15, "hp": 100,
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
         "met": False, "prez": "Un ours.",
-        "reward": {"currency": "CO2", "amount": 20},
+        "reward": {"currency": "CO2", "amount": 50},
     },
     {
         "id": 3, "name": "Serpent", "rarity": "rare",
@@ -110,12 +110,20 @@ ENEMIES = [
         "reward": {"currency": "O2", "amount": 8},
     },
     {
-        "id": 12, "name": "Crabefaible", "rarity": "common",
+        "id": 13, "name": "Heron", "rarity": "common",
         "atk": 3, "hp": 10,
-        "biome": ["plain"], "lvl": 1,
-        "visual": "assets/imgs/npc/crabfaible.png",
-        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
-        "reward": {"currency": "O2", "amount": 8},
+        "biome": ["lake"], "lvl": 1,
+        "visual": "assets/imgs/npc/BigBadHeron.png",
+        "met": False, "prez": "tie finito chef",
+        "reward": {"currency": "O2", "amount": 1000},
+    },
+    {
+        "id": 14, "name": "OursGrand", "rarity": "common",
+        "atk": 20, "hp": 500,
+        "biome": ["mountain"], "lvl": 1,
+        "visual": "assets/imgs/npc/bear.png",
+        "met": False, "prez": "Un ours.",
+        "reward": {"currency": "CO2", "amount": 50},
     },
 ]
 

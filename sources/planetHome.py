@@ -486,9 +486,8 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 if px + SPRITE_W >= ox + dw:    stop_tp_screen(); tp(e, biome); return
                 if scene_actu[0] == 0:
                     stop_tp_screen(); declenche_scene(e, biome, scene_actu[0]); return
-                if event == "lore" and scene_actu[0] >= len(LORE):
-                    if "lore" in EVENTS: EVENTS.remove("lore")
-                    stop_tp_screen(); tp(e, biome); return
+                
+
 
                 ent_px = ox + dw * entity_ratio
                 near   = abs(px - ent_px) < 170
@@ -971,8 +970,13 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         def suite():
             scene_actu[0] += 1
             page.on_resize = None
+<<<<<<< Updated upstream
 
             if scene_actu[0] == len(LORE): on_close()
+=======
+            if scene_actu[0] >= len(LORE)-1:
+                page.window.close() #a regler avec un on close
+>>>>>>> Stashed changes
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:
