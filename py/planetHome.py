@@ -927,9 +927,11 @@ def _planet(page: ft.Page, navigate) -> list:
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
         locuteur   = LORE[n]["visual"]
-        if not LORE[n]["combat"]:
+        if LORE[n]["entity"] == "leaf":
             entity = next(b for b in LEAFS.values() if b["img"] == locuteur)
-        else:
+        elif LORE[n]["entity"] == "npc":
+            entity = next(b for b in NPCS if b["visual"] == locuteur)
+        else: #LORE[n]["entity"] == "nmi"
             entity = next(b for b in ENEMIES if b["visual"] == locuteur)
         scale, offset_x, offset_y, ground_bot, img_disp_w, img_disp_h = compute_layout(page.width, page.height, biome)
         bg_img     = ft.Image(src=biome_icon, width=img_disp_w, height=img_disp_h, fit="fill")
@@ -959,7 +961,7 @@ def _planet(page: ft.Page, navigate) -> list:
                         listener.stop()
                         page.overlay.remove(boite)
                         page.update()
-                        suite()
+                        page.run_thread(suite)
                 listener = pynput_keyboard.Listener(on_press=toi)
                 listener.start()
             else:
@@ -968,28 +970,37 @@ def _planet(page: ft.Page, navigate) -> list:
         def suite():
             scene_actu[0] += 1
             page.on_resize = None
+
             if scene_actu[0] == 4:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 9:
                 biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
             if scene_actu[0] == 14:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
+
+
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (5,10,15):
-                    print(f"Navigation vers la page planet, scene_actu[0]: {scene_actu[0]}")
+                if scene_actu[0] in (5, 10, 15):
                     music.play("assets/musics/lobby.wav", loop=True)
+                    page.overlay.clear()
                     navigate("planet")
+                    return
                 else:
+                    running[0] = False
+                    page.overlay.clear()
+                    page.update()
                     tp(e, biome)
+                    return
             else:
                 enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+                page.overlay.clear()
+                page.update()
                 combat(e, biome, enemy)
                 on_planet_resize()
-                print(f"Navigation vers un combat, scene_actu[0]: {scene_actu[0]}")
-            page.overlay.clear()
-            page.update()
+                return
+            
 
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
         preset  = [bg, npc_sprite, sprite, paroles]

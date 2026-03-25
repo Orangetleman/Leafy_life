@@ -123,15 +123,15 @@ ENEMIES = [
 NPCS = [
     { "id": 1, "name": "Heron", "biome": "lake", "visual": "assets/imgs/npc/heron.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
     { "id": 2, "name": "Cat", "biome": "plain", "visual": "assets/imgs/npc/cat.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
-    { "id": 7, "name": "chamois", "biome": "mountain", "visual": "assets/imgs/items/chamois.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
-    { "id": 9, "name": "spider", "biome": "forest", "visual": "assets/imgs/items/spider.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 7, "name": "chamois", "biome": "mountain", "visual": "assets/imgs/npc/chamois.png","met": False, "prez": "Le chamois (Rupicapra rupicapra) est un bovidé vivant dans les zones rocheuses, forêts et pâturages de montagne. Ils possèdent de petites cornes noires leur permettant de se défendre ainsi qu’une très bonne vision pour repérer ses prédateurs. Il est la proie des loups, lynx, ours, aigles royaux et parfois des grands corbeaux et se nourri exclusivement d’herbes et de graines."},
+    { "id": 9, "name": "spider", "biome": "forest", "visual": "assets/imgs/items/npc.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
 
     { "id": 3, "name": "rien", "biome": "plain", "visual": "assets/imgs/items/rien.png"},
     { "id": 4, "name": "rien", "biome": "forest", "visual": "assets/imgs/items/rien.png"},
     { "id": 5, "name": "rien", "biome": "mountain", "visual": "assets/imgs/items/rien.png"},
     { "id": 6, "name": "rien", "biome": "lake", "visual": "assets/imgs/items/rien.png"},
     
-    { "id": 8, "name": "criquet", "biome": "plain", "visual": "assets/imgs/items/criquet.png","met": False, "prez": "Un crabe minuscule, mais ses pinces font mal."},
+    { "id": 8, "name": "criquet", "biome": "plain", "visual": "assets/imgs/npc/criquet.png","met": False, "prez": " Le criquet migrateur (Locusta migratoria) est un insecte orthoptère de la famille des acrididae. C’est un insecte ravageur dans de nombreuses régions tropicales. Il se nourri principalement de graines, il est chassé par des oiseaux comme les rapaces ou la volaille, des insectes comme les mantes religieuses, ou encore des reptiles et amphibiens. Il utilise généralement le camouflage pour se défendre."},
 ]
 
 # ------------------------------------ Objects palette -----------------------------------
@@ -303,9 +303,9 @@ LEAFS = {
     1:  { "id": 1,  "name": "pissenlit", "type": 1, "rarity": "default", "atk": 5, "hp": 40,  "species": "plant",  "biome": 1, "level": 0, "img": "assets/imgs/leafs/Leaf_dandelion.png",   "xp": 0, "met": False, "prez":"hehe" },
     4:  { "id": 4,  "name": "sapin",     "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_pine.png",        "xp": 0, "met": False, "prez":" Le sapin commun (Abies alba) est une espèce de conifère de la famille des pinacées, et est originaire d’Europe. Il produit des cônes appelés pomme de pin dans le but que les animaux puissent les disperser, semant ainsi leurs graines pour se dupliquer. Il peut être la cible de coléoptères, qui creusent des galeries dans son tronc, entrainant la mort de l’arbre." },
     6:  { "id": 6,  "name": "fraisier",  "type": 2, "rarity": "default", "atk": 3, "hp": 60,  "species": "plant",  "biome": 2, "level": 0, "img": "assets/imgs/leafs/Leaf_strawberry.png",  "xp": 0, "met": False, "prez":" Le framboisier (Rubus idaeus) est une plante à fleur de la famille des rosacées. C’est une plante dressée produisant des fruits, les framboises, qui sont consommées par de nombreux insectes, tels que par exemple les papillons, les chenilles et les pucerons. Cela lui permet de disperser ses graines et donc de se multiplier." },
-    7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0, "met": False, "prez":"hehe" },
-    10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0, "met": False, "prez":"hehe" },
-    11: { "id": 11, "name": "nénuphare", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0, "met": False, "prez":"hehe" },
+    7:  { "id": 7,  "name": "roseaux",   "type": 3, "rarity": "default", "atk": 3, "hp": 80,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_reeds.png",       "xp": 0, "met": False, "prez":" La massette à feuilles étroites (Typha angustifolia) plus connue sous le nom de roseau est une plante herbacée de la famille des typhaceae. Il se développe généralement proche de l’eau, et produit jusqu’à 300 000 graines par macettes, lui permettant ainsi de se multiplier très rapidement. Il n’a pas de réel prédateur, bien que certains insectes l’attaque et que les humains se servent de lui dans l’industrie du textile." },
+    10: { "id": 10, "name": "arbuste",   "type": 3, "rarity": "default", "atk": 1, "hp": 120, "species": "plant",  "biome": 4, "level": 0, "img": "assets/imgs/leafs/Leaf_bush.png",        "xp": 0, "met": False, "prez":"Le genévrier commun (Juniperus communis) est un arbuste de la famille des cupressacés. Il se protège grâce à ses feuilles qui ont une forme d’aiguille. Il est utilisé par les humains dans la cuisine et la médecine, et n’a pas de prédateurs directs même si certains insectes se servent de lui pour survivre." },
+    11: { "id": 11, "name": "lotus", "type": 2, "rarity": "default", "atk": 1, "hp": 40,  "species": "plant",  "biome": 3, "level": 0, "img": "assets/imgs/leafs/Leaf_lilypad.png",     "xp": 0, "met": False, "prez":"Le lotus sacré (Nelumbo nucifera) est une plante aquatique d’eau douce à fleurs de la famille des Nélumbonacées, et est originaire d’Eurasie. Sa fleur immergée est récoltée depuis plusieurs milliers d’années dans un but médical, alimentaire ou ornemental. Certains rongeurs se nourrissent de ses racines ou tiges, provoquant ainsi la mort de la plante." },
 }
 
 LEAFS_TYPE = [
@@ -735,13 +735,24 @@ s2 = ["Que fais un crabe ici, loin de son habitat naturel?",
         "Une mission, vous dites? Dans cet état? Prenez cette gourde d'eau au moins -", 
         "ASSEZ!"
         ]
+s3 = ["[Un criquet est coincé sous une touffe d'herbe aplatie par le vent.]",
+        "Hé. Hé ! Là-dessous !",
+        "Qui est là?",
+        "Je suis bloqué depuis ce matin. Tu peux soulever ça ?",
+        "[soulève]",
+        "Ah. Merci.",
+        "[pars]",
+        "Tu vas à la forêt ?",
+        "Oui.",
+        "Moi j'essaie d'y aller depuis trois jours mais j'arrive pas à traverser le terrain sec au milieu. Je me dessèche...Je peux venir avec toi ?",
+        "Oui.",
+        "Merci beaucoup! Je te guiderais jusqu'aux bois, promis !",
+        ]
 
 
-LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1},
-        {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None},
-        {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
-        {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
-        {'dialogue':s2,'visual':"assets/imgs/leafs/Leaf_clover.png",'combat':False,"add":None},
+LORE = [{'dialogue':s1,'visual':"assets/imgs/leafs/Leaf_dandelion.png",'combat':False,"add":1,"entity":"leaf"},
+        {'dialogue':s2,'visual':"assets/imgs/npc/crabfaible.png",'combat':True,"add":None,"entity":"nmi"},
+        {'dialogue':s3,'visual':"assets/imgs/npc/criquet.png",'combat':False,"add":None,"entity":"npc"},
         ]
 
 """PROLOGUE — La Mare de Vaseille
