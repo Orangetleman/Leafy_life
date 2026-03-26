@@ -162,18 +162,20 @@ def main(page: ft.Page, page_name: str = "tuto") -> None:
 if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    VIDEO_PATH = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
+    
+    VIDEO_PATH1 = os.path.join(BASE_DIR, "assets", "musics", "intro.mp4")
+    VIDEO_PATH2 = os.path.join(BASE_DIR, "assets", "musics", "outro.mp4")
     music.play("assets/musics/frogmusic.wav")
-    play_intro_video(VIDEO_PATH, BASE_DIR)
+    play_intro_video(VIDEO_PATH1, BASE_DIR)
     time.sleep(0.8)
 
-    #_seed_test_data()
+    _seed_test_data()
     music.play("assets/musics/lobby.wav", loop=True)
     ft.run(main)
     music.stop()
 
     if scene_actu[0] >= len(LORE):
         music.play("assets/musics/frogmusic.wav", loop=True)
-        play_intro_video(VIDEO_PATH, BASE_DIR)
+        play_intro_video(VIDEO_PATH2, BASE_DIR)
         time.sleep(0.8)
         music.stop()

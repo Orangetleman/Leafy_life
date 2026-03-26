@@ -12,7 +12,7 @@ import math
 ENEMIES = [
     {
         "id": 1, "name": "Crabe", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 35, "hp": 80,
         "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/crab.png",
         "met": False, "prez": "Le crabe chinois (Eriocheir sinensis) est un crabe fouisseur de la famille des varunidae. Il se nourrit essentiellement d’algues et de petits crustacés. Il est la proie de mammifères, d’oiseaux, et de poissons. Il possède deux pinces pour se défendre.",
@@ -20,7 +20,7 @@ ENEMIES = [
     },
     {
         "id": 2, "name": "Ours", "rarity": "common",
-        "atk": 15, "hp": 100,
+        "atk": 25, "hp": 100,
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
         "met": False, "prez": " L’ours brun (Ursus arctos) est un mammifère omnivore de la famille des ursidés. Il utilise l’intimidation pour se défendre, et possède de grandes griffes. Il se nourrit de tout, des poissons jusqu’aux élans, mais surtout des végétaux. Etant un superprédateur, seuls certains grands carnivores osent l’attaquer.",
@@ -28,7 +28,7 @@ ENEMIES = [
     },
     {
         "id": 3, "name": "Serpent", "rarity": "rare",
-        "atk": 5, "hp": 20,
+        "atk": 20, "hp": 80,
         "biome": ["mountain"], "lvl": 3,
         "visual": "assets/imgs/npc/snake.png",
         "met": False, "prez": "La vipère aspic (Vipera aspis) est un serpent de la famille des viperidae, endémique d’Europe. Elle utilise du venin pour se défendre. Elle est la proie de certains oiseaux, de sangliers, de blaireaux, de renards et de mustélidés. Elle chasse des micromammifères et plus rarement des lézards et petits oiseaux.",
@@ -36,7 +36,7 @@ ENEMIES = [
     },
     {
         "id": 4, "name": "rien", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 5, "hp": 20,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/items/rien.png",
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
@@ -44,7 +44,7 @@ ENEMIES = [
     },
     {
         "id": 5, "name": "rien", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 12, "hp": 40,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/items/rien.png",
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
@@ -53,7 +53,7 @@ ENEMIES = [
     {
         "id": 6, "name": "rien", "rarity": "common",
         "atk": 3, "hp": 10,
-        "biome": ["montain"], "lvl": 1,
+        "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/items/rien.png",
         "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
         "reward": {"currency": "O2", "amount": 8},
@@ -68,7 +68,7 @@ ENEMIES = [
     },
     {
         "id": 8, "name": "Champignon", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 12, "hp": 40,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/mushroom.png",
         "met": False, "prez": " L’amanite tue-mouche (Amanita muscaria) est un champignon mortel et psychotrope. Il produit des toxines violentes pour se protéger de ses prédateurs, généralement des cervidés.",
@@ -76,7 +76,7 @@ ENEMIES = [
     },
     {
         "id": 9, "name": "Mante religieuse", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 6, "hp": 25,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/mantis.png",
         "met": False, "prez": "La mante religieuse (Mantis religiosa) est un insecte de la famille des mantidae originaire du bassin méditerranéen. Si son intimidation ne fonctionne pas, elle peut mordre pour se défendre des oiseaux et reptiles. Elle se nourrit de petits insectes vivants, en mouvement, qu’elle chasse.",
@@ -84,7 +84,7 @@ ENEMIES = [
     },
     {
         "id": 10, "name": "Guepe", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 8, "hp": 18,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/wasp.png",
         "met": False, "prez": "La guêpe commune (Vespula vulgaris) est un insecte de la famille des vespinae originaire d’Eurasie. Elle dispose d’un dard pour se défendre contre les oiseaux, les chauves-souris, les amphibiens et insectes carnivores. Elle se nourrit de substances sucrées, et attaque les abeilles pour leur territoire.",
@@ -92,7 +92,7 @@ ENEMIES = [
     },
     {
         "id": 11, "name": "Ronces", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 15, "hp": 50,
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/thorns.png",
         "met": False, "prez": "La ronce commune (Rubus fruticosus) est une plante à fleur de la famille des rosacées. Elle possède des aiguillons pour se protéger des chèvres et cervidés, et produit des fruits appelés mûres pour se multiplier très rapidement. Elle est considérée comme de la mauvaise-herbe.",
@@ -111,7 +111,7 @@ ENEMIES = [
     },
     {
         "id": 13, "name": "Heron", "rarity": "common",
-        "atk": 3, "hp": 10,
+        "atk": 50, "hp": 1000,
         "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/BigBadHeron.png",
         "met": False, "prez": "tie finito chef",
@@ -815,6 +815,29 @@ s13 = ["[peine à avancer dans les broussailles]",
        "[continue d'avancer, arrachant une des branches]"]
 s14 = ["Vas y petit loup, c'est ta chance de briller !",
        "QUI OSE ENTRER SUR MON TERRITOIRE?"]
+s15 = ["Bonjour, savez vous où je peux trouver un point d'eau?",
+       "Il  y a un grand lac après cette montagne.",
+       "Merci beauc- [glisse]",
+       "Vous allez bien?",
+       "[se relève] Oui, oui, merci, j'ai juste glissé un peu rien de grave.",
+       "Une grenouille qui gravit une montagne, on en voit pas tous les jours.",
+       "J'en gravirai cent si c'est pour que mes enfants grandissent dans les meilleures conditions!",
+       "J'ai de la peine pour vous, laissez moi au moins vous porter jusqu'au lac, j'y allais également de toute façon"]
+s16 = ["[marche]",
+       "[fais des cercles au-dessus, dans le ciel]",
+       "[se sent mal à l'aise]",
+       "[plonge]",
+       "(c'est la fin...)",
+       "Aie ! Pourquoi le protèges tu, Chèvre?",
+       "[lève la tête, apperçoit la chèvre au dessus de lui, bloquant l'attaque de l'aigle]",
+       "Depuis quand une grenouille a une armée pour traverser la montagne?",
+       "(il s'est blessé en heurtant la chèvre...), je peux soigner cette plaie si tu promets de ne plus m'attaquer.",
+       "[confus] Si t'y tiens tant, je n'ai aucune raison de refuser..."]
+s17 = ["[époustoufflé]",
+       "Nous y sommes, Froggy, le grand lac des Eaux Tranquilles!",
+       "Enfin... c'est tellement beau...",
+       "Hehe, un choc, pas vrai? Ca m'a fait le même effet la première fois que je l'ai vu aussi.",
+       "Ne perdons pas de temps, et allons y tout de suite !"]
 
 LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat':False, "add":1,    "entity":"leaf", "biome":"plain"},
         {'dialogue':s2, 'visual':"assets/imgs/npc/crabfaible.png",       'combat':True,  "add":None, "entity":"nmi",  "biome":"plain"},
@@ -836,6 +859,9 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
 
         {'dialogue':s13, 'visual':"assets/imgs/leafs/Leaf_bush.png",    'combat':False, "add":10,   "entity":"leaf", "biome":"mountain"},
         {'dialogue':s14, 'visual':"assets/imgs/npc/bigbear.png",       'combat':True,  "add":None, "entity":"nmi", "biome":"mountain"},
+        {'dialogue':s15, 'visual':"assets/imgs/leafs/Leaf_goat.png",    'combat':False, "add":9,   "entity":"leaf", "biome":"mountain"},
+        {'dialogue':s16, 'visual':"assets/imgs/leafs/Leaf_eagle.png",    'combat':False, "add":12,   "entity":"leaf", "biome":"mountain"},
+        {'dialogue':s17, 'visual':"assets/imgs/leafs/Leaf_goat.png",    'combat':False, "add":None,   "entity":"leaf", "biome":"mountain"},
         ]
 
 
@@ -844,12 +870,6 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
 
 
 """PROLOGUE — La Mare de Vaseille
-Scène 1 · ONCLE BROM
-[Il émerge de la vase. S'assoit à côté de Froggy sans le regarder.]
-BROM — Les œufs... ils vont bien ?
-BROM — Lyse me parlait d'un lac. Loin au nord. Elle disait que c'était le seul endroit où des œufs pouvaient vraiment éclore en sécurité.
-BROM — Je sais pas où c'est exactement. Commence par les herbes hautes, vers le nord.
-BROM — [Il se lève lentement.] Le reste, tu trouveras.
 
 
 
@@ -857,29 +877,7 @@ BROM — [Il se lève lentement.] Le reste, tu trouveras.
 
 ACTE III — Les Crêtes de Pierre Mousse
 
-Scène 1 · CHÈVRE (= Grumb dans la Bible, remplacé par la chèvre de la liste)
-[Elle est postée sur un rocher. Elle mâche quelque chose d'inconnu.]
-CHÈVRE — [Elle lève la tête.] Un passage dans la montagne. C'est ça que tu veux.
-CHÈVRE — [Elle voit le pot de miel.] ... C'est du vrai miel ça ?
-[CHOIX — Froggy lui tend le pot.]
-CHÈVRE — [Elle le prend, satisfaite.] Le passage est à deux heures d'ici. Tu suis la mousse rouge sur les rochers jusqu'à l'entaille dans la paroi.
-CHÈVRE — Et écoute bien : traverse avant que le soleil passe derrière les crêtes. Le gel arrive vite ici. La nuit sur les rochers mouillés... c'est pas une bonne façon de finir un voyage.
 
-Scène 2 · AIGLE
-[Elle tourne au-dessus de Froggy depuis un moment. Elle se pose.]
-AIGLE — T'es une grenouille. Et tu montes dans la montagne.
-AIGLE — [Elle regarde les œufs.] Et t'en portes.
-AIGLE — Je survole le lac chaque matin. C'est bleu et calme. Des nénuphars partout. Des grenouilles dessus au coucher du soleil.
-AIGLE — [Elle le regarde un moment.] Tu veux voir ? Juste voir.
-[CHOIX — Froggy s'accroche à son dos.]
-[SÉQUENCE DE VOL — 45 secondes. Aucun dialogue. Juste la vue. La musique.]
-[Froggy voit le lac pour la première fois. La lumière est exactement celle que Lyse décrivait.]
-[Varka le repose. Repart sans un mot supplémentaire.]
-
-Scène 3 · ARBUSTE (Collectible)
-[Un arbuste de montagne, tout tordu par le vent. Une branche flexible, idéale.]
-
-🌿 Arbuste obtenu. (Voir dialogues de collecte)
 
 
 Scène 4 · POISSON (aperçu dans un ruisseau de montagne)

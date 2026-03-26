@@ -982,14 +982,14 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 12:
                 biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
-            if scene_actu[0] == 14:
+            if scene_actu[0] == 17:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
 
 
             if not LORE[n]["combat"]:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
-                if scene_actu[0] in (7, 12, 14):
+                if scene_actu[0] in (7, 12, 17):
                     music.play("assets/musics/lobby.wav", loop=True)
                     page.overlay.clear()
                     navigate("planet")
