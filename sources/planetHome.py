@@ -395,7 +395,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         page.clean()
         running[0]            = True
         # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
-        event                 = "lore" #choose_event()
+        event                 = choose_event()
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False

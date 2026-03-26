@@ -169,7 +169,7 @@ if __name__ == "__main__":
     play_intro_video(VIDEO_PATH1, BASE_DIR)
     time.sleep(0.8)
 
-    _seed_test_data()
+    #_seed_test_data()
     music.play("assets/musics/lobby.wav", loop=True)
     ft.run(main)
     music.stop()
