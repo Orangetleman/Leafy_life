@@ -1018,7 +1018,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
     def explique(entity):
         if entity["met"] == False:
             boite = ft.Container(
-                content=ft.Text(entity["prez"], size=50, color="white"),
+                content=ft.Text(entity["prez"], color="white", expand=True, size=40),
                 bgcolor='black',
                 alignment=ft.Alignment.CENTER_LEFT,
                 height=page.height,   

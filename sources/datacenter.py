@@ -16,7 +16,7 @@ ENEMIES = [
         "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/crab.png",
         "met": False, "prez": "Le crabe chinois (Eriocheir sinensis) est un crabe fouisseur de la famille des varunidae. Il se nourrit essentiellement d’algues et de petits crustacés. Il est la proie de mammifères, d’oiseaux, et de poissons. Il possède deux pinces pour se défendre.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "O2", "amount": 130},
     },
     {
         "id": 2, "name": "Ours", "rarity": "common",
@@ -24,7 +24,7 @@ ENEMIES = [
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bear.png",
         "met": False, "prez": " L’ours brun (Ursus arctos) est un mammifère omnivore de la famille des ursidés. Il utilise l’intimidation pour se défendre, et possède de grandes griffes. Il se nourrit de tout, des poissons jusqu’aux élans, mais surtout des végétaux. Etant un superprédateur, seuls certains grands carnivores osent l’attaquer.",
-        "reward": {"currency": "CO2", "amount": 50},
+        "reward": {"currency": "CO2", "amount": 120},
     },
     {
         "id": 3, "name": "Serpent", "rarity": "rare",
@@ -32,7 +32,7 @@ ENEMIES = [
         "biome": ["mountain"], "lvl": 3,
         "visual": "assets/imgs/npc/snake.png",
         "met": False, "prez": "La vipère aspic (Vipera aspis) est un serpent de la famille des viperidae, endémique d’Europe. Elle utilise du venin pour se défendre. Elle est la proie de certains oiseaux, de sangliers, de blaireaux, de renards et de mustélidés. Elle chasse des micromammifères et plus rarement des lézards et petits oiseaux.",
-        "reward": {"currency": "O2", "amount": 18},
+        "reward": {"currency": "O2", "amount": 105},
     },
     {
         "id": 4, "name": "rien", "rarity": "common",
@@ -72,7 +72,7 @@ ENEMIES = [
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/mushroom.png",
         "met": False, "prez": " L’amanite tue-mouche (Amanita muscaria) est un champignon mortel et psychotrope. Il produit des toxines violentes pour se protéger de ses prédateurs, généralement des cervidés.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "CO2", "amount": 45},
     },
     {
         "id": 9, "name": "Mante religieuse", "rarity": "common",
@@ -80,7 +80,7 @@ ENEMIES = [
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/mantis.png",
         "met": False, "prez": "La mante religieuse (Mantis religiosa) est un insecte de la famille des mantidae originaire du bassin méditerranéen. Si son intimidation ne fonctionne pas, elle peut mordre pour se défendre des oiseaux et reptiles. Elle se nourrit de petits insectes vivants, en mouvement, qu’elle chasse.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "O2", "amount": 25},
     },
     {
         "id": 10, "name": "Guepe", "rarity": "common",
@@ -88,7 +88,7 @@ ENEMIES = [
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/wasp.png",
         "met": False, "prez": "La guêpe commune (Vespula vulgaris) est un insecte de la famille des vespinae originaire d’Eurasie. Elle dispose d’un dard pour se défendre contre les oiseaux, les chauves-souris, les amphibiens et insectes carnivores. Elle se nourrit de substances sucrées, et attaque les abeilles pour leur territoire.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "CO2", "amount": 20},
     },
     {
         "id": 11, "name": "Ronces", "rarity": "common",
@@ -96,7 +96,7 @@ ENEMIES = [
         "biome": ["forest"], "lvl": 1,
         "visual": "assets/imgs/npc/thorns.png",
         "met": False, "prez": "La ronce commune (Rubus fruticosus) est une plante à fleur de la famille des rosacées. Elle possède des aiguillons pour se protéger des chèvres et cervidés, et produit des fruits appelés mûres pour se multiplier très rapidement. Elle est considérée comme de la mauvaise-herbe.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "O2", "amount": 55},
     },
 
 
@@ -107,7 +107,7 @@ ENEMIES = [
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/crabfaible.png",
         "met": False, "prez": "Le crabe chinois (Eriocheir sinensis) est un crabe fouisseur de la famille des varunidae. Il se nourrit essentiellement d’algues et de petits crustacés. Il est la proie de mammifères, d’oiseaux, et de poissons. Il possède deux pinces pour se défendre.",
-        "reward": {"currency": "O2", "amount": 8},
+        "reward": {"currency": "O2", "amount": 10},
     },
     {
         "id": 13, "name": "Heron", "rarity": "common",
@@ -123,7 +123,7 @@ ENEMIES = [
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bigbear.png",
         "met": True, "prez": " L’ours brun (Ursus arctos) est un mammifère omnivore de la famille des ursidés. Il utilise l’intimidation pour se défendre, et possède de grandes griffes. Il se nourrit de tout, des poissons jusqu’aux élans, mais surtout des végétaux. Etant un superprédateur, seuls certains grands carnivores osent l’attaquer.",
-        "reward": {"currency": "CO2", "amount": 50},
+        "reward": {"currency": "CO2", "amount": 250},
     },
 ]
 
@@ -905,9 +905,3 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
         {'dialogue':s23, 'visual':"assets/imgs/leafs/Leaf_reeds.png", 'combat':False, "add":7,    "entity":"leaf", "biome":"lake"},
         {'dialogue':s24, 'visual':"assets/imgs/leafs/BigBadHeron.png", 'combat':True, "add":None,    "entity":"leaf", "biome":"lake"},
         ]
-
-
-
-
-
-
