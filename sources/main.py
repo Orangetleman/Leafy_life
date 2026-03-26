@@ -163,7 +163,7 @@ if __name__ == "__main__":
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     
-    VIDEO_PATH1 = os.path.join(BASE_DIR, "assets", "musics", "intro.mp4")
+    VIDEO_PATH1 = os.path.join(BASE_DIR, "assets", "musics", "test.mp4")
     VIDEO_PATH2 = os.path.join(BASE_DIR, "assets", "musics", "outro.mp4")
     music.play("assets/musics/frogmusic.wav")
     play_intro_video(VIDEO_PATH1, BASE_DIR)

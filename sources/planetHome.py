@@ -970,7 +970,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 listener = pynput_keyboard.Listener(on_press=toi)
                 listener.start()
             else:
-                suite()
+                page.runtask(suite)
 
         async def suite():
             scene_actu[0] += 1
@@ -990,6 +990,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 if LORE[n]["add"] is not None:
                     leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
                 if scene_actu[0] in (7, 12, 17):
+                    print("changement biome")
                     music.play("assets/musics/lobby.wav", loop=True)
                     page.overlay.clear()
                     navigate("planet")
