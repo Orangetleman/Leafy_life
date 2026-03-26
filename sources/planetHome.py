@@ -956,6 +956,8 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         page.on_resize = on_resize_scene
 
         def on_end():
+            keys_pressed["right"] = False
+            keys_pressed["leaft"] = False
             page.on_resize = None
             boite = explique(entity)
             if boite is not None:
@@ -1009,7 +1011,6 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 combat(e, biome, enemy)
                 on_planet_resize()
                 return
-            
 
         paroles = dialogue(e, LORE[n]["dialogue"], dialogue_active, on_end=on_end)
         preset  = [bg, npc_sprite, sprite, paroles]
