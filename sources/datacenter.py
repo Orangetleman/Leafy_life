@@ -106,7 +106,7 @@ ENEMIES = [
         "atk": 3, "hp": 10,
         "biome": ["plain"], "lvl": 1,
         "visual": "assets/imgs/npc/crabfaible.png",
-        "met": False, "prez": "Un crabe minuscule, mais ses pinces font mal.",
+        "met": False, "prez": "Le crabe chinois (Eriocheir sinensis) est un crabe fouisseur de la famille des varunidae. Il se nourrit essentiellement d’algues et de petits crustacés. Il est la proie de mammifères, d’oiseaux, et de poissons. Il possède deux pinces pour se défendre.",
         "reward": {"currency": "O2", "amount": 8},
     },
     {
@@ -114,7 +114,7 @@ ENEMIES = [
         "atk": 50, "hp": 1000,
         "biome": ["lake"], "lvl": 1,
         "visual": "assets/imgs/npc/BigBadHeron.png",
-        "met": False, "prez": "tie finito chef",
+        "met": False, "prez": "Le tyran du lac.",
         "reward": {"currency": "O2", "amount": 1000},
     },
     {
@@ -122,7 +122,7 @@ ENEMIES = [
         "atk": 20, "hp": 500,
         "biome": ["mountain"], "lvl": 1,
         "visual": "assets/imgs/npc/bigbear.png",
-        "met": True, "prez": "Un ours.",
+        "met": True, "prez": " L’ours brun (Ursus arctos) est un mammifère omnivore de la famille des ursidés. Il utilise l’intimidation pour se défendre, et possède de grandes griffes. Il se nourrit de tout, des poissons jusqu’aux élans, mais surtout des végétaux. Etant un superprédateur, seuls certains grands carnivores osent l’attaquer.",
         "reward": {"currency": "CO2", "amount": 50},
     },
 ]
@@ -707,26 +707,26 @@ music = MusicManager()
 
 
 # ── Dialogues ────────────────────────────────────────────────────────────────────────────
-victoire = ["bravo! vous avez vaicu l'ennemi!"]
+victoire = ["bravo! vous avez vaincu l'ennemi!"]
 
 s1 = ["Tiens, un pissenlit...", 
         "Bonsoir! Je ne t'ai encore jamais vu dans ces plaines, tu es nouveau?", 
         "Bonjour, oui, je m'appelle Froggy", 
         "Un voyageur ! C'est rare par ici! Quelle est ta destination ?", 
         "Je voyage pour trouver un point d'eau pour mes oeufs, tu sais où je peux en trouver un ?", 
-        "Il n'y en a pas d'appropriés par ici, mais tu en trouveras peut etre un dans la forêt!", 
-        "Où est elle?",
+        "Il n'y en a pas d'appropriés par ici, mais tu en trouveras peut-être un dans la forêt!", 
+        "Où est-elle?",
         "Pas très loin, je pense.",
         "Tu penses?",
-        "Je ne me suis jamais aventuré très loin, à cause de tous les voisins aggressifs... Je peux peut être t'accompagner!",
+        "Je ne me suis jamais aventuré très loin, à cause de tous les voisins aggressifs... Je peux peut-être t'accompagner!",
         "Si soudainement?",
-        "Je vais te protéger des locaux, et je souhaite voir le monde au delà de ma motte de terre!",
+        "Je vais te protéger des locaux, et je souhaite voir le monde au-delà de ma motte de terre!",
         "Eh bien, si t'insistes, je ne suis pas contre un peu de compagnie pour la route.",
         ]
-s2 = ["Que fais un crabe ici, loin de son habitat naturel?",
+s2 = ["Que fait un crabe ici, loin de son habitat naturel?",
         "Qui va là?","Bonjour, je ne suis qu'un simple voyageur, savez vous où -", 
         "Pas un pas de plus! Revenez d'où vous venez, je n'ai pas d'affaires à faire avec ceux qui ralentissent ma mission.", 
-        "Vous ne semblais pas en très bonne santé.", 
+        "Vous ne semblez pas en très bonne santé.", 
         "Cela ne vous regarde pas!",
         "Un crabe sans eau ne survivra pas longtemps.",
         "Partez !",
@@ -739,12 +739,12 @@ s3 = ["[Un criquet est coincé sous une touffe d'herbe aplatie par le vent.]",
         "Je suis bloqué depuis ce matin. Tu peux soulever ça ?",
         "[soulève]",
         "Ah. Merci.",
-        "[pars]",
+        "[part]",
         "Tu vas à la forêt ?",
         "Oui.",
         "Moi j'essaie d'y aller depuis trois jours mais j'arrive pas à traverser le terrain sec au milieu. Je me dessèche...Je peux venir avec toi ?",
-        "[aquiese]",
-        "Merci beaucoup! Je te guiderais jusqu'aux bois, promis !",
+        "[acquiesce]",
+        "Merci beaucoup! Je te guiderai jusqu'aux bois, promis !",
         ]
 s4 = ["(Un nuage dans l'herbe...)",
         "Oh. Une grenouille. On voit pas souvent ça par ici.",
@@ -752,21 +752,21 @@ s4 = ["(Un nuage dans l'herbe...)",
         "T'as l'air de chercher quelque chose.",
         "La forêt.",
         "[regarde vers le nord] La forêt? C'est par là. Les herbes deviennent plus sombres, tu peux pas rater.",
-        "[suis le regard]",
+        "[suit le regard]",
         "Moi j'y vais jamais. Trop de racines sous les pattes. Mais bon, Charlie m'a répété pleins de fois que si je voulais que les femelles me regardent un jour, il fallait que je me salisse les sabots."
         ]
 s5 = ["(quel est ce bourdonnement ?)",
-      "Halte ! Que faites vous si près de la reine?",
+      "Halte ! Que faites-vous si près de la reine?",
       "Je ne fais que passer",
-      "Comment etes vous arrivés si près? Mes frères ont dû vous arrêter avant.",
+      "Comment êtes-vous arrivés si près? Mes frères ont dû vous arrêter avant.",
       "Non, vous êtes la première abeille que je vois.",
       "Etrange. Si vous ne voulez vraiment aucun mal, il n'y a pas d'inconvénient à ce que je vous surveille quelques temps, n'est-ce pas?",
       "(Le pissenlit sera content, je suppose)"
       ]
-s6 = ["(Un trèfle à quatres feuilles... Il parait que ça porte chance. J'en aurai surement besoin.)"]
+s6 = ["(Un trèfle à quatre feuilles... Il parait que ça porte chance. J'en aurai surement besoin.)"]
 s7 = ["Nous y sommes.",
       "C'est... grand. Je savais pas que c'était aussi grand.",
-      "Ca te fais peur?",
+      "Ca te fait peur?",
       "...je vais rester là un petit instant, avance sans moi",
       "Tu es sûr?",
       "Oui, merci d'avoir voyagé avec moi jusqu'ici, je ne t'oublierai jamais, promis!",
@@ -774,7 +774,7 @@ s7 = ["Nous y sommes.",
       "Bonne chance pour la suite !",
       "(Moi aussi je ne t'oublierai jamais, ami.)"
       ]
-s8 = ["(La forêt, enfin... mais je ne vois pas de point d'eau. Il y a t'il quelqu'un à qui demander?)",
+s8 = ["(La forêt, enfin... mais je ne vois pas de point d'eau. Y a t'il quelqu'un à qui demander?)",
       "Besoin d'aide?",
       "(C'est vraiment calme ici, comparé à la plaine)",
       "Bonjouuuuur !!!",
@@ -782,12 +782,12 @@ s8 = ["(La forêt, enfin... mais je ne vois pas de point d'eau. Il y a t'il quel
       "EH OH NE ME MARCHEZ PAS DESSUS !!",
       "[sursaute]",
       "Vous pourriez faire attention où vous marchez au moins ?",
-      "Escusez moi.",
+      "Excusez-moi.",
       "Ce n'est pas grave. Je suis Saltique, la manageuse en chef de toute la communication web de la forêt.",
       "(La mana- quoi?) Je suis Froggy, enchanté.",
       "Mince, on m'appelle. Je dois filer.",
       "(Je crois que je commence à comprendre.)",
-      "N'hésite pas à venir me voir si tu as besoin de quoi que ce soit. Moi et mes soeurs feront tout notre possible pour que tu passes un merveilleux séjour dans le Bois de l'Ombre Verte!",
+      "N'hésite pas à venir me voir si tu as besoin de quoi que ce soit. Moi et mes soeurs ferons tout notre possible pour que tu passes un merveilleux séjour dans le Bois de l'Ombre Verte!",
       "Attendez, je voulais vous demand...er. Elle est partie. En bondissant. Très bien, ce bois promet d'être intéressant."
       ]
 s9 = ["(Une fraise parfaitement mûre. Le rouge éclatant fait le charme des forêts.)"]
@@ -796,76 +796,76 @@ s10 = ["[Mouton tremble]",
        "Bonjour, toi.",
        "Tu n'as pas peur de moi?",
        "Pourquoi un louveteau s'attaquerait à une grenouille?",
-       "Je ne sais pas, ma meute dit que tous les animeaux de cette forêt nous craignent, et que c'est pour cela qu'on n'en vois pas beaucoup sur notre territoire",
+       "Je ne sais pas, ma meute dit que tous les animeaux de cette forêt nous craignent, et que c'est pour cela qu'on n'en voit pas beaucoup sur notre territoire",
        "Ca doit être pour ça que je ne croise personne...",
-       "Je dois retourner vers ma meute, mais ne t'inquetes pas, je leur dirait que tu es un ami qui ne fait que passer!"
+       "Je dois retourner vers ma meute, mais ne t'inquetes pas, je leur dirai que tu es un ami qui ne fait que passer!"
        ]
-s11 = ["(Plus je m'avance, plus les arbres sont immenses...)","[vent soufle]","[saute sur une branche et admire le paysage]","Je peux t'emmener regarder la canopée, si tu le souhaite."]
-s12 = ["(Ce n'est pas le louveteau de tout à l'heure? Il a l'air triste...)",
+s11 = ["(Plus je m'avance, plus les arbres sont immenses...)","[vent soufle]","[saute sur une branche et admire le paysage]","Je peux t'emmener regarder la canopée, si tu le souhaites."]
+s12 = ["(Ce n'est pas le louveteau de toute à l'heure? Il a l'air triste...)",
        "La grenouille ! Ca me fait plaisir de te voir à nouveau.",
        "Quelque chose ne va pas?",
        "[sanglote] Mon frère a ramené une immense proie qu'il a chassé avec son groupe d'amis, et mes parents et l'alpha ne parlent que de lui depuis...",
        "Tu te sens délaissé?",
        "Oui...",
-       "J'ai rencontré quelques ennemis redoutables pendant mon voyage. Si on en térasse un ensemble, tu pourras le ramener à ta meute et tu sera couvert de bien plus de gloire que ton frère et sa proie.",
-       "Oui ! Tu as raison ! Vous aussi, vous êtes mon proupe d'amis après tout!"
+       "J'ai rencontré quelques ennemis redoutables pendant mon voyage. Si on en térasse un ensemble, tu pourras le ramener à ta meute et tu seras couvert de bien plus de gloire que ton frère et sa proie.",
+       "Oui ! Tu as raison ! Vous aussi, vous êtes mon groupe d'amis après tout!"
        ]
 s13 = ["[peine à avancer dans les broussailles]",
        "[s'accroche à son menteau]",
        "[continue d'avancer, arrachant une des branches]"]
-s14 = ["Vas y petit loup, c'est ta chance de briller !",
+s14 = ["Vas-y petit loup, c'est ta chance de briller !",
        "QUI OSE ENTRER SUR MON TERRITOIRE?"]
-s15 = ["Bonjour, savez vous où je peux trouver un point d'eau?",
+s15 = ["Bonjour, savez-vous où je peux trouver un point d'eau?",
        "Il  y a un grand lac après cette montagne.",
        "Merci beauc- [glisse]",
        "Vous allez bien?",
-       "[se relève] Oui, oui, merci, j'ai juste glissé un peu rien de grave.",
+       "[se relève] Oui, oui, merci, j'ai juste glissé un peu, rien de grave.",
        "Une grenouille qui gravit une montagne, on en voit pas tous les jours.",
        "J'en gravirai cent si c'est pour que mes enfants grandissent dans les meilleures conditions!",
-       "J'ai de la peine pour vous, laissez moi au moins vous porter jusqu'au lac, j'y allais également de toute façon"]
+       "J'ai de la peine pour vous, laissez-moi au moins vous porter jusqu'au lac, j'y allais également de toute façon"]
 s16 = ["[marche]",
-       "[fais des cercles au-dessus, dans le ciel]",
+       "[fait des cercles au-dessus, dans le ciel]",
        "[se sent mal à l'aise]",
        "[plonge]",
        "(c'est la fin...)",
-       "Aie ! Pourquoi le protèges tu, Chèvre?",
+       "Aïe ! Pourquoi le protèges-tu, Chèvre?",
        "[lève la tête, apperçoit la chèvre au dessus de lui, bloquant l'attaque de l'aigle]",
        "Depuis quand une grenouille a une armée pour traverser la montagne?",
        "(il s'est blessé en heurtant la chèvre...), je peux soigner cette plaie si tu promets de ne plus m'attaquer.",
-       "[confus] Si t'y tiens tant, je n'ai aucune raison de refuser..."]
+       "[confus] Si tu y tiens tant, je n'ai aucune raison de refuser..."]
 s17 = ["[époustoufflé]",
        "Nous y sommes, Froggy, le grand lac des Eaux Tranquilles!",
        "Enfin... c'est tellement beau...",
        "Hehe, un choc, pas vrai? Ca m'a fait le même effet la première fois que je l'ai vu aussi.",
-       "Ne perdons pas de temps, et allons y tout de suite !"]
-s18 = ["Chercheons un endroit tranquille et abrité d'abord.",
+       "Ne perdons pas de temps, et allons-y tout de suite !"]
+s18 = ["Cherchons un endroit tranquille et abrité d'abord.",
        "On peut longer la rive, juqu'à trouver le parfait endroit.",
        "Oui, bonne idée.",
        "[observe le sac de Froggy] Les oeufs ont l'air de vouloir éclore d'ici peu.",
-       "[souris]"
+       "[sourit]"
        ]
 s19 = ["[saute sur un nénuphar près de la rive]",
-       "Pour qui vous prenez vous, monsieur la grenouille ?!",
-       "[bondis de nouveau, surpris]",
+       "Pour qui vous prenez-vous, monsieur la grenouille ?!",
+       "[bondit de nouveau, surpris]",
        "C'est sur la princesse lotus que vous venez de poser vos pattes vertes!",
-       "Excuseez moi, majesté, je suis nouveau ici.",
+       "Excusez-moi, Majesté, je suis nouveau ici.",
        "Cela explique la présence d'une grenouille ici, à découvert",
-       "Que voulez vous dire par là?",
+       "Que voulez-vous dire par là?",
        "[attentive] restez près de moi, j'entends quelque chose arriver."]
 s20 = ["[attentif]",
-       "C'est moi ! Ne vous inquetez pas !",
+       "C'est moi ! Ne vous inquiétez pas !",
        "[soulagement général]",
        "Mais je n'apporte pas de bonnes nouvelles. Le Héron est revenu de sa promenade !",
        "[tressaille]",
-       "Suivez moi, je vais vous cacher pas loin."]
-s21 = ["L'Héron, droit devant !",
+       "Suivez-moi, je vais vous cacher pas loin."]
+s21 = ["Le Héron, droit devant !",
        "[se retourne]",
        "[tout le monde se fige]",
        "[s'envole]",
        "(Quoi?)"]
-s22 = ["(Pourquoi continuons nous de courir? Le héron ne vient il pas de s'envoler?)",
-       "C'est son cousin. Il a honte de sa tyrannie, mais a trop peur pour s'y opposer. Il nous vends des babioles pour nous aider en secret"]
-s23 = ["[cours]",
+s22 = ["(Pourquoi continuons-nous de courir? Le héron ne vient-il pas de s'envoler?)",
+       "C'est son cousin. Il a honte de sa tyrannie, mais a trop peur pour s'y opposer. Il nous vend des babioles pour nous aider en secret"]
+s23 = ["[court]",
        "Par ici! Je vais vous cacher!"]
 s24 = ["On y est presqu-",
        "[se pose devant tout le monde] Presque, où?",
