@@ -395,7 +395,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         page.clean()
         running[0]            = True
         # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
-        event                 = choose_event()
+        event                 = "lore" #choose_event()
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False
@@ -970,9 +970,10 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 listener = pynput_keyboard.Listener(on_press=toi)
                 listener.start()
             else:
-                page.runtask(suite)
+                page.run_task(suite)
 
         async def suite():
+            print("SUITE")
             scene_actu[0] += 1
             page.on_resize = None
 
