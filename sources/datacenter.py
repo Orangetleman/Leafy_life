@@ -838,6 +838,38 @@ s17 = ["[époustoufflé]",
        "Enfin... c'est tellement beau...",
        "Hehe, un choc, pas vrai? Ca m'a fait le même effet la première fois que je l'ai vu aussi.",
        "Ne perdons pas de temps, et allons y tout de suite !"]
+s18 = ["Chercheons un endroit tranquille et abrité d'abord.",
+       "On peut longer la rive, juqu'à trouver le parfait endroit.",
+       "Oui, bonne idée.",
+       "[observe le sac de Froggy] Les oeufs ont l'air de vouloir éclore d'ici peu.",
+       "[souris]"
+       ]
+s19 = ["[saute sur un nénuphar près de la rive]",
+       "Pour qui vous prenez vous, monsieur la grenouille ?!",
+       "[bondis de nouveau, surpris]",
+       "C'est sur la princesse lotus que vous venez de poser vos pattes vertes!",
+       "Excuseez moi, majesté, je suis nouveau ici.",
+       "Cela explique la présence d'une grenouille ici, à découvert",
+       "Que voulez vous dire par là?",
+       "[attentive] restez près de moi, j'entends quelque chose arriver."]
+s20 = ["[attentif]",
+       "C'est moi ! Ne vous inquetez pas !",
+       "[soulagement général]",
+       "Mais je n'apporte pas de bonnes nouvelles. Le Héron est revenu de sa promenade !",
+       "[tressaille]",
+       "Suivez moi, je vais vous cacher pas loin."]
+s21 = ["L'Héron, droit devant !",
+       "[se retourne]",
+       "[tout le monde se fige]",
+       "[s'envole]",
+       "(Quoi?)"]
+s22 = ["(Pourquoi continuons nous de courir? Le héron ne vient il pas de s'envoler?)",
+       "C'est son cousin. Il a honte de sa tyrannie, mais a trop peur pour s'y opposer. Il nous vends des babioles pour nous aider en secret"]
+s23 = ["[cours]",
+       "Par ici! Je vais vous cacher!"]
+s24 = ["On y est presqu-",
+       "[se pose devant tout le monde] Presque, où?",
+       "(C'est lui. C'est lui qui a dévoré ma femme sous mes yeux. Jamais je n'oublierai cet oiseau. Il va me payer pour tout ce qu'il a fait, ce tyran !)"]
 
 LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat':False, "add":1,    "entity":"leaf", "biome":"plain"},
         {'dialogue':s2, 'visual':"assets/imgs/npc/crabfaible.png",       'combat':True,  "add":None, "entity":"nmi",  "biome":"plain"},
@@ -862,6 +894,16 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
         {'dialogue':s15, 'visual':"assets/imgs/leafs/Leaf_goat.png",    'combat':False, "add":9,   "entity":"leaf", "biome":"mountain"},
         {'dialogue':s16, 'visual':"assets/imgs/leafs/Leaf_eagle.png",    'combat':False, "add":12,   "entity":"leaf", "biome":"mountain"},
         {'dialogue':s17, 'visual':"assets/imgs/leafs/Leaf_goat.png",    'combat':False, "add":None,   "entity":"leaf", "biome":"mountain"},
+
+        # lac
+
+        {'dialogue':s18, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat':False, "add":None,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s19, 'visual':"assets/imgs/leafs/Leaf_lilypad.png", 'combat':False, "add":11,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s20, 'visual':"assets/imgs/leafs/Leaf_fish.png", 'combat':False, "add":8,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s21, 'visual':"assets/imgs/npc/heron.png",          'combat':False, "add":None, "entity":"npc",  "biome":"lake"},
+        {'dialogue':s22, 'visual':"assets/imgs/leafs/Leaf_fish.png", 'combat':False, "add":None,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s23, 'visual':"assets/imgs/leafs/Leaf_reeds.png", 'combat':False, "add":7,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s24, 'visual':"assets/imgs/leafs/BigBadHeron.png", 'combat':True, "add":None,    "entity":"leaf", "biome":"lake"},
         ]
 
 
@@ -869,106 +911,3 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
 
 
 
-"""PROLOGUE — La Mare de Vaseille
-
-
-
-
-
-ACTE III — Les Crêtes de Pierre Mousse
-
-
-
-
-Scène 4 · POISSON (aperçu dans un ruisseau de montagne)
-[Un petit ruisseau descend des crêtes. Un poisson minuscule remonte le courant.]
-POISSON — [Il s'arrête, regarde Froggy depuis l'eau.] T'es bien loin de chez toi, grenouille.
-POISSON — Moi je remonte depuis le lac. Chaque année.
-POISSON — [Il reprend son chemin dans le courant.] L'eau que tu sens là... c'est son eau. Suis-la en descendant. Elle t'y amène direct.
-[Il disparaît sous les pierres.]
-
-Scène 5 · ROSEAUX (collectible, bord d'un ruisseau de montagne)
-[Des tiges de roseaux poussent au bord du ruisseau.]
-
-🌾 Roseaux obtenus. (Voir dialogues de collecte)
-
-
-ACTE IV — Le Lac des Eaux Tranquilles
-
-Scène 1 · NÉNUPHAR (collectible, premier contact)
-[Froggy arrive au bord du lac. Un nénuphar flotte près de la rive.]
-[Animation : Froggy s'arrête. Regarde l'eau. L'eau est exactement comme Lyse la décrivait.]
-[Il tend la patte. Le nénuphar se rapproche.]
-
-🪷 Nénuphar obtenu. (Voir dialogues de collecte)
-
-
-Scène 2 · NAIA (gardienne du lac)
-[Elle émerge des roseaux. Vieille grenouille. Elle regarde Froggy sans surprise.]
-NAIA — Je t'attendais. Enfin... toi ou quelqu'un comme toi.
-NAIA — Ce lac attire ceux qui ont quelque chose de précieux à protéger.
-NAIA — [Elle regarde les œufs.] Viens. Il y a un endroit. À l'abri des roseaux. L'eau y est douce le matin. Les hérons n'y vont pas.
-[Elle guide Froggy jusqu'à l'endroit.]
-NAIA — [Après le dépôt des œufs.] Ils vont éclore. Je le sais à la façon dont ils bougent.
-NAIA — [Elle repart dans les roseaux.] Tu as bien fait de venir.
-
-Scène 3 · POISSON (lac — deuxième rencontre)
-[Le même petit poisson du ruisseau de montagne. Il nage près de Froggy.]
-POISSON — Ah. T'es arrivé.
-POISSON — [Il tourne en cercle autour des œufs.]
-POISSON — Ce coin-là, je le connais bien. L'eau y est stable. Profonde. Bonne température toute l'année.
-POISSON — [Il repart dans les profondeurs.] Bonne chance, grenouille de montagne.
-
-Scène 4 · ROSEAUX (scène automatique — vent dans les roseaux)
-[Pas de personnage. Juste le vent dans les roseaux au coucher du soleil.]
-[Animation automatique : Froggy reste dans l'eau à côté des œufs. Les œufs pulsent doucement. La phosphorescence verte commence.]
-[Le ciel devient noir. Les étoiles apparaissent. Froggy ne bouge pas.]
-[FIN DU JEU.]
-
-
-DIALOGUES DE COLLECTE — Toutes les feuilles et plantes
-Ces textes s'affichent dans une petite boîte en bas de l'écran quand Froggy ramasse un élément. Courts. Doux. Pas de speaker — juste le texte.
-
-🌼 PISSENLIT
-
-Un pissenlit. Lyse en mettait parfois dans ses cheveux. Elle disait que les plantes qui poussent n'importe où sont les plus courageuses.
-
-
-🍀 TRÈFLE
-
-Un trèfle à quatre feuilles. Froggy n'a jamais cru à la chance. Mais il le prend quand même.
-
-
-🌿 ARBUSTE (branche souple)
-
-Une branche d'arbuste de montagne. Solide malgré sa taille. Elle a résisté à tous les vents.
-
-
-🌾 ROSEAUX (tige)
-
-Une tige de roseau. Creuse et légère. Les roseaux bordent les grands lacs. On approche.
-
-
-🪷 NÉNUPHAR
-
-Un nénuphar du Lac des Eaux Tranquilles. Froggy le tient un moment avant de le poser sur l'eau. Lyse aurait aimé ça.
-
-
-🌲 SAPIN (branche)
-
-Une branche de sapin tombée. Elle sent la résine et le froid. L'odeur de la montagne.
-
-
-🍓 FRAISIER (feuille)
-
-Une feuille de fraisier sauvage. Douce sur les œufs. Elle garde un peu d'humidité.
-
-
-🌸 FLEUR DE PIERRE (rare — montagne)
-
-Une fleur qui pousse dans une fissure de roche, sans terre autour, sans eau visible. Juste une fleur, là, dans le rien.
-
-
-🍄 CHAMPIGNON LUMINEUX (forêt, la nuit)
-
-Il brille d'un bleu pâle dans l'obscurité. La forêt a ses propres étoiles."""
