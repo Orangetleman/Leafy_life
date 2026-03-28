@@ -829,7 +829,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 biome_musics = {
                     "plain":   "assets/musics/plain.wav",
                     "forest":    "assets/musics/forest.wav",
-                    "montain": "assets/musics/mountain.wav",
+                    "mountain": "assets/musics/mountain.wav",
                     "lake":      "assets/musics/lake.wav",
                 }
                 music.play(biome_musics[biome], loop=True)
