@@ -7,7 +7,7 @@ Leafy Life est un jeu vidéo éducatif original créé pour les Trophées NSI 20
 ## 🚀 Démarrage Rapide
 
 ### Installation automatique (Recommandé)
-Lancez simplement le fichier `dependencies.bat`. 
+Lancez simplement le fichier `PLAY.bat`. 
 - Il vérifiera si Python est installé (et vous guidera vers le Store si besoin).
 - Il installera les bibliothèques nécessaires (`flet`, `pyglet`, `pynput`).
 - Il lancera le jeu automatiquement.
