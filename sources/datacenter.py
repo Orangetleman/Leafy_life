@@ -697,7 +697,7 @@ class MusicManager:
 
     def play(self, path: str, loop: bool = True):
         mixer.music.load(path)
-        mixer.music.set_volume(0.5)
+        mixer.music.set_volume(0.3)
         mixer.music.play(-1 if loop else 0)
 
     def stop(self):
@@ -903,5 +903,5 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
         {'dialogue':s21, 'visual':"assets/imgs/npc/heron.png",          'combat':False, "add":None, "entity":"npc",  "biome":"lake"},
         {'dialogue':s22, 'visual':"assets/imgs/leafs/Leaf_fish.png", 'combat':False, "add":None,    "entity":"leaf", "biome":"lake"},
         {'dialogue':s23, 'visual':"assets/imgs/leafs/Leaf_reeds.png", 'combat':False, "add":7,    "entity":"leaf", "biome":"lake"},
-        {'dialogue':s24, 'visual':"assets/imgs/leafs/BigBadHeron.png", 'combat':True, "add":None,    "entity":"leaf", "biome":"lake"},
+        {'dialogue':s24, 'visual':"assets/imgs/leafs/BigBadHeron.png", 'combat':True, "add":None,    "entity":"nmi", "biome":"lake"},
         ]
