@@ -23,10 +23,10 @@ if %errorlevel% neq 0 (
 echo Python detecte !
 echo.
 echo Installation des dependances...
-python -m pip install --user flet --quiet --no-warn-script-location
-python -m pip install --user pyglet --quiet --no-warn-script-location
-python -m pip install --user pynput --quiet --no-warn-script-location
-python -m pip install --user pygame --quiet --no-warn-script-location
+python -m pip install --user flet==0.82.0 --quiet --no-warn-script-location
+python -m pip install --user pyglet==2.1.13 --quiet --no-warn-script-location
+python -m pip install --user pynput==1.8.1 --quiet --no-warn-script-location
+python -m pip install --user pygame==2.6.1 --quiet --no-warn-script-location
 
 echo.
 echo ============================================
