@@ -170,6 +170,7 @@ if __name__ == "__main__":
     time.sleep(0.8)
 
     #_seed_test_data()
+    scene_actu[0]=22
     music.play("assets/musics/lobby.wav", loop=True)
     ft.run(main)
     music.stop()

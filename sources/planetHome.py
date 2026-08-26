@@ -395,7 +395,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
         page.clean()
         running[0]            = True
         # ── Tirage pondéré de l'événement ─────────────────────────────────────────────
-        event                 = choose_event()
+        event                 = "lore" #choose_event() 
         biome_icon            = next(b["icon"] for b in BIOMES if b["name"] == biome)
         keys_pressed["space"] = False
         dialogue_active[0]    = False
@@ -495,7 +495,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 if event == "lore" and near:
                     if LORE[scene_actu[0]].get("biome", "plain") == biome:
                         stop_tp_screen()
-                        declenche_scene(e, biome, scene_actu[0]); return
+                        declenche_scene(e, biome, scene_actu[0]); return 
 
                 if keys_pressed["space"]:
                     keys_pressed["space"] = False
@@ -980,18 +980,20 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
             page.on_resize = None
 
 
-            if scene_actu[0] == len(LORE): await on_close()
+            if scene_actu[0] == len(LORE): 
+                await on_close()
+                return
             if scene_actu[0] == 7:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 12:
                 biomes_state["ff"] = False; biomes_state["montagne"] = True; biomes_state["mm"] = True
             if scene_actu[0] == 17:
                 biomes_state["mm"] = False; biomes_state["lac"] = True; biomes_state["ll"] = True
+            current_lore = LORE[scene_actu[0]]
 
-
-            if not LORE[n]["combat"]:
-                if LORE[n]["add"] is not None:
-                    leafmanager.add_leaf(LEAFS[LORE[n]["add"]])
+            if not current_lore["combat"]:
+                if current_lore["add"] is not None:
+                    leafmanager.add_leaf(LEAFS[current_lore["add"]])
                 if scene_actu[0] in (7, 12, 17):
                     print("changement biome")
                     music.play("assets/musics/lobby.wav", loop=True)
@@ -1005,7 +1007,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                     tp(e, biome)
                     return
             else:
-                enemy = next(b for b in ENEMIES if b["visual"] == locuteur)
+                enemy = next(b for b in ENEMIES if b["visual"] == current_lore["visual"])
                 page.overlay.clear()
                 page.update()
                 combat(e, biome, enemy)
