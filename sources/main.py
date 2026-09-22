@@ -175,7 +175,7 @@ if __name__ == "__main__":
     ft.run(main)
     music.stop()
 
-    if scene_actu[0] >= len(LORE):
+    if scene_actu[0] >= len(LORE)-1:
         music.play("assets/musics/frogmusic.wav", loop=True)
         play_intro_video(VIDEO_PATH2, BASE_DIR)
         time.sleep(0.8)
