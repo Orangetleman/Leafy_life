@@ -169,7 +169,8 @@ if __name__ == "__main__":
     play_intro_video(VIDEO_PATH1, BASE_DIR)
     time.sleep(0.8)
 
-    #_seed_test_data()
+    _seed_test_data()
+    scene_actu[0] = 23 # réinitialise la scène actuelle pour le tuto
     music.play("assets/musics/lobby.wav", loop=True)
     ft.run(main)
     music.stop()
