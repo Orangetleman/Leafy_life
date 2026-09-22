@@ -169,12 +169,13 @@ if __name__ == "__main__":
     play_intro_video(VIDEO_PATH1, BASE_DIR)
     time.sleep(0.8)
 
-    #_seed_test_data()
+    _seed_test_data()
+    scene_actu[0] = 23 # réinitialise la scène actuelle pour le tuto
     music.play("assets/musics/lobby.wav", loop=True)
     ft.run(main)
     music.stop()
 
-    if scene_actu[0] >= len(LORE):
+    if scene_actu[0] >= len(LORE)-1:
         music.play("assets/musics/frogmusic.wav", loop=True)
         play_intro_video(VIDEO_PATH2, BASE_DIR)
         time.sleep(0.8)
