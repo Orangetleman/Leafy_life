@@ -928,8 +928,8 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
     def declenche_scene(e, biome, n):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
-        if scene_actu[0] > len(LORE):
-            tp(e, biome); return
+        if scene_actu[0] >= len(LORE):
+            on_close()
         dialogue_active[0] = True
         page.clean()
         biome_icon = next(b["icon"] for b in BIOMES if b["name"] == biome)
@@ -980,8 +980,6 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
             print("SUITE")
             scene_actu[0] += 1
             page.on_resize = None
-
-
             if scene_actu[0] >= len(LORE): await on_close()
             if scene_actu[0] == 7:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
