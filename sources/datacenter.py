@@ -904,4 +904,5 @@ LORE = [{'dialogue':s1, 'visual':"assets/imgs/leafs/Leaf_dandelion.png", 'combat
         {'dialogue':s22, 'visual':"assets/imgs/leafs/Leaf_fish.png", 'combat':False, "add":None,    "entity":"leaf", "biome":"lake"},
         {'dialogue':s23, 'visual':"assets/imgs/leafs/Leaf_reeds.png", 'combat':False, "add":7,    "entity":"leaf", "biome":"lake"},
         {'dialogue':s24, 'visual':"assets/imgs/npc/BigBadHeron.png", 'combat':True, "add":None,    "entity":"nmi", "biome":"lake"},
+        {'dialogue':s24, 'visual':"assets/imgs/npc/BigBadHeron.png", 'combat':True, "add":None,    "entity":"nmi", "biome":"lake"},
         ]

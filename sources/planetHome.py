@@ -826,6 +826,8 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
                 for l in leafmanager.owned:
                     l.reset_combat_boosts()
                 music.stop()
+                if scene_actu[0] >= 24:
+                    await on_close()
                 biome_musics = {
                     "plain":   "assets/musics/plain.wav",
                     "forest":    "assets/musics/forest.wav",
@@ -926,7 +928,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
     def declenche_scene(e, biome, n):
         if hasattr(page, "stop_current_screen"):
             page.stop_current_screen()
-        if scene_actu[0] >= len(LORE):
+        if scene_actu[0] > len(LORE):
             tp(e, biome); return
         dialogue_active[0] = True
         page.clean()
@@ -980,7 +982,7 @@ def _planet(page: ft.Page, navigate, on_close=None) -> list:
             page.on_resize = None
 
 
-            if scene_actu[0] == len(LORE): await on_close()
+            if scene_actu[0] >= len(LORE): await on_close()
             if scene_actu[0] == 7:
                 biomes_state["pp"] = False; biomes_state["foret"] = True; biomes_state["ff"] = True
             if scene_actu[0] == 12:
